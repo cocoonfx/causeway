@@ -1,0 +1,253 @@
+[ {
+    "class" : [ "org.ref_send.log.Got", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 0,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 1
+      }
+    },
+    "message" : "",
+    "trace" : {
+      "calls" : [ {
+          "name" : "go(\u003Cfar ref:behaviour of \u003Cactormirror:3820764\u003E\u003E, \u003Cfar ref:behaviour of \u003Cactormirror:5646618\u003E\u003E, \u003Cfar ref:behaviour of \u003Cactormirror:751090\u003E\u003E)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 74 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Sent", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 1,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 1
+      }
+    },
+    "message" : "buyer-partInStock(\"partNo\",\u003Cobj:6066420{run}\u003E)-\u003Cjava:5981887335314007924\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "inventory\u003C-partInStock(\"partNo\", teller)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 82 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Sent", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 2,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 1
+      }
+    },
+    "message" : "buyer-checkCredit(\"name\",\u003Cobj:6066420{run}\u003E)-\u003Cjava:-4047305433533846905\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "creditBureau\u003C-checkCredit(\"name\", teller)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 83 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Sent", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 3,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 1
+      }
+    },
+    "message" : "buyer-canDeliver(\"profile\",\u003Cobj:6066420{run}\u003E)-\u003Cjava:6861932823136231916\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "shipper\u003C-canDeliver(\"profile\", teller)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 84 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Got", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 0,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 2
+      }
+    },
+    "message" : "account-run(true)-\u003Cjava:3064940081384498956\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "run(true)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 52 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Comment", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 1,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 2
+      }
+    },
+    "text" : "leadsto: all true",
+    "trace" : {
+      "calls" : [ {
+          "name" : "T.comment(\"leadsto: all true\")",
+          "source" : "purchase_example.at",
+          "span" : [ [ 61 ] ]
+        }, {
+          "name" : "if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 56 ] ]
+        }, {
+          "name" : "if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 54 ] ]
+        }, {
+          "name" : "if:then:(callback.!=(nil), { if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil }) })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 53 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Got", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 0,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 3
+      }
+    },
+    "message" : "product-run(true)-\u003Cjava:-8797848120024912983\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "run(true)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 52 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Comment", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 1,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 3
+      }
+    },
+    "text" : "leadsto: all true",
+    "trace" : {
+      "calls" : [ {
+          "name" : "T.comment(\"leadsto: all true\")",
+          "source" : "purchase_example.at",
+          "span" : [ [ 61 ] ]
+        }, {
+          "name" : "if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 56 ] ]
+        }, {
+          "name" : "if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 54 ] ]
+        }, {
+          "name" : "if:then:(callback.!=(nil), { if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil }) })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 53 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Got", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 0,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 4
+      }
+    },
+    "message" : "shipper-run(true)-\u003Cjava:6236978944805249899\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "run(true)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 52 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Comment", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 1,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 4
+      }
+    },
+    "text" : "happened: all true",
+    "trace" : {
+      "calls" : [ {
+          "name" : "T.comment(\"happened: all true\")",
+          "source" : "purchase_example.at",
+          "span" : [ [ 57 ] ]
+        }, {
+          "name" : "if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 56 ] ]
+        }, {
+          "name" : "if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 54 ] ]
+        }, {
+          "name" : "if:then:(callback.!=(nil), { if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil }) })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 53 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Sent", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 2,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 4
+      }
+    },
+    "message" : "buyer-run(true)-\u003Cjava:8923824972437772785\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "callback\u003C-run(true)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 58 ] ]
+        }, {
+          "name" : "if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 56 ] ]
+        }, {
+          "name" : "if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 54 ] ]
+        }, {
+          "name" : "if:then:(callback.!=(nil), { if:then:else:(answer, { numExpected := numExpected.-(1); if:then:else:(numExpected.\u003C=(0), { T.comment(\"happened: all true\"); callback\u003C-run(true); callback := nil }, { T.comment(\"leadsto: all true\") }) }, { T.comment(\"found a false\"); callback\u003C-run(false); callback := nil }) })",
+          "source" : "purchase_example.at",
+          "span" : [ [ 53 ] ]
+        } ]
+    }
+  }, {
+    "class" : [ "org.ref_send.log.Got", "org.ref_send.log.Event" ],
+    "anchor" : {
+      "number" : 0,
+      "turn" : {
+        "loop" : "buyer",
+        "number" : 5
+      }
+    },
+    "message" : "buyer-run(true)-\u003Cjava:8923824972437772785\u003E",
+    "trace" : {
+      "calls" : [ {
+          "name" : "run(true)",
+          "source" : "purchase_example.at",
+          "span" : [ [ 76 ] ]
+        } ]
+    }
+  } ]

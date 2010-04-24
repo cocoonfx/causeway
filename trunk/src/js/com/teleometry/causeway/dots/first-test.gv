@@ -1,0 +1,36 @@
+
+digraph messageGraph {
+"[top, 0]" [color=black fontcolor=black];
+"[buyer, 1]" [color=mediumblue fontcolor=mediumblue];
+"[top, 0]" -> "[buyer, 1]" [color=black label="## Sent"];
+"[buyer, 1]" [color=mediumblue fontcolor=mediumblue]; 
+"[product, 1]" [color=forestgreen fontcolor=forestgreen]; 
+"[buyer, 1]" -> "[product, 1]" [color=black label="## Sent"]; 
+"[product, 1]" [color=forestgreen fontcolor=forestgreen];
+"[buyer, 3]" [color=mediumblue fontcolor=mediumblue]; 
+"[product, 1]" -> "[buyer, 3]" [color=black label="## Sent"];
+"[buyer, 3]" [color=mediumblue fontcolor=mediumblue];
+"[bottom, 0]" [color=black fontcolor=black]; 
+"[buyer, 3]" -> "[bottom, 0]" [color=black label="# leadsto: all true"]; 
+"[buyer, 1]" [color=mediumblue fontcolor=mediumblue];
+"[account, 1]" [color=indigo fontcolor=indigo];
+"[buyer, 1]" -> "[account, 1]" [color=black label="## Sent"]; 
+"[account, 1]" [color=indigo fontcolor=indigo];
+"[buyer, 2]" [color=mediumblue fontcolor=mediumblue];
+"[account, 1]" -> "[buyer, 2]" [color=black label="## Sent"];
+"[buyer, 2]" [color=mediumblue fontcolor=mediumblue]; 
+"[bottom, 0]" [color=black fontcolor=black]; 
+"[buyer, 2]" -> "[bottom, 0]" [color=black label="# leadsto: all true"];
+"[buyer, 1]" [color=mediumblue fontcolor=mediumblue]; 
+"[shipper, 1]" [color=chocolate fontcolor=chocolate]; 
+"[buyer, 1]" -> "[shipper, 1]" [color=black label="## Sent"]; 
+"[shipper, 1]" [color=chocolate fontcolor=chocolate]; 
+"[buyer, 4]" [color=mediumblue fontcolor=mediumblue];
+"[shipper, 1]" -> "[buyer, 4]" [color=black label="## Sent"];
+"[buyer, 4]" [color=mediumblue fontcolor=mediumblue]; 
+"[bottom, 0]" [color=black fontcolor=black];
+"[buyer, 4]" -> "[bottom, 0]" [color=black label="# happened: all true"]; 
+"[buyer, 4]" [color=mediumblue fontcolor=mediumblue]; 
+"[buyer, 5]" [color=mediumblue fontcolor=mediumblue];
+"[buyer, 4]" -> "[buyer, 5]" [color=black label="## Sent"];
+}
