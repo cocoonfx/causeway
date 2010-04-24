@@ -1,0 +1,73 @@
+
+
+
+Ideas:
+
+Use Split Buttons with multiples icon and popup menu for going to a particular event in the set.
+Maybe not Splits: the button is functional (like submitting a form) & the menu is more stuff -- all hot.
+Menu Buttons: the button shows the menu, only the menu items are hot.
+
+
+
+
+Questions:
+
+// 'loadingPanel' is the id of the HTML element that our our widget creates
+// id || YAHOO.util.Dom.generateId()
+// YUI Dom's generateId
+
+loadingPanel = new YAHOO.widget.Panel('loadingPanel', {
+
+    
+    visible: false
+});
+
+loadingPanel.setBody('<img src="loading.gif"/>');
+Dom.setStyle(loadingPanel.body, 'textAlign', 'center');
+
+
+loadingPanel.render(document.body);
+
+...
+
+loadingPanel.show();
+
+// what is 'render' ? It's rendering the HTML, parsing the markup to present the ui.
+
+//  Use the "inDocument" method of the Dom utility to  
+//  determine if the Button's Menu has been rendered. 
+	 
+    if (YAHOO.util.Dom.inDocument(oMenuButton.getMenu().element)) { 
+
+//  By default a Button's Menu is lazyloaded - meaning the  
+//  creation and rendering of all MenuItems is  
+//  deferred until the Menu is intially requested by the  
+//  user.
+
+//  Once rendered, if content is cleared and then newly created, you must invoke render again.
+
+
+-------
+// The tree is not created in the DOM until this method is called: 
+    tree.draw(); 
+
+
+// what is 'class' ?
+
+<body class="yui-skin-sam">
+
+<div class="exampleIntro">
+
+// YUI button markup
+
+<span id="pushbutton4" class="yui-button yui-push-button"><span class="first-child"><input type="button" name="button4" value="Add"></span></span>
+<span id="pushbutton5" class="yui-button yui-push-button"><em class="first-child"><button type="button" name="button5">Add</button></em></span>
+<span id="pushbutton6" class="yui-button yui-push-button"><strong class="first-child"><button type="button" name="button6">Add</button></strong></span>
+
+configuration attributes...
+  container:"pushbuttonsfromjavascript"  // container is the HTML element that the button should be appended to once created
+
+If an id is not specified for the button, one will be generated using the generateId method of the Dom utility.
+
+
+
