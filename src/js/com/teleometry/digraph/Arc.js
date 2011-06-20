@@ -1,27 +1,34 @@
+// Copyright 2011 Teleometry Design under the terms of the MIT X license
+// found at http:3www.opensource.org/licenses/mit-license.html ...............
 
-var Arc = function(origin, target) {
+var Arc;
+
+(function(){
+  "use strict";
+  
+  Arc = function Arc(origin, target) {
     this.origin = origin;
     this.target = target;
     
     var ono = origin.nextOut;
     var tni = target.nextIn;
-
+    
     GraphElement.call(this, target, tni, origin, ono);
     
     ono.prevOut = this;
     this.origin.nextOut = this;
     tni.prevIn = this;
     this.target.nextIn = this;
-};
-
-Arc.prototype = Object.beget(GraphElement.prototype);
-Arc.prototype.constructor = Arc;
-
-Arc.prototype.isNode = function() {
+  };
+  
+  Arc.prototype = Object.create(GraphElement.prototype);
+  Arc.prototype.constructor = Arc;
+  
+  Arc.prototype.isNode = function() {
     return false;
-};
-
-Arc.prototype.setOrigin = function(newOrigin) {
+  };
+  
+  Arc.prototype.setOrigin = function(newOrigin) {
     // splice out the old
     var no = this.nextOut;
     var po = this.prevOut;
@@ -36,9 +43,9 @@ Arc.prototype.setOrigin = function(newOrigin) {
     this.prevOut = newOrigin;
     
     this.origin = newOrigin;
-};
-
-Arc.prototype.setTarget = function(newTarget) {
+  };
+  
+  Arc.prototype.setTarget = function(newTarget) {
     // splice out the old
     var ni = this.nextIn;
     var pi = this.prevIn;
@@ -53,5 +60,6 @@ Arc.prototype.setTarget = function(newTarget) {
     this.prevIn = newTarget;
     
     this.target = newTarget;
-};
-
+  };
+})();
+  
