@@ -5,11 +5,15 @@ var EventArc;
 
 (function(){
   "use strict";
+
+  var CLIP = 0;
+  var SKIP = 1;
+  var KEEP = 2;
   
   EventArc = function EventArc(origin,
                                target,
                                optTraceRecord) {
-    Arc.call(this, origin, target);
+    GraphArc.call(this, origin, target);
     
     this.tag = KEEP;
     this.traceRecord = optTraceRecord || {
@@ -24,7 +28,7 @@ var EventArc;
     };
   };
   
-  EventArc.prototype = Object.create(Arc.prototype);
+  EventArc.prototype = Object.create(GraphArc.prototype);
   EventArc.prototype.constructor = EventArc;
   
   EventArc.prototype.getOrigin = function() {

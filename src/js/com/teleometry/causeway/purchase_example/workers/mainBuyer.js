@@ -27,19 +27,16 @@
  (function(){
    "use strict";
    
-   var cwLogger;
-   var send;
-   
-   var partNo = '123abc';
-   var name = 'West Coast Buyers';
-   var profile = 'West Coast Buyers Profile';
-   
    doWebWorkersTest = function doWebWorkersTest() {
+
+     var partNo = '123abc';
+     var name = 'West Coast Buyers';
+     var profile = 'West Coast Buyers Profile';
      
      // Make a logger instance to log messaging events for the main page.
      // This communicating event loop is named 'buyer'.
-     
-     cwLogger = makeCausewayLogger('buyer');
+    
+     var cwLogger = makeCausewayLogger('buyer');
      
      // Enable logging. 
      // The argument 'inFrame' tells the logger that the events are
@@ -59,7 +56,7 @@
      // Use the logger's send function to log 
      // local one-way asynchronous messages (callbacks).
      
-     send = cwLogger.send;
+     var send = cwLogger.send;
      
      var product = new Worker('wwProduct.js');
      var accounts = new Worker('wwAccounts.js');
@@ -95,7 +92,7 @@
      
      // teller expects 3 answers;
      // checkAnswers is invoked after 3 trues or the first false
-     var teller = asyncAnd(3, checkAnswers);
+     var teller = asyncAnd(3, checkAnswers, send);
      
      product.postMessage({'msg': 'isAvailable',
                           'partNo': partNo});

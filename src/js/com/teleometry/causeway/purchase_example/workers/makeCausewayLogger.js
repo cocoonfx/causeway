@@ -72,7 +72,7 @@ var makeCausewayLogger;
     
     function makeStack(sst) {
       var stack = [];
-      for (var i = 0; i < sst.length; i++) {
+      for (var i = 0, iLen = sst.length; i < iLen; i++) {
         var frame = sst[i];
         stack.push({
           name: frame.getFunctionName() + ', ' +
@@ -86,7 +86,7 @@ var makeCausewayLogger;
     
     function makeEvent() {
       return {
-        class: [ 'org.ref_send.log.Event' ],
+        "class": [ 'org.ref_send.log.Event' ],
         anchor: TheAnchor
       };
     }
@@ -219,7 +219,7 @@ var makeCausewayLogger;
       },
       
       send: function(rcvr, verb, args) {
-        var umid = 'umid:' + Math.random();
+        var umid = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
         logger.logSentRecord(umid, new Error('dummy').stack);
         postpone(function() {
           logger.logGotRecord(umid, new Error('dummy').stack);
@@ -234,7 +234,7 @@ var makeCausewayLogger;
           messenger = Worker.prototype;
           inWorker = false;
         } else {
-          messenger = self;
+          messenger = self;  // workers have a 'special' self reference
           inWorker = true;
         }
         
@@ -249,16 +249,15 @@ var makeCausewayLogger;
         }
         
         var pmBase = getOwnBase(messenger, 'postMessage');
-        var pm = pmBase.postMessage;
-        origPostMessage = pm;  // for bypassing logging
-        
+        origPostMessage = pmBase.postMessage;  // for bypassing logging
+
         pmBase.postMessage = function(json) {
-          var umid = 'umid:' + Math.random();
+          var umid = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
           logger.logSentRecord(umid, new Error('dummy').stack);
           if (typeof json === 'object') {
             json['umid'] = umid;
           }
-          return pm.apply(this, arguments);
+          return origPostMessage.apply(this, arguments);
         }
         
         var aelBase = getOwnBase(messenger, 'addEventListener');

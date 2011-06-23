@@ -1,24 +1,24 @@
 // Copyright 2011 Teleometry Design under the terms of the MIT X license
 // found at http:3www.opensource.org/licenses/mit-license.html ...............
 
-var Node;
+var GraphNode;
 
 (function(){
   "use strict";
   
-  Node = function Node(name) {
+  GraphNode = function GraphNode(name) {
     this.name = name;
     GraphElement.call(this, this, this, this, this);
   };
   
-  Node.prototype = Object.create(GraphElement.prototype);
-  Node.prototype.constructor = Node;
+  GraphNode.prototype = Object.create(GraphElement.prototype);
+  GraphNode.prototype.constructor = GraphNode;
   
-  Node.prototype.isNode = function() {
+  GraphNode.prototype.isNode = function() {
     return true;
   };
   
-  Node.prototype.outs = function(func) {
+  GraphNode.prototype.outs = function(func) {
     // left-to-right order
     var ge = this.prevOut;
     while (ge !== this) {
@@ -31,7 +31,7 @@ var Node;
   
   // Visits each descendant edge exactly once, in deep pre-order.
   
-  Node.prototype.deepOutsPre = function(func) {
+  GraphNode.prototype.deepOutsPre = function(func) {
     var seen = new FlexSet();
     function walk(node) {
       if (seen.contains(node)) { return; }
@@ -47,7 +47,7 @@ var Node;
   
   // Visits each descendant edge exactly once, in deep post-order.
 
-  Node.prototype.deepOutsPost = function(func) {
+  GraphNode.prototype.deepOutsPost = function(func) {
     var seen = new FlexSet();
     function walk(node) {
       if (seen.contains(node)) { return; }
@@ -61,7 +61,7 @@ var Node;
     walk(this);
   };
   
-  Node.prototype.ins = function(func) {
+  GraphNode.prototype.ins = function(func) {
     // left-to-right order
     var ge = this.prevIn;
     while (ge !== this) {
@@ -72,7 +72,7 @@ var Node;
     }
   };
   
-  Node.prototype.getOutgoingCount = function() {
+  GraphNode.prototype.getOutgoingCount = function() {
     var count = 0;
     this.outs(function(edge, target) {
       count++;
@@ -80,7 +80,7 @@ var Node;
     return count;
   };
   
-  Node.prototype.getIncomingCount = function() {
+  GraphNode.prototype.getIncomingCount = function() {
     var count = 0;
     this.ins(function(edge, origin) {
       count++;
@@ -88,11 +88,11 @@ var Node;
     return count;
   };
   
-  Node.prototype.isRoot = function() {
+  GraphNode.prototype.isRoot = function() {
     return this.prevIn === this && this.nextIn === this;
   };
   
-  Node.prototype.isLeaf = function() {
+  GraphNode.prototype.isLeaf = function() {
     return this.prevOut === this && this.nextOut === this;
   };
 })();
