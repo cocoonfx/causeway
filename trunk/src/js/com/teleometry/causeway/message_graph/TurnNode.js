@@ -5,9 +5,13 @@ var TurnNode;
 
 (function(){
   "use strict";
+
+  var CLIP = 0;
+  var SKIP = 1;
+  var KEEP = 2;
   
   TurnNode = function TurnNode(id, optTraceRecord) {
-    Node.call(this, TurnNode.idToName(id));
+    GraphNode.call(this, TurnNode.idToName(id));
     this.id = id;
     
     this.tag = KEEP;
@@ -28,7 +32,7 @@ var TurnNode;
     return id.loop + ": " + id.number;
   };
   
-  TurnNode.prototype = Object.create(Node.prototype);
+  TurnNode.prototype = Object.create(GraphNode.prototype);
   TurnNode.prototype.constructor = TurnNode;
   
   TurnNode.prototype.getOrigin = function() {

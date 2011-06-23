@@ -11,7 +11,7 @@
  * subsequent answers.
  */
  
- function asyncAnd(expected, tellAreAllTrue) {
+ function asyncAnd(expected, tellAreAllTrue, send) {
    "use strict";
    
    if (expected === 0) {

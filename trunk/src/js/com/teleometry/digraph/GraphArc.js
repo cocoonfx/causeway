@@ -1,12 +1,12 @@
 // Copyright 2011 Teleometry Design under the terms of the MIT X license
 // found at http:3www.opensource.org/licenses/mit-license.html ...............
 
-var Arc;
+var GraphArc;
 
 (function(){
   "use strict";
   
-  Arc = function Arc(origin, target) {
+  GraphArc = function GraphArc(origin, target) {
     this.origin = origin;
     this.target = target;
     
@@ -21,14 +21,14 @@ var Arc;
     this.target.nextIn = this;
   };
   
-  Arc.prototype = Object.create(GraphElement.prototype);
-  Arc.prototype.constructor = Arc;
+  GraphArc.prototype = Object.create(GraphElement.prototype);
+  GraphArc.prototype.constructor = GraphArc;
   
-  Arc.prototype.isNode = function() {
+  GraphArc.prototype.isNode = function() {
     return false;
   };
   
-  Arc.prototype.setOrigin = function(newOrigin) {
+  GraphArc.prototype.setOrigin = function(newOrigin) {
     // splice out the old
     var no = this.nextOut;
     var po = this.prevOut;
@@ -45,7 +45,7 @@ var Arc;
     this.origin = newOrigin;
   };
   
-  Arc.prototype.setTarget = function(newTarget) {
+  GraphArc.prototype.setTarget = function(newTarget) {
     // splice out the old
     var ni = this.nextIn;
     var pi = this.prevIn;

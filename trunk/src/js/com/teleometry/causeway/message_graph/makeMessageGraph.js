@@ -40,7 +40,7 @@ var makeMessageGraph;
       
       // ...
       
-      var majorType = chunk["class"][chunk["class"].length -2];
+      var majorType = chunk.class[chunk.class.length -2];
       if (majorType === "org.ref_send.log.Sent") {
         var origin = getOrMakeTurnNode(chunk.anchor.turn);
         

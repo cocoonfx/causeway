@@ -170,7 +170,7 @@ var filterMessageGraph;
     
     devoraOne(messageGraph.top);
     
-    devoraTwo(messageGraph);
+    devoraTwo(messageGraph, messageGraph.top);
     
     sortOutgoing(messageGraph.top);
   }

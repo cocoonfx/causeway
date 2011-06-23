@@ -23,7 +23,7 @@ var MessageGraph;
   };
   
   MessageGraph.prototype.getTurnNodeFromId = function(id) {
-    this.digraph.getNodeFromName(TurnNode.idToName(id));
+   return this.digraph.getNodeFromName(TurnNode.idToName(id));
   };
   
   MessageGraph.prototype.makeTurnNode = function(id) {
