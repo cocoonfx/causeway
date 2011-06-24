@@ -48,6 +48,8 @@ var makeCausewayLogger;
         number: 0
       }
     };
+
+    var logBuffer = [];
     
     function logJson(json) {
       if (wkRemote && wkRemote.post && wkRemote.ref) {
@@ -59,8 +61,9 @@ var makeCausewayLogger;
       } else {
         var s = JSON.stringify(json, undefined, ' '); 
         var pretty = fixSpans(s);
-        console.log(pretty);
-        console.log(',');
+        //console.log(pretty);
+        //console.log(',');
+        logBuffer.push(pretty, ',\n');
       }
     }
     
@@ -281,6 +284,12 @@ var makeCausewayLogger;
       },
       
       turnOff: function() {
+      },
+
+      flush: function() {
+        var log = logBuffer.join('');
+        logBuffer = [];
+        return log;
       }
     };
     

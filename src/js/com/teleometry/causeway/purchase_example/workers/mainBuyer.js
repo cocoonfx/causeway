@@ -58,8 +58,31 @@
      
      var send = cwLogger.send;
      
-     var product = new Worker('wwProduct.js');
-     var accounts = new Worker('wwAccounts.js');
+     var product =
+       new Worker('causeway/purchase_example/workers/wwProduct.js');
+     var accounts =
+       new Worker('causeway/purchase_example/workers/wwAccounts.js');
+
+     var re = new RegExp('([<>"])', 'g');
+     var entity = {
+       '<': '&lt;',
+       '>': '&gt;',
+       '"': '&quot;'
+     };
+     function encode(entityChar) {
+       return entity[entityChar];
+     }
+     function htmlEncode(str) {
+       return str.replace(re, encode);
+     }
+     function captureLog() {
+       var domElement = document.getElementById('logfile');
+       domElement.innerHTML = [
+         '<br></br><pre>',
+         htmlEncode(cwLogger.flush()),
+         '</pre><br></br>'
+       ].join('');
+     }
      
      var reporter = {
        run: function(answer) {
@@ -72,6 +95,7 @@
                                      name,
                                      new Error('dummy').stack);
          }
+         captureLog();
        }
      };
      
@@ -86,6 +110,7 @@
          } else {
            cwLogger.logCommentRecord('Conditions were not met',
                                      new Error('dummy').stack);
+           captureLog();
          }
        }
      };
