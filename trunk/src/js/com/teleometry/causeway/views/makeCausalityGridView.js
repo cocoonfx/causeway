@@ -211,9 +211,9 @@ var makeCausalityGridView;
       },
       
       draw: function(ctx, wdwMap) {
-        ctx.strokeStyle = "#483D8B";  // darkslateblue for arcs
-        ctx.fillStyle = "#483D8B";
-        ctx.lineStyle = "#483D8B";
+        ctx.strokeStyle = "#C0C0C0";  // silver for arcs
+        ctx.fillStyle = "#C0C0C0";
+        ctx.lineStyle = "#C0C0C0";
         ctx.lineWidth = 1;
         cellGrid.cells.forEach(function(cell) {
           var originNode = cell.node;

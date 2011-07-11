@@ -6,39 +6,48 @@ var drawDirectedArc;
 (function(){
   "use strict";
 
-  drawDirectedArc = function drawDirectedArc(ctx, fromPt, toPt) {
+  drawDirectedArc = function drawDirectedArc(context, fromPt, toPt) {
 
-    var dx = Math.abs(toPt.x - fromPt.x);
-    var dy = Math.abs(toPt.y - fromPt.y);
+    var isRight = (toPt.x > fromPt.x) ? true : false;
+    var isBelow = (toPt.y > fromPt.y) ? true : false;
 
-    var incrx = Math.floor(dx) / 4;
-    var incry = Math.floor(dy) / 4;
+    var distX = Math.abs(toPt.x - fromPt.x);
+    var distY = Math.abs(toPt.y - fromPt.y);
 
-    var isRight = false;
-    var isBelow = false;
+    var quarterX = (isRight) ? 
+      (fromPt.x + Math.floor(distX /4)) :
+      (fromPt.x - Math.floor(distX /4));
 
-    if (toPt.x > fromPt.x) {
-      isRight = true;
-    }
-    if (toPt.y > fromPt.y) {
-      isBelow = true;
-    }
+    var midX = (isRight) ? 
+      (fromPt.x + Math.floor(distX /2)) :
+      (fromPt.x - Math.floor(distX /2));
 
-    var cpx1, cpy1, cpx2, cpy2;
+    var threeQuarterX = (isRight) ? 
+      (fromPt.x + Math.floor(distX *3/4)) :
+      (fromPt.x - Math.floor(distX *3/4));
 
-    cpy1 = fromPt.y;
-    cpy2 = toPt.y;
-    if (isRight) {
-      cpx1 = fromPt.x + incrx;
-      cpx2 = cpx1 + incrx;
-    } else {
-      cpx1 = fromPt.x - incrx;
-      cpx2 = cpx1 - incrx;
-    }
+    var midY = (isBelow) ?
+      (fromPt.y + Math.floor(distY /2)) :
+      (fromPt.y - Math.floor(distY /2));
 
-    ctx.beginPath();
-    ctx.moveTo(fromPt.x, fromPt.y);
-    ctx.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, toPt.x, toPt.y);
-    ctx.stroke();
+    context.beginPath();
+    context.moveTo(fromPt.x, fromPt.y);
+    context.bezierCurveTo(fromPt.x, fromPt.y,
+                          quarterX, fromPt.y,
+                          midX, midY);
+    context.bezierCurveTo(threeQuarterX, toPt.y, 
+                          toPt.x -5, toPt.y, 
+                          toPt.x -5, toPt.y);
+    context.stroke();
+
+    // draw 5x3 arrow tip (points right)
+    var x = toPt.x;
+    var y = toPt.y;
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x -5, y -3);
+    context.lineTo(x -5, y +3);
+    context.closePath();
+    context.fill();
   };
 })();
