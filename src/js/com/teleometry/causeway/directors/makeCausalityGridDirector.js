@@ -9,10 +9,10 @@ var makeCausalityGridDirector;
   makeCausalityGridDirector = function makeCausalityGridDirector(causewayModel,
                                                                  vatMap,
                                                                  graphWalker,
-                                                                 canvas,
+                                                                 gridCanvas,
                                                                  context) {
-    var xOffset =10;
-    var yOffset = 10;
+    var xOffset = 5.5;
+    var yOffset = 5.5;
 
     var wdwMap = makeWdwMap();
 
@@ -20,18 +20,42 @@ var makeCausalityGridDirector;
 
     var area = gridView.layout(context);
 
-    var displayArea = {w: area.w + xOffset * 2,
-                       h: area.h + yOffset * 2};
+    var displayArea = {w: area.w + xOffset *2,
+                       h: area.h + yOffset *2};
 
-    if (displayArea.w > canvas.width) {
-      canvas.width = displayArea.w;
+    if (displayArea.w > gridCanvas.width) {
+      gridCanvas.width = displayArea.w;
     }
-    if (displayArea.h > canvas.height) {
-      canvas.height = displayArea.h;
+    if (displayArea.h > gridCanvas.height) {
+      gridCanvas.height = displayArea.h;
     }
 
     gridView.postToWdwMap(wdwMap, xOffset, yOffset);
     gridView.draw(context, wdwMap);
+
+    function gridOnClick(e) {
+      var x;
+      var y;
+      // get document-relative coordinates
+      if (e.pageX !== undefined && e.pageY !== undefined) {
+        x = e.pageX;
+        y = e.pageY;
+      } else {
+        x = e.clientX + document.body.scrollLeft +
+          document.documentElement.scrollLeft;
+        y = e.clientY + document.body.scrollTop +
+          document.documentElement.scrollTop;
+      }
+      // get canvas-relative coordinates
+      x -= gridCanvas.offsetLeft;
+      y -= gridCanvas.offsetTop;
+
+      context.clearRect(0, 0, displayArea.w, displayArea.h);
+
+      gridView.redraw(context, wdwMap, wdwMap.whoIs(x, y));
+    }
+
+    gridCanvas.addEventListener("click", gridOnClick, false);
 
     var causalityGridDirector = {
 
