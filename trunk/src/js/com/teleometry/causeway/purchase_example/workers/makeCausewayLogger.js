@@ -294,5 +294,5 @@ var makeCausewayLogger;
     };
 
     return logger;
-  }
+  };
 })();
