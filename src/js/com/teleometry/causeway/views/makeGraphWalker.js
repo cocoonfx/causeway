@@ -5,40 +5,40 @@ var makeGraphWalker;
 
 (function(){
   "use strict";
-  
+
   makeGraphWalker = function makeGraphWalker(srcLookup) {
 
     function normalizeSpan(span) {
       var first = 1;
       var fo = 0;
-      
+
       var s0 = span[0];
       if (s0) {
         first = s0[0] || 1;
         fo = s0[1] || 0;
       }
-      
+
       var last = first;
       var lo = fo;
-      
+
       var s1 = span[1];
       if (s1) {
         last = s1[0] || first;
         lo = s1[1] || fo;
       }
-      
+
       var ns = {};
-      
+
       ns.firstLine = first;
       ns.firstOffset = fo;
       ns.lastLine = last;
       ns.lastOffset = lo;
-      
+
       return ns;
     }
-    
+
     function getOptLine(stackEntry) {
-      
+
       if (stackEntry.source && stackEntry.span) {
         var source = srcLookup[stackEntry.source];
         if (source) {
@@ -51,11 +51,11 @@ var makeGraphWalker;
       }
       return null;
     }
-    
+
     function getEntryLabel(element, entryIndex, vatMap) {
-      
+
       var result = "";
-      
+
       var stack = element.traceRecord.trace.calls;
       if (stack.length > entryIndex) {
         var se = stack[entryIndex];
@@ -79,24 +79,24 @@ var makeGraphWalker;
       //   2. Source code referred to by trace record.
       //   3. Vat name followed by turn number.
       //   4. Log event type.
-    
+
       getElementLabel: function(element, vatMap) {
-      
+
         var result = "";
-      
+
         if (element.traceRecord.text) {
           result += "# " + element.traceRecord.text;
-        } else if (srcLookup && element.traceRecord.trace.calls) { 
+        } else if (srcLookup && element.traceRecord.trace.calls) {
           result += getEntryLabel(element, 0, vatMap);
         }
-      
+
         if (result === "") {
           if (element.isNode()) {
             var id = element.traceRecord.anchor.turn;
             var attr = vatMap[id.loop];
             result += attr.displayName + "," + id.number;
           } else {
-            var c = element.traceRecord.class[0].split(".");
+            var c = element.traceRecord['class'][0].split(".");
             result += "## " + c[c.length -1];
           }
         }
@@ -105,6 +105,5 @@ var makeGraphWalker;
     };
 
     return graphWalker;
-  }
+  };
 })();
-  

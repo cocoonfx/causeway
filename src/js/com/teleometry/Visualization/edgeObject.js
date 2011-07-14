@@ -10,7 +10,7 @@ function edgeObj()
     this.setEdge = function( label )
     {
         this.label = label;
-    }
+    };
 }
 
 

@@ -9,7 +9,7 @@ var makeWdwMap;
   makeWdwMap = function makeWdwMap() {
 
     var lookup = new FlexMap();
-  
+
     var wdwMap = {
 
       post: function(graphElement, where) {
@@ -22,5 +22,5 @@ var makeWdwMap;
     };
 
     return wdwMap;
-  }
+  };
 })();

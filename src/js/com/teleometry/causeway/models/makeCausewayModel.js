@@ -16,23 +16,23 @@ var makeCausewayModel;
 
 (function(){
   "use strict";
-  
-  makeCausewayModel = function makeCausewayModel(jsonChunks, 
+
+  makeCausewayModel = function makeCausewayModel(jsonChunks,
                                                  hiddenSrcPaths) {
-    
+
     var messageGraph = makeMessageGraph(jsonChunks);
-    
+
     filterMessageGraph(messageGraph, hiddenSrcPaths);
-    
+
     var causewayModel = {
-    
+
       getMessageGraph: function() {
         return messageGraph;
       },
-      
+
       getVatTurns: function() {
         var ordered = {};  // process order
-        
+
         messageGraph.top.deepOutsPre(function(edge, target) {
           var id = target.id;
           if (id.loop !== 'bottom') {
@@ -41,7 +41,7 @@ var makeCausewayModel;
             ordered[id.loop] = nodes;
           }
         });
-        
+
         for (var vatName in ordered) {
           if (ordered.hasOwnProperty(vatName)) {
             ordered[vatName].sort(by('id.number'));
@@ -50,7 +50,7 @@ var makeCausewayModel;
         // for each vat, a list of turns sorted by turn number
         return ordered;
       },
-      
+
       getPathnames: function() {
         var pathnames = {};
 
@@ -72,7 +72,7 @@ var makeCausewayModel;
             }
           }
         });
-        
+
         var result = [];
         for (var pn in pathnames) {
           if (pathnames.hasOwnProperty(pn)) {
@@ -82,9 +82,8 @@ var makeCausewayModel;
         return result;
       }
     };
-    
+
     return causewayModel;
-  }
+  };
 })();
 
- 
