@@ -21,7 +21,33 @@ var makeTurnView;
                                                                 vatMap)});
     });
 
+    var displayAttr = {
+      font: '12px sans-serif',
+      textBaseline: 'top',
+      textFill: vatMap[turnNode.id.loop].color.hexColor,
+      selectionFill: "#B0C4DE"  // lightsteelblue
+    };
+
     var displayArea;
+
+    function drawTurnEvent(ctx, wdwMap, turnEvent, isSelected) {
+      var where = wdwMap.whereIs(turnEvent.graphElement);
+      if (where) {
+        ctx.clearRect(where.x, where.y, 
+                      turnEvent.area.w, turnEvent.area.h);
+        if (isSelected) {
+          ctx.fillStyle = displayAttr.selectionFill;
+          ctx.fillRect(where.x -1, where.y -1,
+                       turnEvent.area.w +2, turnEvent.area.h +2);
+        }
+        ctx.font = displayAttr.font;
+        ctx.textBaseline = displayAttr.textBaseline;
+        ctx.fillStyle = displayAttr.textFill;
+        ctx.fillText(turnEvent.displayName, where.x, where.y);
+      } else {
+        throw new Error('graphElement not found in wdwMap');
+      }
+    }
 
     var turnView = {
 
@@ -29,6 +55,8 @@ var makeTurnView;
         // TODO(cocoonfx): Invalidate cache if ctx changes
         if (displayArea) { return displayArea; }
 
+        ctx.font = displayAttr.font;
+        ctx.textBaseline = displayAttr.textBaseline;
         var maxw = 0;
         var totalh = 0;
         var h = 15; // TODO(cocoonfx): implement metrics.height
@@ -98,15 +126,19 @@ var makeTurnView;
         throw new Error('graphElement not found in turnEvents');
       },
 
-      draw: function(ctx, wdwMap) {
-        for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
-          var where = wdwMap.whereIs(turnEvents[i].graphElement);
-          if (where) {
-            ctx.fillText(turnEvents[i].displayName,
-                         where.x, where.y);
-          } else {
-            throw new Error('graphElement not found in wdwMap');
+      draw: function(ctx, wdwMap, graphElement, isSelected) {
+        if (graphElement) {
+          for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
+            if (turnEvents[i].graphElement === graphElement) {
+              drawTurnEvent(ctx, wdwMap, turnEvents[i], isSelected);
+              return;
+            }
           }
+          throw new Error('graphElement not found in turnEvents');
+        } else {
+          turnEvents.forEach(function(te) {
+            drawTurnEvent(ctx, wdwMap, te);
+          });
         }
       }
     };

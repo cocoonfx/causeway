@@ -16,8 +16,24 @@ var makeWdwMap;
         lookup.set(graphElement, where);
       },
 
+      maps: function(graphElement) {
+        return !(lookup.get(graphElement) === undefined);
+      },
+
       whereIs: function(graphElement) {
         return lookup.get(graphElement);
+      },
+
+      whoIs: function(x, y) {
+        var graphElements = lookup.getKeys();
+        for (var i = 0, iLen = graphElements.length; i < iLen; i++) {
+          var where = lookup.get(graphElements[i]);
+          if (x >= where.x && x < where.x + where.w &&
+              y >= where.y && y < where.y + where.h) {
+            return graphElements[i];
+          }
+        }
+        return null;
       }
     };
 

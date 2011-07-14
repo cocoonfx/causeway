@@ -6,6 +6,13 @@ var drawDirectedArc;
 (function(){
   "use strict";
 
+  var displayAttr = {
+    strokeStyle: "#778899",  // lightslategray for arcs
+    fillStyle: "#778899",
+    lineStyle: "#778899",
+    lineWidth: 1
+  };
+
   drawDirectedArc = function drawDirectedArc(context, fromPt, toPt) {
 
     var isRight = (toPt.x > fromPt.x) ? true : false;
@@ -29,6 +36,11 @@ var drawDirectedArc;
     var midY = (isBelow) ?
       (fromPt.y + Math.floor(distY /2)) :
       (fromPt.y - Math.floor(distY /2));
+
+    context.strokeStyle = displayAttr.strokeStyle;
+    context.fillStyle = displayAttr.fillStyle;
+    context.lineStyle = displayAttr.lineStyle;
+    context.lineWidth = displayAttr.lineWidth;
 
     context.beginPath();
     context.moveTo(fromPt.x, fromPt.y);

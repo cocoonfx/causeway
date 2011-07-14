@@ -18,6 +18,8 @@ var GraphNode;
     return true;
   };
   
+  // Iterates through the outgoing edges, invoking
+  // the function on each edge-target pair.
   GraphNode.prototype.outs = function(func) {
     // left-to-right order
     var ge = this.prevOut;
@@ -29,8 +31,10 @@ var GraphNode;
     }
   };
   
-  // Visits each descendant edge exactly once, in deep pre-order.
-  
+  // Iterates through all edges transitively outgoing from
+  // this node in pre-order. To iterate through all edge-target
+  // pairs a node can be visited multiple times but each edge
+  // is visited exactly once.
   GraphNode.prototype.deepOutsPre = function(func) {
     var seen = new FlexSet();
     function walk(node) {
@@ -45,8 +49,10 @@ var GraphNode;
     walk(this);
   };
   
-  // Visits each descendant edge exactly once, in deep post-order.
-
+  // Iterates through all edges transitively outgoing from
+  // this node in post-order. To iterate through all edge-target
+  // pairs a node can be visited multiple times but each edge
+  // is visited exactly once.
   GraphNode.prototype.deepOutsPost = function(func) {
     var seen = new FlexSet();
     function walk(node) {
@@ -61,6 +67,8 @@ var GraphNode;
     walk(this);
   };
   
+  // Iterates through the incoming edges, invoking
+  // the function on each edge-origin pair.
   GraphNode.prototype.ins = function(func) {
     // left-to-right order
     var ge = this.prevIn;
@@ -70,6 +78,23 @@ var GraphNode;
       func(ge, ge.origin);
       ge = next;
     }
+  };
+  
+  // Iterates through all edges transitively incoming to
+  // this node in pre-order. To iterate through all edge-origin
+  // pairs a node can be visited multiple times but each edge
+  // is visited exactly once.
+  GraphNode.prototype.deepInsPre = function(func) {
+    var seen = new FlexSet();
+    function walk(node) {
+      if (seen.contains(node)) { return; }
+      seen.addElement(node);
+      node.ins(function(edge, origin) {
+        func(edge, origin);
+        walk(origin);
+      });
+    }
+    walk(this);
   };
   
   GraphNode.prototype.getOutgoingCount = function() {
