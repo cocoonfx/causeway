@@ -13,7 +13,7 @@ var makeTurnView;
     turnEvents.push({graphElement: turnNode,
                      displayName: graphWalker.getElementLabel(turnNode,
                                                               vatMap)});
-            
+
     // The subsequent events that occurred during this turn
     turnNode.outs(function(outgoing, target) {
       turnEvents.push({graphElement: outgoing,
@@ -112,5 +112,5 @@ var makeTurnView;
     };
 
     return turnView;
-  }
+  };
 })();

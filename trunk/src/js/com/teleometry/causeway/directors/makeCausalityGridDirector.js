@@ -6,8 +6,8 @@ var makeCausalityGridDirector;
 (function(){
   "use strict";
 
-  makeCausalityGridDirector = function makeCausalityGridDirector(causewayModel, 
-                                                                 vatMap, 
+  makeCausalityGridDirector = function makeCausalityGridDirector(causewayModel,
+                                                                 vatMap,
                                                                  graphWalker,
                                                                  canvas,
                                                                  context) {
@@ -29,7 +29,7 @@ var makeCausalityGridDirector;
     if (displayArea.h > canvas.height) {
       canvas.height = displayArea.h;
     }
-    
+
     gridView.postToWdwMap(wdwMap, xOffset, yOffset);
     gridView.draw(context, wdwMap);
 
@@ -40,5 +40,5 @@ var makeCausalityGridDirector;
     };
 
     return causalityGridDirector;
-  }
+  };
 })();

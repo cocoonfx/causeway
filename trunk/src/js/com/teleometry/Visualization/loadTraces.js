@@ -58,7 +58,7 @@ function addElement( origin, target, label )
         addNode( origin );
         nodes[ nodes.length-1 ].addOutEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndIn = nodes[ nodes.length-1 ];
-      
+
         addToLevel( nodes[ nodes.length-1 ] );
     }
     else // add new edge info to existing node
@@ -87,7 +87,7 @@ function addElement( origin, target, label )
         //check and move to higher level if new deeper edge connection
         var lvl = nodes[loc].findDeepestParentLevel();
         if( lvl !== (nodes[loc].level - 1) )
-            moveToLevel( nodes[loc], lvl+1 ); 
+            moveToLevel( nodes[loc], lvl+1 );
     }
 
 
@@ -118,15 +118,15 @@ function drawNodeVert( node )
 
     //locate
     var index = locateLevelIndex( node );
-    lvl = node.level;
+    var lvl = node.level;
 
     var canvas = document.getElementById("canvas");
-    
+
     var startx, starty, width, height;
 
     //setting height and width of node
     height = nHeight;
-    starty = lvl * (nHeight+nSpacing)
+    starty = lvl * (nHeight+nSpacing);
     startx = 0;
 
     width = Math.round( (scrnW - nSpacing*levels[lvl].nCnt)/levels[lvl].nCnt );
@@ -143,7 +143,7 @@ function drawNodeVert( node )
             var cent = (index+1)* Math.round( scrnW/(levels[lvl].nCnt+1) );
             //return (cent - (width)/2);
             return cent;
-        }();  
+        }();
         startx = (cent - (width)/2);
     }
 
@@ -172,31 +172,31 @@ function drawArcVert( edge )
 
     var sInd = locateLevelIndex( startNode );
     var eInd = locateLevelIndex( endNode );
-    slvl = startNode.level;
-    elvl = endNode.level;
+    var slvl = startNode.level;
+    var elvl = endNode.level;
 
     var canvas = document.getElementById("canvas");
 
     //coordinates of line start and end
-    var sCenterX = (sInd+1) * ( scrnW/(levels[slvl].nCnt+1) );  
+    var sCenterX = (sInd+1) * ( scrnW/(levels[slvl].nCnt+1) );
     var sCenterY = slvl * (nHeight+nSpacing) + nHeight/2;
 
-    var eCenterX = (eInd+1) * ( scrnW/(levels[elvl].nCnt+1) ); 
+    var eCenterX = (eInd+1) * ( scrnW/(levels[elvl].nCnt+1) );
     var eCenterY = elvl * (nHeight+nSpacing) + nHeight/2;
 
     if( canvas.getContext )
     {
         var ctx = canvas.getContext("2d");
-        
+
         //if edge connects nodes further than one level apart
-        if( elvl - slvl > 1 && sCenterX == eCenterX )
+        if (elvl - slvl > 1 && sCenterX == eCenterX )
         {
             ctx.beginPath();
             ctx.moveTo( sCenterX, sCenterY );
             ctx.lineTo( sCenterX - 30, sCenterY + nHeight/2 );
             ctx.lineTo( eCenterX - 30, eCenterY - nHeight/2 );
             ctx.lineTo( eCenterX, eCenterY );
-            ctx.stroke(); 
+            ctx.stroke();
         }
         else
         {

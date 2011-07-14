@@ -5,32 +5,32 @@ var filterMessageGraph;
 
 (function(){
   "use strict";
-  
+
   var CLIP = 0, SKIP = 1, KEEP = 2;
-  
+
   var compareAnchors = by('turn.loop', by('turn.number', by('number')));
-  
+
   // Sort the out edges from a given turn by anchor.
-  
+
   var sortOutgoing = function(top) {
-    
+
     // seen is still useful, since deepOuts* only suppresses duplicate
     // edge visits, not duplicate node visits.
     var seen = new FlexSet();
-    
+
     top.deepOutsPre(function(ignoredEdge, node) {
-      
+
       if (seen.contains(node)) { return; }
       seen.addElement(node);
-      
+
       var edges = new FlexMap();
-      
+
       node.outs(function(outgoing, target) {
         edges.set(outgoing.getKey(), outgoing);
       });
-      
+
       var edgeKeys = edges.getKeys(compareAnchors);
-      
+
       for (var i = 0, ilen = edgeKeys.length; i < ilen; i++) {
         var k = edgeKeys[i];
         var edge = edges.get(k);
@@ -40,8 +40,8 @@ var filterMessageGraph;
         edge.setOrigin(node);
       }
     });
-  }
-  
+  };
+
   function hideFrames(stack, hiddenSrcPaths) {
     var result = [];
     for (var i = 0, ilen = stack.length; i < ilen; i++) {
@@ -53,28 +53,28 @@ var filterMessageGraph;
     }
     return result;
   }
-  
+
   // Hide the stack frames corresponding to uninteresting source paths
-  
+
   function hideDetail(top, hiddenSrcPaths) {
     var seen = new FlexSet();
     top.deepOutsPre(function(edge, node) {
-      edge.traceRecord.trace.calls = 
-        hideFrames(edge.traceRecord.trace.calls || [], 
+      edge.traceRecord.trace.calls =
+        hideFrames(edge.traceRecord.trace.calls || [],
                    hiddenSrcPaths);
-      
+
       if (seen.contains(node)) { return; }
       seen.addElement(node);
-      node.traceRecord.trace.calls = 
-        hideFrames(node.traceRecord.trace.calls || [], 
+      node.traceRecord.trace.calls =
+        hideFrames(node.traceRecord.trace.calls || [],
                    hiddenSrcPaths);
     });
   }
-  
+
   function lastCause(edge) {
     return edge === edge.target.nextIn;
   }
-  
+
   function aggregate(edge, newTarget, isLastCause) {
     var curLast = newTarget.nextIn;
     edge.setTarget(newTarget);
@@ -82,7 +82,7 @@ var filterMessageGraph;
     if (curLast.isNode() || isLastCause) { return; }
     curLast.setTarget(newTarget);
   }
-  
+
   function devoraOne(top) {
     top.deepOutsPost(function(edge, node) {
       var nodeStack = node.traceRecord.trace.calls;
@@ -99,16 +99,16 @@ var filterMessageGraph;
       }
     });
   }
-  
+
   function devoraTwo(messageGraph, top) {
     var dummy = messageGraph.makeTurnNode({loop: 'dummy', number: 0});
     var seen = new FlexSet();
     var orphans = [];
-    
+
     function devoraThree(root) {
       if (seen.contains(root)) { return; }
       seen.addElement(root);
-      
+
       var edgeList = [];
       root.outs(function(outgoing, ignored) {
         edgeList.push(outgoing);
@@ -117,11 +117,11 @@ var filterMessageGraph;
         var edge = edgeList[i];
         var target = edge.target;
         devoraThree(target);
-        
+
         if (edge.tag === CLIP) {
           edge.setOrigin(dummy);
           edge.setTarget(dummy);
-        } else if (target.tag <= SKIP && 
+        } else if (target.tag <= SKIP &&
                    target.getOutgoingCount() >= 1) {
           var grandTargets = new FlexMap();
           var maxGETag = CLIP;
@@ -153,26 +153,25 @@ var filterMessageGraph;
       }
     }
     devoraThree(top);
-    
+
     for (var i = 0, ilen = orphans.length; i < ilen; i++) {
       var orphan = orphans[i];
       orphan.setOrigin(dummy);
       orphan.setTarget(dummy);
     }
   }
-  
-  filterMessageGraph = function filterMessageGraph(messageGraph, 
+
+  filterMessageGraph = function filterMessageGraph(messageGraph,
                                                    hiddenSrcPaths) {
-    
+
     if (hiddenSrcPaths) {
       hideDetail(messageGraph.top, hiddenSrcPaths);
     }
-    
+
     devoraOne(messageGraph.top);
-    
+
     devoraTwo(messageGraph, messageGraph.top);
-    
+
     sortOutgoing(messageGraph.top);
-  }
+  };
 })();
-  

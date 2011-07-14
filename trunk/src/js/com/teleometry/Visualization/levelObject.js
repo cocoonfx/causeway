@@ -1,4 +1,4 @@
-var minH = 30; 
+var minH = 30;
 var maxH = 100;
 var minW = 100;
 var maxW = 300;
@@ -29,8 +29,8 @@ function addToLevel( node )
         node.level = 0;
 
         return;
-    }    
-   
+    }
+
     lvl += 1;
 
     //check if new level needs to be created
@@ -38,22 +38,22 @@ function addToLevel( node )
     {
           levels[lvl] = new levelObj();
     }
-    
+
     //add node to level
     levels[lvl].nodes[ levels[lvl].nCnt ] = node;
     levels[lvl].nCnt++;
     node.level = lvl;
 
-    if( lvl >= lvlCnt )
+    if (lvl >= lvlCnt )
         lvlCnt = lvl+1;
-    
+
 }
 
 function moveToLevel( node, lvl )
 {
     //remove from current level
     var curlvl = node.level;
-    for( i = 0; i < levels[curlvl].nodes.length; i++ )
+    for (var i = 0; i < levels[curlvl].nodes.length; i++ )
     {
         if( levels[curlvl].nodes[i] === node )
         {
@@ -69,7 +69,7 @@ function moveToLevel( node, lvl )
     {
         levels[lvl] = new levelObj();
     }
-    
+
     levels[lvl].nodes[ levels[lvl].nCnt ] = node;
     levels[lvl].nCnt++;
     node.level = lvl;
@@ -77,7 +77,7 @@ function moveToLevel( node, lvl )
 
 function locateLevelIndex( node )
 {
-    lvl = node.level;
+    var lvl = node.level;
 
     var i;
     for( i = 0; i < levels[lvl].nodes.length; i++ )
@@ -90,6 +90,6 @@ function locateLevelIndex( node )
 
 function resizeLevel( lvl )
 {
-    
+
 
 }
