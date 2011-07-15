@@ -16,36 +16,48 @@ var nMinHeight = 30;
 var nHeight = 60;
 var nSpacing = 20;
 
+var nHheight = 6;
+var nHwidth = 6;
+var xHspcg = 250;
+var yHspcg = 60;
+
+
 function loadTraces()
 {
 
     // adding nodes to list individually
     // data structure adapts accordingly
-    addElement( "[top,0]", "[buyer,0]", "##Sent");
-    addElement( "[buyer,0]", "[product,1]", "postMessage({'msg': 'isAvailable',");
-    addElement( "[product,1]", "[buyer,1]", "postMessage({'msg': msg,");
-    addElement( "[buyer,1]", "[buyer,3]", "send(teller, 'run', [data.answer]);" );
-    addElement( "[buyer,0]", "[accounts,1]", "postMessage({'msg': 'doCreditCheck',");
-    addElement( "[accounts,1]", "[buyer,4]", "postMessage({'msg': msg," );
-    addElement( "[buyer,4]", "[buyer,6]", "send(teller, 'run', [data.answer]);" );
-    addElement( "[buyer,6]", "[buyer,7]", "send(tellAreAllTrue, 'run', [true]);" );
-    addElement( "[buyer,7]", "[bottom,0]", "# All queries answered true" );
-    addElement( "[buyer,7]", "[product,3]", "postMessage({'msg': 'placeOrder'," );
-    addElement( "[product,3]", "[buyer,8]", "postMessage({'msg': msg," );
-    addElement( "[buyer,8]", "[buyer,9]", "send(reporter, 'run', [data.answer]);" );
-    addElement( "[buyer,9]", "[bottom,0]", "# Order placed for West Coast Buyers" );
-    addElement( "[buyer,0]", "[product,2]", "postMessage({'msg': 'canDeliver'," );
-    addElement( "[product,2]", "[buyer,2]", "postMessage({'msg': msg," );
-    addElement( "[buyer,2]", "[buyer,5]", "send(teller, 'run', [data.answer]);" );
+    addElement( "[top,0]", "[buyer,0]", "##Sent", "black", "blue" );
+    addElement( "[buyer,0]", "[product,1]", "postMessage({'msg': 'isAvailable',", "blue", "green" );
+    addElement( "[product,1]", "[buyer,1]", "postMessage({'msg': msg,", "green", "blue" );
+    addElement( "[buyer,1]", "[buyer,3]", "send(teller, 'run', [data.answer]);", "blue", "red" );
+    addElement( "[buyer,0]", "[accounts,1]", "postMessage({'msg': 'doCreditCheck',", "blue", "purple" );
+    addElement( "[accounts,1]", "[buyer,4]", "postMessage({'msg': msg," , "purple", "blue" );
+    addElement( "[buyer,4]", "[buyer,6]", "send(teller, 'run', [data.answer]);", "blue", "blue" );
+    addElement( "[buyer,6]", "[buyer,7]", "send(tellAreAllTrue, 'run', [true]);", "blue", "blue" );
+    addElement( "[buyer,7]", "[bottom,0]", "# All queries answered true", "blue", "red" );
+    addElement( "[buyer,7]", "[product,3]", "postMessage({'msg': 'placeOrder',", "blue", "green" );
+    addElement( "[product,3]", "[buyer,8]", "postMessage({'msg': msg,", "green", "blue" );
+    addElement( "[buyer,8]", "[buyer,9]", "send(reporter, 'run', [data.answer]);", "blue", "blue" );
+    addElement( "[buyer,9]", "[bottom,0]", "# Order placed for West Coast Buyers", "blue", "red" );
+    addElement( "[buyer,0]", "[product,2]", "postMessage({'msg': 'canDeliver',", "blue", "green" );
+    addElement( "[product,2]", "[buyer,2]", "postMessage({'msg': msg,", "green", "blue" );
+    addElement( "[buyer,2]", "[buyer,5]", "send(teller, 'run', [data.answer]);", "blue", "red" );
+
+
+//    addElement( "[top,0]", "[test,1]", "make paths", "black", "red" );
+//    addElement( "[test,1]", "[accounts,1]", "readable", "red", "purple" );
+
 
     //visualization starting with the beginning node
     visualize( nodes[0] );
 
 
+    //printInfo();
 };
 
 
-function addElement( origin, target, label )
+function addElement( origin, target, label, colorO, colorT )
 {
 
     //add new edge
@@ -55,7 +67,7 @@ function addElement( origin, target, label )
     var loc = findNode( origin );
     if( loc === -1 ) // if node doesn't exist, create one
     {
-        addNode( origin );
+        addNode( origin, colorO );
         nodes[ nodes.length-1 ].addOutEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndIn = nodes[ nodes.length-1 ];
 
@@ -73,9 +85,11 @@ function addElement( origin, target, label )
     var loc = findNode( target );
     if( loc === -1 ) // if node doesn't exist, create one
     {
-        addNode( target );
+        addNode( target, colorT );
         nodes[nodes.length-1].addInEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndOut = nodes[ nodes.length-1 ];
+
+        nodes[nodes.length-1].setgInd();
 
         addToLevel( nodes[ nodes.length-1 ] );
     }
@@ -83,6 +97,8 @@ function addElement( origin, target, label )
     {
         nodes[loc].addInEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndOut = nodes[loc];
+
+        nodes[loc].setgInd();
 
         //check and move to higher level if new deeper edge connection
         var lvl = nodes[loc].findDeepestParentLevel();
@@ -93,28 +109,167 @@ function addElement( origin, target, label )
 
 }
 
+function printInfo()
+{
+    var i;
+    for( i = 0; i < levels.length; i++ )
+    {
+
+        var j;
+        for( j = 0; j < levels[i].nodes.length; j++ )
+        {
+            var nd = levels[i].nodes[j];
+            document.write("nodes "+nd.name+" "+nd.gInd+"<br/>");
+        }
+    }
+
+}
+
 //recurse through the graph and visualize
 function visualize( node )
 {
 
     //draw node
-    drawNodeVert( node );
-
+    //drawNodeVert( node );
+    drawNodeHoriz( node );   
+ 
     var i;
     for( i = 0; i < node.eOutCnt; i++ )
     {
         //draw arc
-        drawArcVert( node.edgOut[i] );
+        //drawArcVert( node.edgOut[i] );
+        drawArcHoriz( node.edgOut[i] );
         visualize( node.edgOut[i].ndOut );
     }
 
+}
+
+
+function drawNodeHoriz( node )
+{
+    var index = locateLevelIndex( node );
+    lvl = node.level;
+    depth = node.gInd;
+
+    var canvas = document.getElementById("canvas");
+
+    var startx = 40 + xHspcg*lvl;
+    var starty = 40 + yHspcg*depth;
+
+    if (canvas.getContext)
+    {
+        var ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = node.color;
+        ctx.fillRect (startx, starty, nHwidth, nHheight);
+
+        ctx.fillStyle = node.color;
+        ctx.font = "8pt Helvetica";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillText(node.name,startx,starty-30);
+
+    }
+    
+}
+
+
+function drawArcHoriz( edge )
+{
+    //start and end nodes
+    var startNode = edge.ndIn;
+    var endNode = edge.ndOut;
+
+    var sInd = startNode.gInd;//locateLevelIndex( startNode );
+    var eInd = endNode.gInd;//locateLevelIndex( endNode );
+    slvl = startNode.level;
+    elvl = endNode.level;
+
+    var canvas = document.getElementById("canvas");
+ 
+    var startx = 40 + xHspcg*slvl + nHwidth/2;
+    var starty = 40 + yHspcg*sInd + nHheight/2; 
+
+    var endx = 40 + xHspcg*elvl + nHwidth/2;
+    var endy = 40 + yHspcg*eInd + nHheight/2;    
+
+    if( canvas.getContext )
+    {
+        var ctx = canvas.getContext("2d");
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 1;
+
+
+        //if edge connects nodes further than one level apart
+      for( i = slvl; i < elvl; i++ )
+      {
+
+        if( elvl - i > 1 )// && sCenterX == eCenterX )
+        {
+           ctx.beginPath()
+           ctx.moveTo( startx, starty )
+           startx += xHspcg;// + nHwidth/2;
+           ctx.lineTo( startx, starty );
+           ctx.stroke()
+
+        }
+        else
+        {
+            ctx.beginPath();
+            if( sInd == eInd )
+            {
+                ctx.moveTo( startx, starty );
+                ctx.lineTo( startx+.1*xHspcg, starty-.3*yHspcg );
+                ctx.lineTo( startx+.9*xHspcg, starty-.3*yHspcg );
+                ctx.lineTo( endx, endy );
+                ctx.stroke();
+
+                var centerx = startx+.1*xHspcg;//(startx+xHspcg)/2;
+                var centery = starty-.3*yHspcg;
+
+                ctx.fillStyle = startNode.color;
+                ctx.font = "8pt Helvetica";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "top";
+                ctx.fillText( edge.label, centerx, centery );
+
+            }
+            else
+            {
+                ctx.moveTo( startx, starty );
+                ctx.lineTo( startx+.1*xHspcg, starty+.3*yHspcg + yHspcg*(eInd-sInd-1) );
+                ctx.lineTo( startx+.9*xHspcg, starty+.3*yHspcg + yHspcg*(eInd-sInd-1) );
+                ctx.lineTo( endx, endy );
+                ctx.stroke();
+
+                var centerx = startx+.1*xHspcg;
+                var centery = starty+.3*yHspcg + yHspcg*(eInd-sInd-1);
+
+                ctx.fillStyle = startNode.color;//"blue";
+                ctx.font = "8pt Helvetica";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "bottom";
+                ctx.fillText( edge.label, centerx, centery );
+
+            }
+        }
+      }
+
+    }
+
+}
+
+function drawArcDown( lDiff, startx, starty, ex, ey )
+{
+    ex.value = startx + 10;
+    ey.value = starty + yHspcg*lDiff;
 }
 
 function drawNodeVert( node )
 {
 
     //uncomment for step by step view
-    //alert("node "+node.name);
+    alert("node "+node.name);
 
     //locate
     var index = locateLevelIndex( node );
