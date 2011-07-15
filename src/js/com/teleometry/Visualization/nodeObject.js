@@ -2,37 +2,40 @@
 
 function nodeObj()
 {
-    this.name;
+    this.name; 
     this.level = -1;
+    this.gInd = 0;
+    this.color;
 
     //edges in and edges out
     this.edgIn = new Array();
     this.edgOut = new Array();
     this.eInCnt = 0;
     this.eOutCnt = 0;
+ 
 
-
-    this.setNode = function( origin )
+    this.setNode = function( origin, color )
     {
         this.name = origin;
-    };
+        this.color = color;
+    }
 
     this.addInEdge = function( edge )
     {
         this.edgIn[ this.eInCnt ] = edge;
         this.eInCnt++;
-    };
+    }
 
     this.addOutEdge = function( edge )
     {
         this.edgOut[ this.eOutCnt ] = edge;
         this.eOutCnt++;
-    };
+    }    
 
     // searches edges to find deepest parent level for nodes with new incoming edges
     this.findDeepestParentLevel = function()
     {
-        var i;
+        var i; 
         var minLevel = -1;
 
         for( i = 0; i < this.eInCnt; i++)
@@ -42,15 +45,39 @@ function nodeObj()
         }
 
         return minLevel;
-    };
+    }
+
+    this.setgInd = function()
+    {
+        //var nd = nodes[ nodes.length-1 ];
+        var i; 
+        var prnt;
+        var ind = 0;
+        var num = 0;
+        for( i = 0; i < this.edgIn.length; i++ )
+        {
+            if( num < this.edgIn[i].ndIn.gInd )
+            {
+                num = this.edgIn[i].ndIn.gInd;
+                //prnt = this.edgIn[i].ndIn;
+                ind = i;
+            }
+        }   
+        prnt = this.edgIn[ind].ndIn;
+        this.gInd = (prnt.edgOut.length-1) + prnt.gInd;      
+        //document.write(this.name+" parent "+prnt.gInd+" <br/>");
+        //this.gInd = Math.max( prnt.gInd, edgInd );
+
+    }
 
 }
 
 
-function addNode( name )
+function addNode( name, color )
 {
     nodes[nCnt] = new nodeObj();
-    nodes[nCnt].setNode( name );
+    nodes[nCnt].setNode( name,color );
+//document.write("color "+ nodes[nCnt].color + "<br/>");
     nCnt++;
 }
 
@@ -63,7 +90,8 @@ function findNode( origin )
         if( nodes[i].name == origin )
             return i;
     }
-
+   
     return -1;
 }
+
 
