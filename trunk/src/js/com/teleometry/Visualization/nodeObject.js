@@ -6,6 +6,9 @@ function nodeObj()
     this.level = -1;
     this.gInd = 0;
     this.color;
+    this.drawn = 0;
+    this.drawnDepth = 0;
+    this.order = 0;
 
     //edges in and edges out
     this.edgIn = new Array();
@@ -14,10 +17,11 @@ function nodeObj()
     this.eOutCnt = 0;
  
 
-    this.setNode = function( origin, color )
+    this.setNode = function( origin, color, order )
     {
         this.name = origin;
         this.color = color;
+        this.order = order;
     }
 
     this.addInEdge = function( edge )
@@ -62,22 +66,35 @@ function nodeObj()
                 //prnt = this.edgIn[i].ndIn;
                 ind = i;
             }
-        }   
-        prnt = this.edgIn[ind].ndIn;
-        this.gInd = (prnt.edgOut.length-1) + prnt.gInd;      
-        //document.write(this.name+" parent "+prnt.gInd+" <br/>");
-        //this.gInd = Math.max( prnt.gInd, edgInd );
+        }
 
+        if( this.edgIn.length > 0 )
+        {   
+
+            prnt = this.edgIn[ind].ndIn;
+            for( i = 0; i < prnt.edgOut.length; i++ )
+            {
+                if( prnt.edgOut[i].ndOut.name == this.name )
+                    ind = i;
+            }
+
+            //this.gInd = (prnt.edgOut.length-1) + prnt.gInd;
+            this.gInd = prnt.gInd + this.edgIn.length-1;    
+            //this.gInd = prnt.gInd + ind + this.edgIn.length-1;
+        }
+        else
+        {
+            this.gInd = 0;
+        }
     }
 
 }
 
 
-function addNode( name, color )
+function addNode( name, color, order )
 {
     nodes[nCnt] = new nodeObj();
-    nodes[nCnt].setNode( name,color );
-//document.write("color "+ nodes[nCnt].color + "<br/>");
+    nodes[nCnt].setNode( name,color,order );
     nCnt++;
 }
 

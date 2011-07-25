@@ -11,6 +11,8 @@ function levelObj()
     this.height = 150;
     this.nCnt = 0;
 
+    this.depth=0;
+
     this.nodes = new Array();//[30];
 
 }
@@ -33,6 +35,9 @@ function addToLevel( node )
 
     lvl += 1;
 
+//    if( node.order > lvl )
+//        lvl = node.order;
+
     //check if new level needs to be created
     if( levels[lvl] == undefined )
     {
@@ -43,6 +48,7 @@ function addToLevel( node )
     levels[lvl].nodes[ levels[lvl].nCnt ] = node;
     levels[lvl].nCnt++;
     node.level = lvl;
+//    levels[lvl].depth++;
 
     if (lvl >= lvlCnt )
         lvlCnt = lvl+1;
@@ -60,6 +66,7 @@ function moveToLevel( node, lvl )
             delete levels[curlvl].nodes[i];
             levels[curlvl].nodes.splice(i,1);
             levels[curlvl].nCnt--;
+//            levels[curlvl].depth--;
         }
         break;
     }
@@ -73,6 +80,13 @@ function moveToLevel( node, lvl )
     levels[lvl].nodes[ levels[lvl].nCnt ] = node;
     levels[lvl].nCnt++;
     node.level = lvl;
+
+/*
+    for( var i = curlvl; i <= lvl; i++ )
+    {
+        levels[i].depth++;
+    } 
+*/
 }
 
 function locateLevelIndex( node )
