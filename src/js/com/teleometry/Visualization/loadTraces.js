@@ -1,5 +1,3 @@
-// loads information into levels and nodes
-
 
 var nodes = new Array();
 var levels = new Array();
@@ -20,30 +18,38 @@ var nHheight = 6;
 var nHwidth = 6;
 var xHspcg = 250;
 var yHspcg = 60;
-
+var xInitialSpcg = 60;
+var yInitialSpcg = 60;
 
 function loadTraces()
 {
-
     // adding nodes to list individually
     // data structure adapts accordingly
-    addElement( "[top,0]", "[buyer,0]", "##Sent", "black", "blue" );
-    addElement( "[buyer,0]", "[product,1]", "postMessage({'msg': 'isAvailable',", "blue", "green" );
-    addElement( "[product,1]", "[buyer,1]", "postMessage({'msg': msg,", "green", "blue" );
-    addElement( "[buyer,1]", "[buyer,3]", "send(teller, 'run', [data.answer]);", "blue", "red" );
-    addElement( "[buyer,0]", "[accounts,1]", "postMessage({'msg': 'doCreditCheck',", "blue", "purple" );
-    addElement( "[accounts,1]", "[buyer,4]", "postMessage({'msg': msg," , "purple", "blue" );
-    addElement( "[buyer,4]", "[buyer,6]", "send(teller, 'run', [data.answer]);", "blue", "blue" );
-    addElement( "[buyer,6]", "[buyer,7]", "send(tellAreAllTrue, 'run', [true]);", "blue", "blue" );
-    addElement( "[buyer,7]", "[bottom,0]", "# All queries answered true", "blue", "red" );
-    addElement( "[buyer,7]", "[product,3]", "postMessage({'msg': 'placeOrder',", "blue", "green" );
-    addElement( "[product,3]", "[buyer,8]", "postMessage({'msg': msg,", "green", "blue" );
-    addElement( "[buyer,8]", "[buyer,9]", "send(reporter, 'run', [data.answer]);", "blue", "blue" );
-    addElement( "[buyer,9]", "[bottom,0]", "# Order placed for West Coast Buyers", "blue", "red" );
-    addElement( "[buyer,0]", "[product,2]", "postMessage({'msg': 'canDeliver',", "blue", "green" );
-    addElement( "[product,2]", "[buyer,2]", "postMessage({'msg': msg,", "green", "blue" );
-    addElement( "[buyer,2]", "[buyer,5]", "send(teller, 'run', [data.answer]);", "blue", "red" );
+    addElement( "[top,0]", "[buyer,0]", "##Sent", "black", "blue", 0,1 );
+    addElement( "[buyer,0]", "[product,1]", "postMessage({'msg': 'isAvailable',", "blue", "green",1,2 );
+    addElement( "[product,1]", "[buyer,1]", "postMessage({'msg': msg,", "green", "blue",2,2 );
+    addElement( "[buyer,1]", "[buyer,3]", "send(teller, 'run', [data.answer]);", "blue", "red",2,4 );
+    addElement( "[buyer,0]", "[accounts,1]", "postMessage({'msg': 'doCreditCheck',", "blue", "purple",1,2 );
+    addElement( "[accounts,1]", "[buyer,4]", "postMessage({'msg': msg," , "purple", "blue",2,5 );
+    addElement( "[buyer,4]", "[buyer,6]", "send(teller, 'run', [data.answer]);", "blue", "blue",5,7 );
+    addElement( "[buyer,6]", "[buyer,7]", "send(tellAreAllTrue, 'run', [true]);", "blue", "blue",7,8 );
+    addElement( "[buyer,7]", "[bottom,0]", "# All queries answered true", "blue", "red",8,1 );
+    addElement( "[buyer,7]", "[product,3]", "postMessage({'msg': 'placeOrder',", "blue", "green",8,4 );
+    addElement( "[product,3]", "[buyer,8]", "postMessage({'msg': msg,", "green", "blue",4,9 );
+    addElement( "[buyer,8]", "[buyer,9]", "send(reporter, 'run', [data.answer]);", "blue", "blue",9,10 );
+    addElement( "[buyer,9]", "[bottom,0]", "# Order placed for West Coast Buyers", "blue", "red",10,1 );
+    addElement( "[buyer,0]", "[product,2]", "postMessage({'msg': 'canDeliver',", "blue", "green",1,3 );
+    addElement( "[product,2]", "[buyer,2]", "postMessage({'msg': msg,", "green", "blue",3,3 );
+    addElement( "[buyer,2]", "[buyer,5]", "send(teller, 'run', [data.answer]);", "blue", "red",3,6 );
 
+
+//    addElement( "[buyer,3]", "[tester,1]", "standard message", "red", "red" );
+//    addElement( "[buyer,3]", "[tester,2]", "standard message", "red", "red" );
+//    addElement( "[buyer,3]", "[tester,3]", "standard message", "red", "red" );
+//    addElement( "[buyer,4]", "[tester,4]", "standard message", "blue", "red" );
+//    addElement( "[product,1]", "[tester,5]", "standard message", "green", "red" );
+//    addElement( "[tester,5]", "[tester,6]", "standard message", "red", "red" );
+//    addElement( "[tester,6]", "[tester,7]", "standard message", "red", "red" );
 
 //    addElement( "[top,0]", "[test,1]", "make paths", "black", "red" );
 //    addElement( "[test,1]", "[accounts,1]", "readable", "red", "purple" );
@@ -57,7 +63,7 @@ function loadTraces()
 };
 
 
-function addElement( origin, target, label, colorO, colorT )
+function addElement( origin, target, label, colorO, colorT, orderO, orderT )
 {
 
     //add new edge
@@ -67,7 +73,8 @@ function addElement( origin, target, label, colorO, colorT )
     var loc = findNode( origin );
     if( loc === -1 ) // if node doesn't exist, create one
     {
-        addNode( origin, colorO );
+
+        addNode( origin, colorO, orderO );
         nodes[ nodes.length-1 ].addOutEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndIn = nodes[ nodes.length-1 ];
 
@@ -85,13 +92,15 @@ function addElement( origin, target, label, colorO, colorT )
     var loc = findNode( target );
     if( loc === -1 ) // if node doesn't exist, create one
     {
-        addNode( target, colorT );
+
+        addNode( target, colorT, orderT );
         nodes[nodes.length-1].addInEdge( edges[ edges.length-1 ] );
         edges[ edges.length-1 ].ndOut = nodes[ nodes.length-1 ];
 
-        nodes[nodes.length-1].setgInd();
+        nodes[nodes.length-1].setgInd(); 
 
         addToLevel( nodes[ nodes.length-1 ] );
+
     }
     else // add new edge info to existing node
     {
@@ -104,6 +113,7 @@ function addElement( origin, target, label, colorO, colorT )
         var lvl = nodes[loc].findDeepestParentLevel();
         if( lvl !== (nodes[loc].level - 1) )
             moveToLevel( nodes[loc], lvl+1 );
+
     }
 
 
@@ -131,14 +141,21 @@ function visualize( node )
 
     //draw node
     //drawNodeVert( node );
-    drawNodeHoriz( node );   
- 
+//    node.setgInd();
+    if( !node.drawn )
+{
+        node.setgInd();
+//}
+        drawNodeHoriz( node );   
+}
+
     var i;
     for( i = 0; i < node.eOutCnt; i++ )
     {
         //draw arc
         //drawArcVert( node.edgOut[i] );
-        drawArcHoriz( node.edgOut[i] );
+        if( !node.edgOut[i].drawn )
+            drawArcHoriz( node.edgOut[i] );
         visualize( node.edgOut[i].ndOut );
     }
 
@@ -149,12 +166,14 @@ function drawNodeHoriz( node )
 {
     var index = locateLevelIndex( node );
     lvl = node.level;
-    depth = node.gInd;
+    depth = Math.max( node.gInd, levels[lvl].depth );
+    node.gInd = depth;
 
     var canvas = document.getElementById("canvas");
 
-    var startx = 40 + xHspcg*lvl;
-    var starty = 40 + yHspcg*depth;
+    var startx = xInitialSpcg + xHspcg*lvl;
+    var starty = yInitialSpcg + yHspcg*depth;
+
 
     if (canvas.getContext)
     {
@@ -171,6 +190,9 @@ function drawNodeHoriz( node )
 
     }
     
+    levels[lvl].depth = Math.max( node.gInd+1, levels[lvl].depth+1 );
+    node.drawn = 1;
+    node.drawnDepth = depth;
 }
 
 
@@ -180,18 +202,25 @@ function drawArcHoriz( edge )
     var startNode = edge.ndIn;
     var endNode = edge.ndOut;
 
-    var sInd = startNode.gInd;//locateLevelIndex( startNode );
-    var eInd = endNode.gInd;//locateLevelIndex( endNode );
-    slvl = startNode.level;
-    elvl = endNode.level;
+    //if(!endNode.drawn)
+    endNode.setgInd();
+
+    var slvl = startNode.level;
+    var elvl = endNode.level;
+    var sInd = Math.max( startNode.gInd, levels[slvl].depth -1 );//locateLevelIndex( startNode );
+    var eInd;
+    if(!endNode.drawn)
+        eInd = Math.max( endNode.gInd, levels[elvl].depth  );//locateLevelIndex( endNode );
+    else
+        eInd = endNode.drawnDepth;//endNode.gInd;
 
     var canvas = document.getElementById("canvas");
  
-    var startx = 40 + xHspcg*slvl + nHwidth/2;
-    var starty = 40 + yHspcg*sInd + nHheight/2; 
+    var startx = xInitialSpcg + xHspcg*slvl + nHwidth/2;
+    var starty = yInitialSpcg + yHspcg*sInd + nHheight/2; 
 
-    var endx = 40 + xHspcg*elvl + nHwidth/2;
-    var endy = 40 + yHspcg*eInd + nHheight/2;    
+    var endx = xInitialSpcg + xHspcg*elvl + nHwidth/2;
+    var endy = yInitialSpcg + yHspcg*eInd + nHheight/2;    
 
     if( canvas.getContext )
     {
@@ -203,6 +232,9 @@ function drawArcHoriz( edge )
         //if edge connects nodes further than one level apart
       for( i = slvl; i < elvl; i++ )
       {
+        if(i > slvl && i < elvl )
+            levels[i].depth = Math.max( startNode.gInd+1, levels[i].depth+1 );
+            //levels[i].depth++;
 
         if( elvl - i > 1 )// && sCenterX == eCenterX )
         {
@@ -236,14 +268,15 @@ function drawArcHoriz( edge )
             }
             else
             {
+                var yindex = eInd-sInd - 1;
                 ctx.moveTo( startx, starty );
-                ctx.lineTo( startx+.1*xHspcg, starty+.3*yHspcg + yHspcg*(eInd-sInd-1) );
-                ctx.lineTo( startx+.9*xHspcg, starty+.3*yHspcg + yHspcg*(eInd-sInd-1) );
+                ctx.lineTo( startx+.1*xHspcg, starty+.3*yHspcg + yHspcg*yindex );
+                ctx.lineTo( startx+.9*xHspcg, starty+.3*yHspcg + yHspcg*yindex );
                 ctx.lineTo( endx, endy );
                 ctx.stroke();
 
                 var centerx = startx+.1*xHspcg;
-                var centery = starty+.3*yHspcg + yHspcg*(eInd-sInd-1);
+                var centery = starty+.3*yHspcg + yHspcg*yindex;
 
                 ctx.fillStyle = startNode.color;//"blue";
                 ctx.font = "8pt Helvetica";
@@ -257,6 +290,7 @@ function drawArcHoriz( edge )
 
     }
 
+    edge.drawn = 1;
 }
 
 function drawArcDown( lDiff, startx, starty, ex, ey )

@@ -3,6 +3,7 @@
 function edgeObj()
 {
     this.label;
+    this.drawn = 0;
 
     this.ndIn;
     this.ndOut;
