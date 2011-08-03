@@ -258,7 +258,7 @@ var makeCausewayLogger;
           var umid = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
           logger.logSentRecord(umid, new Error('dummy').stack);
           if (typeof json === 'object') {
-            json['umid'] = umid;
+            json.umid = umid;
           }
           return origPostMessage.apply(this, arguments);
         };
@@ -268,14 +268,25 @@ var makeCausewayLogger;
 
         aelBase.addEventListener = function(type, callback) {
           var origCallback = callback;
+          var ucid;
           function newCallback(event) {
-            var umid = event && event.data && event.data.umid;
-            if (umid) {
-              logger.logGotRecord(umid, new Error('dummy').stack);
+            if (event && event.data && event.data.msg === 'log') {
+              // skip logging
+            } else {
+              var umid = event && event.data && event.data.umid;
+              if (umid) {
+                logger.logGotRecord(umid, new Error('dummy').stack);
+                delete event.data.umid;
+              }
+              var umid2 = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
+              logger.logSentIfRecord(ucid, umid2, new Error('dummy').stack);
+              logger.logGotRecord(umid2, new Error('dummy').stack);
             }
             return origCallback.apply(this, arguments);
           }
           if (type === 'message' && typeof callback === 'function') {
+            ucid = 'ucid:' + Math.random() + ':' + TheAnchor.turn.loop;
+            logger.logFulfilledRecord(ucid, new Error('dummy').stack);
             return ael.call(this, type, newCallback);
           } else {
             return ael.apply(this, arguments);
