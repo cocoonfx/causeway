@@ -131,9 +131,12 @@ var doCausalityGridTest;
     } else {
       makeWalker(null);
     }
-//    var walker = makeGraphWalker(null);
-
-//    makeStatisticsModel( model, hidden, makeVatMap(model.getMessageGraph()), walker );
+/*
+    var walker = makeGraphWalker(null);
+    var canvas = document.getElementById('gridCanvas');
+    var context = canvas.getContext('2d');
+    makeStatisticsModel( model, hidden, makeVatMap(model.getMessageGraph()), walker,canvas,context );
+*/
   }
 
   doCausalityGridTest = function doCausalityGridTest() {

@@ -3,18 +3,23 @@ function turnObject()
 {
     this.name;
     this.counter = 0;
+    this.turn;
 
-    this.trnNodes = new Array();
-    this.trnCnt = 0;
+    this.trnNode;
+
+    this.trnEdges = new Array();
 
     this.addNodeToTurn = function ( node )
     {
-        this.name = node.name;
-        this.counter++;
-
-        this.trnNodes[ this.trnCnt ] = node;
-        this.trnCnt++;
+        this.name = node.getVatName();
+        this.trnNode = node;
     };
+
+    this.addEdgeToTurn = function( edge )
+    {
+        this.trnEdges.push( edge );
+        this.counter++;
+    }
 
 }
 
@@ -25,5 +30,5 @@ function addTurn( turns, ind, node )
         turns[ ind ] = new turnObject();
 
     turns[ ind ].addNodeToTurn( node );
-
+    turns[ ind ].turn = ind;
 }

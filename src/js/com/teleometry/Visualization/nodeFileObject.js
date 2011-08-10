@@ -18,13 +18,16 @@ function nodeObj()
     this.ndIn;
     this.ndOut;
  
+    //previous node in process order
+    this.prevNode;
+
     //sets node information
     this.setNode = function( name, color, label, index )
     {
         this.name = name;
         this.color = color;
         this.label = label;
-        this.index = index; // used for happen-before   
+        this.index = index; // used for nodes in a turn   
 
         this.isSet = 1; // used to avoid duplicates while traversing graph   
     };
@@ -41,6 +44,14 @@ function nodeObj()
         this.ndOut = node;
     };   
 
+    this.setPrevNode = function ()
+    {
+        var str;
+        str = this.name.substring(0,this.name.length-1) + (this.name.charAt(this.name.length-1)-1+'') +"0";
+   
+        this.prevNode = str;
+    }
+
     //sets the turn for the node
     this.setTurn = function( turn )
     {
@@ -54,7 +65,6 @@ function nodeObj()
         }
         else
             this.turn = turn;
-
 
     }; 
 
@@ -84,7 +94,8 @@ function addNode( nodes, nodeCnt, name, color, label, target, turns )
             //creating new node object
             nodes[ ostr ] = new nodeObj();
             nodes[ ostr ].setNode( name, color, label, oindex );
-   
+            nodes[ ostr ].setPrevNode();   
+
             //setting the turn
             if( !nodes[ ostr ].turn )
             {
@@ -97,6 +108,7 @@ function addNode( nodes, nodeCnt, name, color, label, target, turns )
         else if( !nodes[ ostr ].isSet ) //if node was found but not completely set
         {
             nodes[ ostr ].setNode( name, color, label, hppn, oindex );
+            nodes[ ostr ].setPrevNode();
 
             //setting the turn
             if( !nodes[ ostr ].turn )
@@ -130,6 +142,7 @@ function addNode( nodes, nodeCnt, name, color, label, target, turns )
             nodes[ tstr ].ndIn = nodes[ostr];
             nodes[ tstr ].name = target;
             nodes[ tstr ].index = tindex;
+            nodes[ tstr ].setPrevNode();
 
             if( !nodes[ tstr ].turn )
             {
