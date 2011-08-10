@@ -14,7 +14,10 @@ var EventArc;
                                target,
                                optTraceRecord) {
     GraphArc.call(this, origin, target);
-    
+ 
+    this.sourceXcoord=0;
+    this.sourceYcoord=0;
+   
     this.tag = KEEP;
     this.traceRecord = optTraceRecord || {
       "class": ["org.ref_send.log.Sent",
@@ -38,5 +41,27 @@ var EventArc;
   EventArc.prototype.getKey = function() {
     return this.traceRecord.anchor;
   };
+
+  EventArc.prototype.setX = function( val )
+  {
+    this.sourceXcoord = val;
+  };
+
+  EventArc.prototype.getX = function()
+  {
+    return this.sourceXcoord;
+  };
+
+  EventArc.prototype.setY = function( val )
+  {
+    this.sourceYcoord = val;
+  };
+
+  EventArc.prototype.getY = function()
+  {
+    return this.sourceYcoord;
+  };
+
+
 })();
   

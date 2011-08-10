@@ -14,6 +14,9 @@ var TurnNode;
     GraphNode.call(this, TurnNode.idToName(id));
     this.id = id;
 
+    this.sourceXcoord = 0;
+    this.sourceYcoord = 0;
+
     this.tag = KEEP;
     // initialize with fake got record
     this.traceRecord = optTraceRecord || {
@@ -42,4 +45,25 @@ var TurnNode;
   TurnNode.prototype.getVatName = function() {
     return this.traceRecord.anchor.turn.loop;
   };
+
+  TurnNode.prototype.setX = function( val )
+  {
+    this.sourceXcoord = val;
+  };
+
+  TurnNode.prototype.getX = function()
+  {
+    return this.sourceXcoord;
+  };
+
+  TurnNode.prototype.setY = function( val )
+  {
+    this.sourceYcoord = val;
+  };
+
+  TurnNode.prototype.getY = function()
+  {
+    return this.sourceYcoord;
+  };
+
 })();

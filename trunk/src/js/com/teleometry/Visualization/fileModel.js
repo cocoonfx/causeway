@@ -12,7 +12,7 @@ function lineObject()
     //adding a node to the line object
     this.addNodeToLine = function ( node )
     {
-        this.lnNodes[ this.ndCnt ] = node; 
+        this.lnNodes[ this.ndCnt ] = node;
         this.ndCnt++;
     }
 
@@ -48,7 +48,7 @@ function fileObject()
         lobj.lineNum = line;
         lobj.message = message;
         lobj.addNodeToLine( node );
-
+ 
         //adds line instance to line object array
         if( this.lineCnt <= 1 ) // avoids binary search info
         {
@@ -170,10 +170,10 @@ function getFileIndex( files, fCnt, name )
 }
 
 // adding a file
-function addFile( files, fCnt, name, line, message, node )
+function addFile( files, fCnt, name, line, message, node, target )
 {
     files[ fCnt[0] ] = new fileObject();
-    files[ fCnt[0] ].setFile( name, line, message, node );
+    files[ fCnt[0] ].setFile( name, line, message, node, target );
     fCnt[0] += 1;
 }
 
