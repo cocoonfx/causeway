@@ -18,90 +18,29 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
   
     //turns data structure
     var cells = new Array();
-
-
-    //set up pseudo cells data structure for testing purposes
-    messageGraph.top.deepOutsPre( function( edge, node )
-    {
-
-                        var origin = edge.getOrigin();
-                if( origin.getVatName() == "buyer" )
-                {
-                    switch( origin.traceRecord.anchor.turn.number )
-                    {
-                        case 0:
-                            addTurn( cells, 0, origin );
-                            break;
-                        case 1:
-                            addTurn( cells, 4, origin );
-                            break;
-                        case 2:
-                            addTurn( cells, 5, origin );
-                            break;
-                        case 3:
-                            addTurn( cells, 6, origin );
-                            break;
-                        case 4:
-                            addTurn( cells, 7, origin );
-                            break;
-                        case 5:
-                            addTurn( cells, 8, origin );
-                            break;
-                        case 6:
-                            addTurn( cells, 9, origin );
-                            break;
-                        case 7:
-                            addTurn( cells, 10, origin );
-                            break;
-                        case 8:
-                            addTurn( cells, 12, origin );
-                            break;
-                        case 9:
-                            addTurn( cells, 13, origin );
-                            break;
-                    }
-                }
-                else if( origin.getVatName() == "product" )
-                {
-                    switch( origin.traceRecord.anchor.turn.number )
-                    {
-                        case 1:
-                            addTurn( cells, 2, origin );
-                            break;
-                        case 2:
-                            addTurn( cells, 3, origin );
-                            break;
-                        case 3:
-                            addTurn( cells, 11, origin );
-                            break;
-                    }
-                }
-                else if( origin.getVatName() == "accounts" )
-                {
-                    addTurn( cells, 1, origin );
-                }
-    });
  
+    var cellGrid = makeCellGrid(causewayModel);
 
 
-    var sourceTurns = new Array();
+    var sourceTurns = {};
 
     var startNdx = 300;
-    var ndspcg = 30;
+    var ndspcg = 10;
+    var trnspcg = 30;
     var cnt = 0;
-    for( i in cells )
+    for( i in cellGrid.cells )
     {
 
 
         var trn = new turnObject();
-        trn.addNodeToTurn( cells[i].trnNode );
+        trn.addNodeToTurn( cellGrid.cells[i].node );
         trn.trnNode.setX( startNdx );
 
 
-        cells[i].trnNode.outs( function( edge )
+        cellGrid.cells[i].node.outs( function( edge )
         {
             
-           
+//            document.write("origin "+edge.getOrigin().name+" target "+edge.getTarget().name+"<br/>");
             var stack = edge.traceRecord.trace.calls;
 
             var label = walker.getElementLabel(edge,vatMap);
@@ -113,16 +52,15 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
             startNdx += ndspcg;
         });
 
-//        document.write("node "+trn.name+"<br/>");
-        var j;
-        for( j = 0; j < trn.trnEdges.length; j++ )
+
+        if( trn.trnEdges.length == 0 )
         {
-//            document.write("edge loc "+trn.trnEdges[j].getX()+"<br/>");
+            trn.trnNode.setY( 50 );
         }
 
-        sourceTurns.push( trn );
+        sourceTurns[ trn.trnNode.name ] = trn;
         cnt++;
-        startNdx += 20;
+        startNdx += trnspcg;
     }
 
     
@@ -147,8 +85,9 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
 
 
     //source grid visualization
-    visualize( globFiles, globCnt, nodes, canvas, ctx ); 
+    drawFiles( globFiles, globCnt, nodes, canvas, ctx ); 
 
+    drawNodesAndEdges( sourceTurns, canvas, ctx );
 
     /*
     //print out the file information
@@ -186,25 +125,155 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
 
 }
 
-function visualize( globFiles, globCnt, nodes, canvas, ctx )
+function drawNodesAndEdges( sourceTurns, canvas, ctx )
+{
+
+    var counter = 0
+    if( canvas.getContext )
+    {
+        
+        for( x in sourceTurns )
+        {
+            //write names
+            var namey;
+            if( counter % 2  == 0 )
+                namey = 5;
+            else
+                namey = 20;
+
+            ctx.fillStyle = "black";
+            ctx.font = "10pt Helvetica";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+            ctx.fillText( sourceTurns[x].trnNode.name, sourceTurns[x].trnNode.getX(), namey );
+
+     
+            if( sourceTurns[x].trnEdges.length == 0 )
+            {
+                var startNdx = sourceTurns[x].trnNode.getX()+5;
+                var startNdy = sourceTurns[x].trnNode.getY()+5;
+                //sourceTurns[x].trnNode.setY( startNdy );               
+
+//document.write("name "+sourceTurns[x].trnNode.name+" x "+startNdx+"<br/>");
+                //draw nodes
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.moveTo( startNdx, startNdy );
+                ctx.lineTo( startNdx+5, startNdy );
+                ctx.lineTo( startNdx+5, startNdy+5 );
+                ctx.lineTo( startNdx, startNdy+5 );
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            var conx;
+            var cony;
+
+            var i;
+            for( i = 0; i < sourceTurns[x].trnEdges.length; i++ )
+            {
+                var edge = sourceTurns[x].trnEdges[i];
+
+                var startx = edge.getX()+5;
+                var starty = edge.getY()+5;
+
+                if( i > 0 )
+                {
+                    ctx.beginPath();
+                    ctx.strokeStyle = "black";//'rbga(0,200,0,1)';
+                    ctx.moveTo( conx, cony );
+                    ctx.lineTo( startx, starty );
+                    ctx.stroke();
+                }
+
+
+                //draw edge nodes
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.moveTo( startx, starty );
+                ctx.lineTo( startx+5, starty );
+                ctx.lineTo( startx+5, starty+5 );
+                ctx.lineTo( startx, starty+5 );
+                ctx.closePath();
+                ctx.fill();
+
+                conx = startx+5;
+                cony = starty+5;
+
+                //begin drawing on right of box
+                startx += 10;
+                starty += 2.5;
+
+                var target = edge.getTarget();
+      
+                if( sourceTurns[ target.name ] != undefined )
+                {
+                    var endx;
+                    var endy;
+                    if( sourceTurns[ target.name ].trnEdges.length > 0 )
+                    {
+                        endx = sourceTurns[ target.name ].trnEdges[0].getX();
+                        endy = sourceTurns[ target.name ].trnEdges[0].getY();
+
+                        ctx.beginPath();
+                        //ctx.strokeStyle = 'rgba(200,0,0,1)';
+                        ctx.moveTo( startx, starty );
+                        ctx.lineTo( endx-10, starty );
+                        ctx.lineTo( endx-10, endy+7.5 );
+                        ctx.lineTo( endx, endy+7.5 );
+                        ctx.strokeStyle = 'rgba(200,0,0,1)';
+                        ctx.stroke();
+
+                    } 
+                    else
+                    {
+                        endx = sourceTurns[ target.name ].trnNode.getX();
+                        endy = sourceTurns[ target.name ].trnNode.getY();
+//document.write("name "+sourceTurns[ target.name ].trnNode.name+" y "+endy+"<br/>");
+
+                        startx -= 7.5;
+                        starty -= 10;
+
+                        ctx.beginPath();
+                        ctx.moveTo( startx, starty );
+                        ctx.lineTo( startx, endy+7.5 );
+                        ctx.lineTo( endx, endy+7.5 );
+                        ctx.strokeStyle = 'rgba(200,0,0,1)';
+                        ctx.stroke();
+                    }
+                }
+                else
+                    continue; 
+                
+            }
+   
+            counter++;
+        }
+
+    }
+
+
+}
+
+function drawFiles( globFiles, globCnt, nodes, canvas, ctx )
 {
 
     var hspcg = 20;
  
     var i;
-    var starty = 30;
+    var starty = 100;
     //looping through all files
     for( i = 0; i < globFiles.length; i++ )
     {
         //individualy visualizing files
-        starty = visFiles( globFiles[i], starty, hspcg, canvas, ctx );
+        starty = drawOneFile( globFiles[i], starty, hspcg, canvas, ctx );
         starty += hspcg;
 
     }
     
 }
 
-function visFiles( file, starty, hspcg, canvas, ctx )
+function drawOneFile( file, starty, hspcg, canvas, ctx )
 {
 
 
@@ -238,25 +307,17 @@ function visFiles( file, starty, hspcg, canvas, ctx )
             ctx.textBaseline = "top";
             ctx.fillText( str, startx+20, starty );
 
+
             var j;
             for( j = 0; j < file.lines[i].lnNodes.length; j++ )
             {
                 var startxNd = file.lines[i].lnNodes[j].getX();
 
-                //document.write("x loc "+file.lines[i].lnNodes[j].getX()+"<br/>");
-
-                var ctx2 = canvas.getContext('2d');
-
-                //ctx2.strokeStyle = "rgba( 0,200,0,1)";
-                //draw nodes
-                ctx2.moveTo( startxNd, starty );
-                ctx2.lineTo( startxNd+10, starty );
-                ctx2.lineTo( startxNd+10, starty+.75*hspcg );
-                ctx2.lineTo( startxNd, starty+.75*hspcg );
-                ctx2.closePath();
-                ctx2.stroke();
+                file.lines[i].lnNodes[j].getOrigin().setY( starty );
+                file.lines[i].lnNodes[j].setY( starty );
 
             }
+
             starty += hspcg;
         }
     }
