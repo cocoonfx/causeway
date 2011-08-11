@@ -37,7 +37,11 @@ var EventArc;
   EventArc.prototype.getOrigin = function() {
     return this.origin;
   };
-  
+ 
+  EventArc.prototype.getTarget = function() {
+    return this.target;
+  };
+ 
   EventArc.prototype.getKey = function() {
     return this.traceRecord.anchor;
   };
