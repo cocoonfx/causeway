@@ -6,13 +6,13 @@ function lineObject()
 {
     this.lineNum;
     this.message;
-    this.lnNodes = new Array();
+    this.lnEdges = new Array();
     this.ndCnt = 0;
 
     //adding a node to the line object
-    this.addNodeToLine = function ( node )
+    this.addEdgeToLine = function ( edge )
     {
-        this.lnNodes[ this.ndCnt ] = node;
+        this.lnEdges[ this.ndCnt ] = edge;
         this.ndCnt++;
     }
 
@@ -31,14 +31,14 @@ function fileObject()
     this.lineCnt = 0;
 
     //sets file information
-    this.setFile = function( name, line, message, node )
+    this.setFile = function( name, line, message, edge )
     {
         this.name = name;
-        this.addLine( line, message, node );
+        this.addLine( line, message, edge );
     };
 
     //adds line to file
-    this.addLine = function( line, message, node )
+    this.addLine = function( line, message, edge )
     {
         //does a binary search for insertion index
         var index = this.binSearch( line );
@@ -47,7 +47,7 @@ function fileObject()
         var lobj = new lineObject();
         lobj.lineNum = line;
         lobj.message = message;
-        lobj.addNodeToLine( node );
+        lobj.addEdgeToLine( edge );
  
         //adds line instance to line object array
         if( this.lineCnt <= 1 ) // avoids binary search info
@@ -170,15 +170,15 @@ function getFileIndex( files, fCnt, name )
 }
 
 // adding a file
-function addFile( files, fCnt, name, line, message, node, target )
+function addFile( files, fCnt, name, line, message, edge )
 {
     files[ fCnt[0] ] = new fileObject();
-    files[ fCnt[0] ].setFile( name, line, message, node, target );
+    files[ fCnt[0] ].setFile( name, line, message, edge );
     fCnt[0] += 1;
 }
 
 //checking for a file, adding what is necessary 
-function checkFile( files, fCnt, name, line, message, node )
+function checkFile( files, fCnt, name, line, message, edge )
 {
     var i;
     var found = 0;
@@ -193,13 +193,13 @@ function checkFile( files, fCnt, name, line, message, node )
             {
                 if( files[i].lines[j].lineNum == line )
                 {
-                    files[i].lines[j].addNodeToLine( node );
+                    files[i].lines[j].addEdgeToLine( edge );
                     return;
                 }
             }
             
             //line not found, add line to file
-            files[i].addLine( line, message, node );
+            files[i].addLine( line, message, edge );
             found = 1;
             break;
         }
@@ -209,7 +209,7 @@ function checkFile( files, fCnt, name, line, message, node )
     //file was not found, create new file object
     if( !found )
     {
-        addFile( files, fCnt, name, line, message, node );
+        addFile( files, fCnt, name, line, message, edge );
     }
 }
 
