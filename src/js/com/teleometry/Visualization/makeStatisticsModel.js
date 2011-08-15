@@ -41,16 +41,21 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         cellGrid.cells[i].node.outs( function( edge )
         {
             trn.name = edge.getOrigin().getVatName();
-            //document.write("origin "+edge.getOrigin().name+" vatname "+edge.getOrigin().getVatName()+"<br/>");
+//            document.write("origin "+edge.getOrigin().name+" vatname "+edge.getOrigin().getVatName()+"<br/>");
             var stack = edge.traceRecord.trace.calls;
+            if( stack.length > 0 )
+            {
+                if( !hiddenSrcPaths.contains( stack[0].source ) )
+                {
+                    var label = walker.getElementLabel(edge,vatMap);
+                    checkFile( globFiles, globCnt, stack[0].source, stack[0].span[0][0], label, edge );
 
-            var label = walker.getElementLabel(edge,vatMap);
-            checkFile( globFiles, globCnt, stack[0].source, stack[0].span[0][0], label, edge );
-
-            edge.setX( startNdx );
-            trn.addEdgeToTurn( edge );
+                    edge.setX( startNdx );
+                    trn.addEdgeToTurn( edge );
      
-            startNdx += ndspcg;
+                    startNdx += ndspcg;
+                }
+            }
         });
 
         //ether
@@ -184,7 +189,6 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
             ctx.font = "10pt Helvetica";
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
-            //ctx.fillText( sourceTurns[x].trnNode.name, sourceTurns[x].trnNode.getX(), namey );
             ctx.fillText( sourceTurns[x].trnNode.traceRecord.anchor.turn.number, sourceTurns[x].trnNode.getX(), 22 );
 
             prevVatName = sourceTurns[x].name;//trnNode.getVatName();
@@ -219,37 +223,41 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                 if( i == 0 ) // line between node box and first edge box
                 {
                     ctx.beginPath();
-                    ctx.strokeStyle = 'rgba(0,0,0,.4)';
+                    ctx.strokeStyle = 'rgba(0,0,0,1)';
+                    //ctx.lineWidth = 2;
                     ctx.moveTo( startNdx+2.5, startNdy+2.5 );
                     ctx.lineTo( startx+2.5, starty+2.5 );
                     ctx.stroke();
+                    ctx.lineWidth = 1;
                     
                 }
                 else // line between edge boxes
                 {
                     ctx.beginPath();
                     ctx.strokeStyle = "black";//'rbga(0,200,0,1)';
+                    //ctx.lineWidth = 2;
                     ctx.moveTo( conx, cony );
                     ctx.lineTo( startx+2.5, starty+2.5 );
                     ctx.stroke();
+                    ctx.lineWidth = 1;
                 }
 
-
+/*
                 //draw edge nodes
                 ctx.beginPath();
-                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.strokeStyle = 'rgba(0,0,0,.5)';
                 ctx.moveTo( startx, starty );
                 ctx.lineTo( startx+5, starty );
                 ctx.lineTo( startx+5, starty+5 );
                 ctx.lineTo( startx, starty+5 );
                 ctx.closePath();
                 ctx.fill();
-
+*/
                 conx = startx+2.5;
                 cony = starty+2.5;
 
                 //begin drawing on right of box
-                startx += 10;
+                startx += 2.5;//10;
                 starty += 2.5;
 
                 var target = edge.getTarget();
@@ -260,7 +268,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                     var endx;
                     var endy;
 
-                    endx = sourceTurns[ target.name ].trnNode.getX();
+                    endx = sourceTurns[ target.name ].trnNode.getX()+7.5;
                     endy = sourceTurns[ target.name ].trnNode.getY();
 
                     ctx.beginPath();
@@ -277,28 +285,32 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
             }
 
             //line connecting edges between vats
-            if( sourceTurns[x].counter > 0 )
+            if( conVats[ sourceTurns[x].name ] == undefined )
             {
-                if( conVats[ sourceTurns[x].name ] == undefined )
-                {
-                    conVats[ sourceTurns[x].name ] = x;
-                }
+                conVats[ sourceTurns[x].name ] = x;
+            }
+            else
+            {
+                var src = sourceTurns[ conVats[ sourceTurns[x].name ] ];
+                var ending;
+                if( src.counter > 0 )
+                    ending = src.trnEdges[ src.trnEdges.length-1 ];
                 else
-                {
-                    var src = sourceTurns[ conVats[ sourceTurns[x].name ] ];
-                    var srx = src.trnEdges[ src.trnEdges.length-1 ].getX();
-                    var sry = src.trnEdges[ src.trnEdges.length-1 ].getY();
+                    ending = src.trnNode;
 
-                    var edge = sourceTurns[x].trnEdges[0];
+                var srx = ending.getX();
+                var sry = ending.getY();
 
-                    ctx.beginPath();
-                    ctx.strokeStyle = "black";
-                    ctx.moveTo( srx+7.5, sry+7.5 );
-                    ctx.lineTo( edge.getX()+7.5, edge.getY()+7.5 );
-                    ctx.stroke();
+                var edge = sourceTurns[x].trnNode;
 
-                    conVats[ sourceTurns[x].name ] = x;
-                }
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(0,0,0,.5)";//"black";
+                ctx.moveTo( srx+7.5, sry+7.5 );
+                ctx.lineTo( edge.getX()+7.5, edge.getY()+7.5 );
+                ctx.stroke();
+
+                conVats[ sourceTurns[x].name ] = x;
+                
             }
 
    
