@@ -304,9 +304,10 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                 var edge = sourceTurns[x].trnNode;
 
                 ctx.beginPath();
-                ctx.strokeStyle = "rgba(0,0,0,.5)";//"black";
-                ctx.moveTo( srx+7.5, sry+7.5 );
-                ctx.lineTo( edge.getX()+7.5, edge.getY()+7.5 );
+                ctx.strokeStyle = "rgba(0,0,0,.8)";//"black";
+//                ctx.moveTo( srx+7.5, sry+7.5 );
+//                ctx.lineTo( edge.getX()+7.5, edge.getY()+7.5 );
+                dottedLine( ctx, srx+7.5, sry+7.5, edge.getX()+7.5, edge.getY()+7.5 );
                 ctx.stroke();
 
                 conVats[ sourceTurns[x].name ] = x;
@@ -319,6 +320,36 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
 
     }
 
+
+}
+
+function dottedLine( ctx, startx, starty, endx, endy )
+{
+    ctx.moveTo( startx, starty );
+
+    var distx = endx - startx;
+    var disty = endy - starty;
+    var distance = Math.sqrt( distx*distx + disty*disty );
+
+    var vecx = distx/distance;
+    var vecy = disty/distance;
+
+    var curx = vecx*10;
+    var cury = vecy*10;
+    while( startx+curx < endx )
+    {
+
+        ctx.lineTo( startx+curx, starty+cury );
+
+        curx += vecx*2.5;
+        cury += vecy*2.5;
+
+        ctx.moveTo( startx+curx, starty+cury );
+
+        curx += vecx*20;
+        cury += vecy*20;
+    }
+    ctx.lineTo( endx, endy );
 
 }
 
