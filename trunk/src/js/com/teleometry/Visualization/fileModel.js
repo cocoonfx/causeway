@@ -6,6 +6,10 @@ function lineObject()
 {
     this.lineNum;
     this.message;
+ 
+    this.xcoord;
+    this.ycoord;
+
     this.lnEdges = new Array();
     this.ndCnt = 0;
 

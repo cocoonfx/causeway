@@ -4,6 +4,7 @@ function turnObject()
     this.name;
     this.counter = 0;
     this.turn;
+    this.concurrent = 0;
 
     this.trnNode;
 

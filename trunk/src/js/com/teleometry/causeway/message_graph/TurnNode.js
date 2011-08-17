@@ -16,6 +16,7 @@ var TurnNode;
 
     this.sourceXcoord = 0;
     this.sourceYcoord = 0;
+    this.transparency = 1;
 
     this.tag = KEEP;
     // initialize with fake got record
@@ -64,6 +65,16 @@ var TurnNode;
   TurnNode.prototype.getY = function()
   {
     return this.sourceYcoord;
+  };
+
+  TurnNode.prototype.setAlpha = function( val )
+  {
+    this.transparency = val;
+  };
+
+  TurnNode.prototype.getAlpha = function()
+  {
+    return this.transparency;
   };
 
 })();
