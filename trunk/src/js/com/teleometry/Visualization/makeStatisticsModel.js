@@ -130,7 +130,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                           }
  
                           ctx.clearRect( 0, 0, canvas.width, canvas.height );
-                          drawFiles( globFiles, globCnt, nodes, canvas, ctx );
+                          drawFiles( globFiles, globCnt, nodes, canvas, ctx, line );
                           dotAlpha = .2;
                           drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
 
@@ -486,7 +486,7 @@ function dottedLine( ctx, startx, starty, endx, endy )
 
 }
 
-function drawFiles( globFiles, globCnt, nodes, canvas, ctx )
+function drawFiles( globFiles, globCnt, nodes, canvas, ctx, shadeLine )
 {
 
     var hspcg = 20;
@@ -497,14 +497,14 @@ function drawFiles( globFiles, globCnt, nodes, canvas, ctx )
     for( i = 0; i < globFiles.length; i++ )
     {
         //individualy visualizing files
-        starty = drawOneFile( globFiles[i], starty, hspcg, canvas, ctx );
+        starty = drawOneFile( globFiles[i], starty, hspcg, canvas, ctx, shadeLine );
         starty += hspcg;
 
     }
     
 }
 
-function drawOneFile( file, starty, hspcg, canvas, ctx )
+function drawOneFile( file, starty, hspcg, canvas, ctx, shadeLine )
 {
 
 
@@ -552,6 +552,13 @@ function drawOneFile( file, starty, hspcg, canvas, ctx )
                 file.lines[i].ycoord = starty;
 
             }
+
+            //if user clicked a line, shade it
+            if( shadeLine != undefined && file.lines[i] == shadeLine )
+            {
+                ctx.fillStyle = "rgba(200,0,0,.1)";
+                ctx.fillRect( startx, starty, 1100, hspcg );
+            }           
 
             starty += hspcg;
         }
