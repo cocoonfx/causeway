@@ -540,12 +540,14 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, shadeLine )
             ctx.textBaseline = "top";
             ctx.fillText( str, startx+20, starty );
 
+/*
             //if user clicked a line, shade it
             if( shadeLine != undefined && file.lines[i] == shadeLine )
             {
                 ctx.fillStyle = "rgba(200,0,0,.1)";
                 ctx.fillRect( startx, starty, 1100, hspcg );
             }
+*/
 
             var j;
             for( j = 0; j < file.lines[i].lnEdges.length; j++ )
@@ -561,8 +563,8 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, shadeLine )
                 //if user clicked a line, shade it
                 if( shadeLine != undefined && file.lines[i] == shadeLine )
                 {
-                    ctx.fillStyle = "rgba(200,0,0,.15)";
-                    ctx.fillRect( edge.getX(), starty, 20, hspcg );
+                    ctx.fillStyle = "rgba(200,0,0,.2)";
+                    ctx.fillRect( edge.getX(), starty, 15, 15 );
                 }
 
             }
