@@ -17,7 +17,8 @@ var EventArc;
  
     this.sourceXcoord=0;
     this.sourceYcoord=0;
-   
+    this.transparency=1;   
+
     this.tag = KEEP;
     this.traceRecord = optTraceRecord || {
       "class": ["org.ref_send.log.Sent",
@@ -64,6 +65,16 @@ var EventArc;
   EventArc.prototype.getY = function()
   {
     return this.sourceYcoord;
+  };
+
+  EventArc.prototype.setAlpha = function( val )
+  {
+    this.transparency = val;
+  };
+
+  EventArc.prototype.getAlpha = function()
+  {
+    return this.transparency;
   };
 
 

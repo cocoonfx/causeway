@@ -21,8 +21,17 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
  
     var cellGrid = makeCellGrid(causewayModel);
 
-
+    var tmp = 2;  
+  
+    canvas.addEventListener( "click", sourceClick, false );
+  
     var sourceTurns = {};
+
+    var alpha = 1;
+    var dotAlpha = 1; //used for dotted lines connecting process order
+
+    var prevCol = -1;
+    var prevCell;
 
     var startNdx = 300;
     var ndspcg = 10;
@@ -31,26 +40,41 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
     for( i in cellGrid.cells )
     {
 
-
+        //adding node to turn object
         var trn = new turnObject();
         trn.addNodeToTurn( cellGrid.cells[i].node );
-        trn.trnNode.setX( startNdx );
+        trn.trnNode.setX( startNdx );  //setting x coordinate
+        trn.trnNode.setAlpha( alpha ); //setting initial alpha
         startNdx += ndspcg;
 
-
-        cellGrid.cells[i].node.outs( function( edge )
+        var cell = cellGrid.cells[i];
+        
+        //keeping track of concurrency to display at top
+        if( cell.col == prevCol && prevCell != undefined )
         {
+            trn.concurrent = 1;
+            sourceTurns[ prevCell.node.name ].concurrent = 1;
+        }
+
+        prevCol = cell.col; //keep track of previous node to see if parallelism is possible
+        prevCell = cell;
+
+        cell.node.outs( function( edge )
+        {
+
             trn.name = edge.getOrigin().getVatName();
-//            document.write("origin "+edge.getOrigin().name+" vatname "+edge.getOrigin().getVatName()+"<br/>");
             var stack = edge.traceRecord.trace.calls;
             if( stack.length > 0 )
             {
                 if( !hiddenSrcPaths.contains( stack[0].source ) )
                 {
                     var label = walker.getElementLabel(edge,vatMap);
+                    //adding edges to file object
                     checkFile( globFiles, globCnt, stack[0].source, stack[0].span[0][0], label, edge );
 
+                    //setting edge alpha and x coordinates
                     edge.setX( startNdx );
+                    edge.setAlpha( alpha );
                     trn.addEdgeToTurn( edge );
      
                     startNdx += ndspcg;
@@ -61,7 +85,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         //ether
         if( trn.trnEdges.length == 0 )
         {
-            trn.trnNode.setY( 55 );
+            trn.trnNode.setY( 20 );
         }
 
         sourceTurns[ trn.trnNode.name ] = trn;
@@ -69,71 +93,213 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         startNdx += trnspcg;
     }
 
-    
-    /*
 
-        //statistics of files per stack
-        if( bins[ locCnt[0] ] == undefined )
-            bins[ locCnt[0] ] = 0;
-
-        bins[ locCnt[0] ] += 1;
-
-        //stacks with 2 source files and statistics on connections
-        if( locCnt[0] == 2 )
-        {
-            var file1 = getFileIndex( globFiles, globCnt, locFiles[0].name );
-            var file2 = getFileIndex( globFiles, globCnt, locFiles[1].name );
-
-            globFiles[ file1 ].addConnectFile( file2 );
-            globFiles[ file2 ].addConnectFile( file1 );
-        }
-    */
-
-
-    //source grid visualization
+    //put files on the screen
     drawFiles( globFiles, globCnt, nodes, canvas, ctx ); 
 
-    drawNodesAndEdges( sourceTurns, canvas, ctx );
 
-    /*
-    //print out the file information
-    document.write("number of Files "+globCnt[0]+"<br/>");
-    var i;
-    for( i = 0; i < globCnt[0]; i++ )
+    //if use has clicked the canvas
+    function sourceClick( e )
     {
-        document.write(globFiles[i].name+" lines per files: "+globFiles[i].lineCnt+"<br/>");
-        
-        var j;
-        for( j = 0; j < globFiles[i].lines.length; j++ )
+        var x;
+        var y;
+ 
+        //if click is in defined space
+        if( e.pageX !== undefined && e.pageY !== undefined )
         {
-            document.write("--- "+globFiles[i].lines[j].lineNum+" "+globFiles[i].lines[j].message+"<br/>");
+            x = e.pageX;
+            y = e.pageY;
 
-          //if( globFiles[i].fileConnect[j] != undefined )
-           //document.write("-----connects with "+globFiles[j].name+" "+globFiles[i].fileConnect[j]+" times <br/>");
-        }
-        document.write("<br/>");
-        
+          //check if user has clicked a source file message
+          if( x > 20 && x < 300 )
+          {
+              var i;
+              for( i = 0; i < globFiles.length; i++ )
+              {
+                  var j;
+                  for( j = 0; j < globFiles[i].lines.length; j++ )
+                  {
+                      var line = globFiles[i].lines[j];
+                      if( y > line.ycoord && y < line.ycoord+10 )
+                      {
+                          resetAlpha( .2 ); //set everything transparent
+                          var k; 
+                          for( k = 0; k < line.lnEdges.length; k++)
+                          {
+                              setTransparencyEdge( sourceTurns, line.lnEdges[k] );  //set chosen edges
+                          }
+ 
+                          ctx.clearRect( 0, 0, canvas.width, canvas.height );
+                          drawFiles( globFiles, globCnt, nodes, canvas, ctx );
+                          dotAlpha = .2;
+                          drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
+
+                      }//k
+                  }//j
+              }//i
+
+
+          }
+          else //if user has clicked a node or edge
+          {
+
+            for( i in sourceTurns )
+            {
+
+                //check if user has clicked a got node
+                var node = sourceTurns[i].trnNode;
+                if(    x > node.getX()-15 && x < node.getX()+15
+                   &&  y > node.getY()-15 && y < node.getY()+15 )
+                {
+                    resetAlpha( .2 );
+                    setTransparencyNode( sourceTurns, node )
+
+                    ctx.clearRect( 0, 0, canvas.width, canvas.height );
+                    drawFiles( globFiles, globCnt, nodes, canvas, ctx );
+                    dotAlpha = .2;
+                    drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
+                    return;
+                }
+
+                //check if user has clicked an edge
+                var j;
+                for( j = 0; j < sourceTurns[i].trnEdges.length; j++ )
+                {
+                    var edge = sourceTurns[i].trnEdges[j];
+                    if(    x > edge.getX()-20 && x < edge.getX()+20  
+                       &&  y > edge.getY()-10 && y < edge.getY()+10 ) 
+                    {
+                        pickEdge = edge;
+                        resetAlpha( .2 );
+                        setTransparencyEdge( sourceTurns, pickEdge );
+
+                        ctx.clearRect( 0, 0, canvas.width, canvas.height );
+                        drawFiles( globFiles, globCnt, nodes, canvas, ctx );
+                        dotAlpha = .2;
+                        drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
+                        return;
+                    }
+                }     
+  
+            }
+
+            //draw everything if user clicks anywhere else
+            resetAlpha( 1 );
+            ctx.clearRect( 0, 0, canvas.width, canvas.height );
+            drawFiles( globFiles, globCnt, nodes, canvas, ctx );
+            dotAlpha = 1;
+            drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
+        }//for loop, nodes and edges
+
+      }//else
+
     }
-    */
 
-    /*
-    //print out bin information
-    document.write("bins <br/>");
 
-    for( i = 1; i < bins.length; i++ )
+    //setting alpha for nodes and edges
+    function resetAlpha( alpha )
     {
-        if( bins[i] == undefined )
-            document.write("Turns with "+i+" different files: 0 <br/>");
-        else
-            document.write("Turns with "+i+" different files: "+bins[i]+"<br/>");
+        for( i in sourceTurns )
+        {
+            sourceTurns[i].trnNode.setAlpha( alpha );
+
+            var j;
+            for( j = 0; j < sourceTurns[i].trnEdges.length; j++ )
+                sourceTurns[i].trnEdges[j].setAlpha( alpha );
+
+        }
     }
-    */
+
+
+    drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha );
+
 
 }
 
-function drawNodesAndEdges( sourceTurns, canvas, ctx )
+function setTransparencyNode( sourceTurns, node )
 {
+    var alpha = 1;
+    node.setAlpha( alpha );
+ 
+    var done = 0;
 
+    if( sourceTurns[ node.name ].trnEdges.length > 0 )
+    {
+        node.outs( function( edge )
+        {
+            setTransparencyEdge( sourceTurns, edge );
+            done = 1;
+        });
+    }
+
+    if( !done )
+    {
+        node.ins( function( edge )
+        {
+            setTransparencyEdge( sourceTurns, edge );
+        });
+    }
+
+}
+
+function setTransparencyEdge( sourceTurns, edge )
+{
+    var alpha = 1;
+    edge.setAlpha( alpha );
+
+    var src = sourceTurns[ edge.getOrigin().name ];
+    src.trnNode.setAlpha( alpha );
+
+    if( sourceTurns[ edge.getTarget().name ] != undefined && edge.getTarget().name != "bottom: 0" )
+        setTransparentRight( sourceTurns, sourceTurns[ edge.getTarget().name ], alpha );
+
+    if( sourceTurns[ edge.getOrigin().name ] != undefined && edge.getOrigin().name != "top: 0" )
+        setTransparentLeft( sourceTurns, sourceTurns[ edge.getOrigin().name ], edge, alpha );
+
+}
+
+function setTransparentRight( sourceTurns, src, alpha )
+{
+    src.trnNode.setAlpha( alpha )
+
+    var i;
+    for( i = 0; i < src.trnEdges.length; i++ )
+    {
+        src.trnEdges[i].setAlpha( alpha );
+        var target = src.trnEdges[i].getTarget();
+        if( target != undefined && target.name != "bottom: 0" )
+        {
+            setTransparentRight( sourceTurns, sourceTurns[ target.name ] , alpha );
+        }
+    }
+
+}
+
+function setTransparentLeft( sourceTurns, src, edge, alpha )
+{
+    src.trnNode.setAlpha( alpha );
+
+    var i;
+    for( i = 0; i < src.trnEdges.length; i++ )
+    {
+        if( src.trnEdges[i] == edge )
+        {
+            src.trnEdges[i].setAlpha( alpha );
+          
+            src.trnNode.ins( function( edge )
+            {
+                var origin = edge.getOrigin();
+                if( origin != undefined && origin.name != "top: 0" )
+                {
+                    setTransparentLeft( sourceTurns, sourceTurns[ origin.name ], edge, alpha );
+                }
+            });            
+        }
+    }   
+}
+
+function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha )
+{
     var conVats = {};
 
     var counter = 0
@@ -141,66 +307,28 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
     {
         var prevVatName;
         var prevX;
-        var prevY;
+        var prevCol;
         for( x in sourceTurns )
         {
-            //write names
-            var namey;
-            if( counter % 2  == 0 )
-                namey = 5;
-            else
-                namey = 20;
 
-            // bar for continuous vats
-            if( prevVatName != undefined )
+            //bar for concurrency
+            if( sourceTurns[x].concurrent )
             {
-                if( prevVatName == sourceTurns[x].name )
-                {
-                    ctx.fillStyle = "rgba(200,200,200,.4)";
-                    ctx.fillRect( prevX, 20, sourceTurns[x].trnNode.getX()-prevX, 20 ); 
-
-                }
-                else
-                {
-                    ctx.fillStyle = "rgba(200,200,200,.4)";
-                    ctx.fillRect( prevX, 20, sourceTurns[x].trnNode.getX()-prevX-20, 20 );
-
-                    //write names if diff from previous Vat
-                    ctx.fillStyle = "rgb(0,0,0)";//"black";
-                    ctx.font = "10pt Helvetica";
-                    ctx.textAlign = "left";
-                    ctx.textBaseline = "top";
-                    ctx.fillText( sourceTurns[x].trnNode.getVatName(), sourceTurns[x].trnNode.getX(), 5 );
-
-                }
+                ctx.fillStyle = "rgba(200,200,200,.4)";
+                ctx.fillRect( sourceTurns[x].trnNode.getX(), 10, sourceTurns[x].trnEdges.length*10+10+20, 10);
             }
             else
-            {
-                    //writing names for beginning
-                    ctx.fillStyle = "rgb(0,0,0)";//"black";
-                    ctx.font = "10pt Helvetica";
-                    ctx.textAlign = "left";
-                    ctx.textBaseline = "top";
-                    ctx.fillText( sourceTurns[x].trnNode.getVatName(), sourceTurns[x].trnNode.getX(), 5 );
+            { 
+                ctx.fillStyle = "rgba(200,200,200,1)";
+                ctx.fillRect( sourceTurns[x].trnNode.getX(), 10, sourceTurns[x].trnEdges.length*10+10+20, 10);
             }
-
-            //write numbers
-            ctx.fillStyle = "rgb(0,0,0)";//"black";
-            ctx.font = "10pt Helvetica";
-            ctx.textAlign = "left";
-            ctx.textBaseline = "top";
-            ctx.fillText( sourceTurns[x].trnNode.traceRecord.anchor.turn.number, sourceTurns[x].trnNode.getX(), 22 );
-
-            prevVatName = sourceTurns[x].name;//trnNode.getVatName();
-            prevX = sourceTurns[x].trnNode.getX();
- 
-     
+    
             var startNdx = sourceTurns[x].trnNode.getX()+5;
             var startNdy = sourceTurns[x].trnNode.getY()+5;
 
             //draw nodes
             ctx.beginPath();
-            ctx.fillStyle = 'rgba(0,0,0,1)';
+            ctx.fillStyle = 'rgba(0,0,0,'+sourceTurns[x].trnNode.getAlpha()+')';
             ctx.moveTo( startNdx, startNdy );
             ctx.lineTo( startNdx+5, startNdy );
             ctx.lineTo( startNdx+5, startNdy+5 );
@@ -212,10 +340,12 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
             var conx;
             var cony;
 
+
             var i;
             for( i = 0; i < sourceTurns[x].trnEdges.length; i++ )
             {
                 var edge = sourceTurns[x].trnEdges[i];
+                var node = sourceTurns[x].trnNode;
 
                 var startx = edge.getX()+5;
                 var starty = edge.getY()+5;
@@ -223,7 +353,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                 if( i == 0 ) // line between node box and first edge box
                 {
                     ctx.beginPath();
-                    ctx.strokeStyle = 'rgba(0,0,0,1)';
+                    ctx.strokeStyle = 'rgba(0,0,0,'+node.getAlpha()+' )';
                     //ctx.lineWidth = 2;
                     ctx.moveTo( startNdx+2.5, startNdy+2.5 );
                     ctx.lineTo( startx+2.5, starty+2.5 );
@@ -233,8 +363,9 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                 }
                 else // line between edge boxes
                 {
+//document.write("edge alpha "+edge.getAlpha()+"<br/>");
                     ctx.beginPath();
-                    ctx.strokeStyle = "black";//'rbga(0,200,0,1)';
+                    ctx.strokeStyle = 'rgba(0,0,0,'+node.getAlpha()+' )';
                     //ctx.lineWidth = 2;
                     ctx.moveTo( conx, cony );
                     ctx.lineTo( startx+2.5, starty+2.5 );
@@ -275,7 +406,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                     ctx.moveTo( startx, starty );
 
                     ctx.bezierCurveTo( startx+(endx-startx), starty, endx-(endx-startx), endy, endx, endy+7.5 );
-                    ctx.strokeStyle = 'rgba(200,0,0,1)';
+                    ctx.strokeStyle = 'rgba(200,0,0,'+edge.getAlpha()+' )';
                     ctx.stroke();
                     
                 }
@@ -283,7 +414,6 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                     continue; 
                 
             }
-
             //line connecting edges between vats
             if( conVats[ sourceTurns[x].name ] == undefined )
             {
@@ -302,9 +432,8 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
                 var sry = ending.getY();
 
                 var edge = sourceTurns[x].trnNode;
-
                 ctx.beginPath();
-                ctx.strokeStyle = "rgba(0,0,0,.8)";//"black";
+                ctx.strokeStyle = "rgba(0,0,0,"+dotAlpha+")";//"black";
 //                ctx.moveTo( srx+7.5, sry+7.5 );
 //                ctx.lineTo( edge.getX()+7.5, edge.getY()+7.5 );
                 dottedLine( ctx, srx+7.5, sry+7.5, edge.getX()+7.5, edge.getY()+7.5 );
@@ -318,6 +447,10 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx )
             counter++;
         }
 
+        ctx.beginPath();
+        ctx.moveTo( 0, 0 );
+        ctx.lineTo( 10,10 );
+        ctx.stroke();
     }
 
 
@@ -359,7 +492,7 @@ function drawFiles( globFiles, globCnt, nodes, canvas, ctx )
     var hspcg = 20;
  
     var i;
-    var starty = 80;
+    var starty = 40;
     //looping through all files
     for( i = 0; i < globFiles.length; i++ )
     {
@@ -415,6 +548,8 @@ function drawOneFile( file, starty, hspcg, canvas, ctx )
 
                 file.lines[i].lnEdges[j].getOrigin().setY( nodey );
                 file.lines[i].lnEdges[j].setY( starty );
+
+                file.lines[i].ycoord = starty;
 
             }
 
