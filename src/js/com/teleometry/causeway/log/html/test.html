@@ -1,0 +1,47 @@
+<html>
+<head>
+<script src="windowLogger.js"></script>
+<script src="instrument.js"></script>
+</head>
+<body>
+<script>
+console.time('foo');
+console.groupCollapsed('grouping...');
+console.log('loading...');
+console.debug('loading...');
+console.info('loading...');
+console.groupEnd('done grouping...');
+console.group('grouping...');
+console.warn('loading...');
+console.error('loading...');
+console.exception(new Error('ouchie!'));
+console.groupEnd('done grouping...');
+console.timeEnd('foo');
+(function () {
+  var worker = new Worker('test.js');
+  worker.addEventListener('message', function (msg) {
+    console.log(msg.data);
+  }, false);
+  var buy = window.document.createElement('button');
+  buy.appendChild(window.document.createTextNode('buy'));
+  buy.addEventListener('click', function DoBuy() {
+    console.log('buying...');
+    worker.postMessage('buy');
+  }, false);
+  window.document.body.appendChild(buy);
+  setTimeout(function clickBuy() {
+    console.log('click');
+    var click = document.createEvent('MouseEvents');
+    click.initMouseEvent('click', true, true, window,
+                         0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    buy.dispatchEvent(click);
+    console.log('afters');
+  }, 0);
+  var intervalId = setInterval(function() {
+    console.log('interval');
+    clearInterval(intervalId);
+  }, 100);
+}());
+</script>
+</body>
+</html>

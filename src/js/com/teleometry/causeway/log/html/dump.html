@@ -1,0 +1,17 @@
+<html>
+<head>
+</head>
+<body>
+<script>
+(function () {
+  var dump = window.document.createElement('pre');
+  window.document.body.appendChild(dump);
+  dump.appendChild(window.document.createTextNode("[\n"));
+  window.addEventListener('message', function (event) {
+    dump.appendChild(window.document.createTextNode(event.data));
+    dump.appendChild(window.document.createTextNode(",\n"));
+  }, false);
+}());
+</script>
+</body>
+</html>
