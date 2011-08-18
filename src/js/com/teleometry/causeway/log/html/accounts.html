@@ -1,0 +1,17 @@
+<html>
+<head>
+<script src="windowLogger.js"></script>
+<script src="instrument.js"></script>
+</head>
+<body>
+<script>
+window.addEventListener('message', function (msg) {
+  if ('doCreditCheck' === msg.data) {
+    msg.source.postMessage('true', '*');
+  } else {
+    console.error(msg.data);
+  }
+}, false);
+</script>
+</body>
+</html>

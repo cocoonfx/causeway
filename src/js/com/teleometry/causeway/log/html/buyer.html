@@ -1,0 +1,43 @@
+<html>
+<head>
+<script src="windowLogger.js"></script>
+<script src="instrument.js"></script>
+</head>
+<body>
+<script>
+(function () {
+  var accounts = window.document.createElement('iframe');
+  accounts.src = 'accounts.html';
+  accounts.width = accounts.height = 0;
+  window.document.body.appendChild(accounts);
+
+  var product = window.document.createElement('iframe');
+  product.src = 'product.html';
+  product.width = product.height = 0;
+  window.document.body.appendChild(product);
+
+  var checks;
+  var buy = window.document.createElement('button');
+  buy.appendChild(window.document.createTextNode('buy'));
+  buy.addEventListener('click', function (event) {
+    checks = 3;
+    product.contentWindow.postMessage('isAvailable', '*');
+    accounts.contentWindow.postMessage('doCreditCheck', '*');
+    product.contentWindow.postMessage('canDeliver', '*');
+  }, false);
+  window.addEventListener('message', function (msg) {
+    if ('true' === msg.data) {
+      checks -= 1;
+      if (0 === checks) {
+        console.log("All queries answered true");
+        product.contentWindow.postMessage('placeOrder', '*');
+      }
+    } else {
+      console.log("query answered false");
+    }
+  }, false);
+  window.document.body.appendChild(buy);
+}());
+</script>
+</body>
+</html>
