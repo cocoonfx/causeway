@@ -380,6 +380,7 @@
         trace.calls = trace.calls.slice(0, 1);
         if (trace.calls.length > 0) {
           trace.calls[0].span[0][0] += 1;
+          trace.calls[0].span[0][1] = 1;
         }
         if ('object' === typeof arg_0.data) {
           arg_0.data['---event-id'] = dispatch;
