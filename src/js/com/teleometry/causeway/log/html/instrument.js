@@ -102,8 +102,8 @@
             problem: function (text, reason, trace) {
               sendLog({
                 'class': [ 'org.ref_send.log.Problem',
-                          'org.ref_send.log.Comment',
-                          'org.ref_send.log.Event' ],
+                           'org.ref_send.log.Comment',
+                           'org.ref_send.log.Event' ],
                 anchor: anchor,
                 timestamp: Date.now(),
                 trace: trace,
@@ -115,7 +115,7 @@
             sent: function (message, trace) {
               sendLog({
                 'class': [ 'org.ref_send.log.Sent',
-                          'org.ref_send.log.Event' ],
+                           'org.ref_send.log.Event' ],
                 anchor: anchor,
                 timestamp: Date.now(),
                 trace: trace,
@@ -126,8 +126,8 @@
             sentIf: function (message, condition, trace) {
               sendLog({
                 'class': [ 'org.ref_send.log.SentIf',
-                          'org.ref_send.log.Sent',
-                          'org.ref_send.log.Event' ],
+                           'org.ref_send.log.Sent',
+                           'org.ref_send.log.Event' ],
                 anchor: anchor,
                 timestamp: Date.now(),
                 trace: trace,
@@ -139,8 +139,8 @@
             fulfilled: function (condition, trace) {
               sendLog({
                 'class': [ 'org.ref_send.log.Fulfilled',
-                          'org.ref_send.log.Resolved',
-                          'org.ref_send.log.Event' ],
+                           'org.ref_send.log.Resolved',
+                           'org.ref_send.log.Event' ],
                 anchor: anchor,
                 timestamp: Date.now(),
                 trace: trace,
