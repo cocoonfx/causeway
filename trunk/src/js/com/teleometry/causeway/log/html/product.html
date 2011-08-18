@@ -1,0 +1,21 @@
+<html>
+<head>
+<script src="windowLogger.js"></script>
+<script src="instrument.js"></script>
+</head>
+<body>
+<script>
+window.addEventListener('message', function (msg) {
+  if ('isAvailable' === msg.data) {
+    msg.source.postMessage('true', '*');
+  } else if ('canDeliver' === msg.data) {
+    msg.source.postMessage('true', '*');
+  } else if ('placeOrder' === msg.data) {
+    console.log("Order placed for West Coast Buyers");
+  } else {
+    console.error(msg.data);
+  }
+}, false);
+</script>
+</body>
+</html>

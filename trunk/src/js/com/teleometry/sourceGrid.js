@@ -110,7 +110,7 @@ var doCausalityGridTest;
 
   function makeModel(chunks) {
 
-    var srcURL = "causeway/purchase_example/workers/";
+    var srcURL = "";
 
     var hidden = new FlexSet();
     hidden.addElement("makeCausewayLogger.js");
@@ -141,12 +141,10 @@ var doCausalityGridTest;
 
   doCausalityGridTest = function doCausalityGridTest() {
 
-    var logURL = "causeway/purchase_example/workers/log/";
-    
     var parser = new AsyncParse(1, function(chunks) {
                                 makeModel(chunks);
     });
     
-    getTraceLog(logURL + "workers.log", parser);
+    getTraceLog("causeway/log/html/buyer.log", parser);
   };
 })();
