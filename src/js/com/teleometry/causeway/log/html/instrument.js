@@ -209,10 +209,14 @@
         timeout = vat.message(),
         setTrace = traceHere(logTimeout);
       turn.sent(timeout, setTrace);
+
+      // TODO: Use listener location instead of setTimeout trace.
       setTrace.calls = setTrace.calls.slice(0, 1);
+      if (setTrace.calls.length > 0) {
+        setTrace.calls[0].span[0][1] += 'setTimeout('.length;
+      }
       arg_0 = function stack_bottom() {
-        turn = vat.got(timeout, setTrace);  // TODO: Use listener location
-                                            // instead of setTimeout trace.
+        turn = vat.got(timeout, setTrace);
         var problem;
         try {
           if ('function' === typeof listener) {
@@ -242,12 +246,16 @@
         listenerId = vat.condition(),
         setTrace = traceHere(logInterval);
       turn.fulfilled(listenerId, setTrace);
+
+      // TODO: Use listener location instead of setInterval trace.
       setTrace.calls = setTrace.calls.slice(0, 1);
+      if (setTrace.calls.length > 0) {
+        setTrace.calls[0].span[0][1] += 'setInterval('.length;
+      }
       arg_0 = function stack_bottom() {
         var interval = vat.message(),
           problem;
-        turn = vat.got(interval, setTrace);  // TODO: Use listener location
-                                             // instead of setInterval trace.
+        turn = vat.got(interval, setTrace);
         turn.sentIf(interval, listenerId, setTrace);
         try {
           if ('function' === typeof listener) {
@@ -273,7 +281,12 @@
     function wrapListener(listener, addListenerTrace) {
       var listenerId = vat.condition();
       turn.fulfilled(listenerId, addListenerTrace);
+
+      // TODO: Use listener location instead of addListener trace
       addListenerTrace.calls = addListenerTrace.calls.slice(0, 1);
+      if (addListenerTrace.calls.length > 0) {
+        addListenerTrace.calls[0].span[0][1] += 'addEventListener('.length;
+      }
       return function stack_bottom(msg) {
         if (!contains(msg, '---stitching-turn')) {
           msg['---stitching-turn'] = vat.got((function () {
@@ -296,8 +309,7 @@
         var stitch = vat.message(),
           problem;
         msg['---stitching-turn'].sentIf(stitch, listenerId);
-        turn = vat.got(stitch, addListenerTrace); // TODO: Use listener location
-                                                  // instead of addListener call
+        turn = vat.got(stitch, addListenerTrace);
         try {
           listener.apply(this, arguments);
         } catch (e) {
@@ -366,6 +378,9 @@
         turn.sent(stitch, trace);
         turn.done();
         trace.calls = trace.calls.slice(0, 1);
+        if (trace.calls.length > 0) {
+          trace.calls[0].span[0][0] += 1;
+        }
         if ('object' === typeof arg_0.data) {
           arg_0.data['---event-id'] = dispatch;
         } else {
