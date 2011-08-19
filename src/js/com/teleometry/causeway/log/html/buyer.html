@@ -25,12 +25,7 @@
     accounts.contentWindow.postMessage('doCreditCheck', '*');
     product.contentWindow.postMessage('canDeliver', '*');
   }, false);
-  window.setTimeout(function () {
-    var click = document.createEvent('MouseEvents');
-    click.initMouseEvent('click', true, true, window,
-                         0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    buy.dispatchEvent(click);
-  }, 0);
+  window.document.body.appendChild(buy);
   window.addEventListener('message', function (msg) {
     if ('true' === msg.data) {
       checks -= 1;
@@ -42,7 +37,12 @@
       console.log("query answered false");
     }
   }, false);
-  window.document.body.appendChild(buy);
+  window.setTimeout(function () {
+    var click = document.createEvent('MouseEvents');
+    click.initMouseEvent('click', true, true, window,
+                         0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    buy.dispatchEvent(click);
+  }, 0);
 }());
 </script>
 </body>
