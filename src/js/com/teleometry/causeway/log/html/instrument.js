@@ -405,7 +405,7 @@
               msg.source = sub;
             }());
           }
-          if (contains(msg.data, '---event-data')) {
+          if (msg.data && contains(msg.data, '---event-data')) {
             msg = argv[0] = (function () {
               function ShadowReadOnlyEventData() {
                 this.data = msg.data['---event-data'];
