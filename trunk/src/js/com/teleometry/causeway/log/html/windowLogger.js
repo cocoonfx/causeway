@@ -4,8 +4,8 @@
 // Setup the log record output stream.
 var sendLog = (function () {
   "use strict";
-  var logOrigin = /^https?:$/.test(location.protocol) ?
-      location.protocol + "//" + location.host : '*',
+  var logOrigin = /^https?:$/.test(window.location.protocol) ?
+        window.location.protocol + "//" + window.location.host : '*',
     logURL = 'dump.html',
     logRef = open(logURL, 'causeway'),
     postMessageToWindow = logRef.postMessage,
@@ -17,11 +17,11 @@ var sendLog = (function () {
     postMessageToWindow.call(logRef, JSON.stringify(record), logOrigin);
   }
   setTimeout(function () {
+    sendLog = postLogToWindow;
     buffer.forEach(function (data) {
       postMessageToWindow.call(logRef, data, logOrigin);
     });
     buffer = undefined;
-    sendLog = postLogToWindow;
-  }, 1000);
+  }, 100);
   return bufferLog;
 }());

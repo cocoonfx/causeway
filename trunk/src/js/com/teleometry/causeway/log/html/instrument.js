@@ -1,7 +1,7 @@
 /*global console, self, sendLog, MessagePort, Node, Worker, XMLHttpRequest*/
 /*jslint indent: 2 */
 (function () {
-  "not strict"; // Can't use strict mode when overriding read-only built-ins
+  "use strict";
 
   function iterate(list, predicate) {
     var i = 0, end = list.length, found;
@@ -204,8 +204,8 @@
   (function () {
     var type = declarer(self, 'setTimeout'),
       setTimeout = type.setTimeout;
-    type.setTimeout = function logTimeout(arg_0) {
-      var listener = arg_0,
+    type.setTimeout = function logTimeout() {
+      var listener = arguments[0],
         timeout = vat.message(),
         setTrace = traceHere(logTimeout);
       turn.sent(timeout, setTrace);
@@ -215,7 +215,7 @@
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setTimeout('.length;
       }
-      arg_0 = function stack_bottom() {
+      arguments[0] = function stack_bottom() {
         turn = vat.got(timeout, setTrace);
         var problem;
         try {
@@ -241,8 +241,8 @@
   (function () {
     var type = declarer(self, 'setInterval'),
       setInterval = type.setInterval;
-    type.setInterval = function logInterval(arg_0) {
-      var listener = arg_0,
+    type.setInterval = function logInterval() {
+      var listener = arguments[0],
         listenerId = vat.condition(),
         setTrace = traceHere(logInterval);
       turn.fulfilled(listenerId, setTrace);
@@ -252,7 +252,7 @@
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setInterval('.length;
       }
-      arg_0 = function stack_bottom() {
+      arguments[0] = function stack_bottom() {
         var interval = vat.message(),
           problem;
         turn = vat.got(interval, setTrace);
@@ -276,6 +276,90 @@
     };
   }());
 
+  // Hook postMessage().
+  (function () {
+    function override(type) {
+      var postMessage = type.postMessage;
+      type.postMessage = function logPost() {
+        var post = vat.message();
+        turn.sent(post, traceHere(logPost));
+        if ('object' === typeof arguments[0]) {
+          arguments[0]['---event-id'] = post;
+        } else {
+          arguments[0] = {
+            '---event-id': post,
+            '---event-data': arguments[0]
+          };
+        }
+        return postMessage.apply(this, arguments);
+      };
+    }
+    override(declarer(MessagePort.prototype, 'postMessage'));
+    override(declarer(Worker.prototype, 'postMessage'));
+
+    // Watch for new frames to override their postMessage function.
+    var addEventListener = Node.prototype.addEventListener;
+    self.addEventListener('DOMNodeInserted', function (msg) {
+      var target = msg.target;
+      if ('IFRAME' === target.tagName) {
+        addEventListener.call(target, 'load', function () {
+          function ShadowReadOnlyPostMessage () {}
+          ShadowReadOnlyPostMessage.prototype = target.contentWindow;
+          delete target.contentWindow;  // Delete first to enable overwrite.
+          target.contentWindow = new ShadowReadOnlyPostMessage();
+          override(target.contentWindow);
+        }, false);
+      }
+    }, false);
+  }());
+
+  // Hook dispatchEvent().
+  (function () {
+    function override(type) {
+      type = declarer(type, 'dispatchEvent');
+      var dispatchEvent = type.dispatchEvent;
+      type.dispatchEvent = function logDispatch() {
+        var dispatch = vat.message(),
+          stitch = vat.message(),
+          trace = traceHere(logDispatch),
+          problem,
+          answer;
+        turn.sent(dispatch, trace);
+        turn.sent(stitch, trace);
+        turn.done();
+
+        // The continuation trace starts on the first line after the call to
+        // dispatchEvent(), but with no column number.
+        trace.calls = trace.calls.slice(0, 1);
+        if (trace.calls.length > 0) {
+          trace.calls[0].span[0][0] += 1;
+          trace.calls[0].span[0].pop();
+        }
+
+        if ('object' === typeof arguments[0].data) {
+          arguments[0].data['---event-id'] = dispatch;
+        } else {
+          arguments[0].data = {
+            '---event-id': dispatch,
+            '---event-data': arguments[0].data
+          };
+        }
+        try {
+          answer = dispatchEvent.apply(this, arguments);
+        } catch (e) {
+          problem = e;
+        }
+        turn = vat.got(stitch, trace);
+        if (problem) {
+          throw problem;
+        }
+        return answer;
+      };
+    }
+    override(self);
+    override(Node.prototype);
+  }());
+
   // Hook addEventListener().
   (function () {
     function wrapListener(listener, addListenerTrace) {
@@ -293,11 +377,7 @@
             var message;
             if (msg.data && contains(msg.data, '---event-id')) {
               message = msg.data['---event-id'];
-              if (contains(msg.data, '=')) {
-                msg.data = msg.data['='];
-              } else {
-                delete msg.data['---event-id'];
-              }
+              delete msg.data['---event-id'];
             } else {
               message = vat.message();
             }
@@ -311,6 +391,15 @@
         msg['---stitching-turn'].sentIf(stitch, listenerId);
         turn = vat.got(stitch, addListenerTrace);
         try {
+          if (contains(msg.data, '---event-data')) {
+            arguments[0] = (function () {
+              function ShadowReadOnlyEventData () {
+                this.data = msg.data['---event-data'];
+              }
+              ShadowReadOnlyEventData.prototype = msg;
+              return new ShadowReadOnlyEventData();
+            }());
+          }
           listener.apply(this, arguments);
         } catch (e) {
           problem = e;
@@ -325,9 +414,9 @@
     function override(type) {
       type = declarer(type, 'addEventListener');
       var addEventListener = type.addEventListener;
-      type.addEventListener = function logListener(arg_0, arg_1) {
-        if (arg_1) {
-          arg_1 = wrapListener(arg_1, traceHere(logListener));
+      type.addEventListener = function logListener() {
+        if (arguments[1]) {
+          arguments[1] = wrapListener(arguments[1], traceHere(logListener));
         }
         return addEventListener.apply(this, arguments);
       };
@@ -336,73 +425,6 @@
     override(XMLHttpRequest.prototype);
     override(MessagePort.prototype);
     override(Worker.prototype);
-    override(Node.prototype);
-  }());
-
-  // Hook postMessage().
-  (function () {
-    function override(type) {
-      type = declarer(type, 'postMessage');
-      var postMessage = type.postMessage;
-      type.postMessage = function logPost(arg_0) {
-        var post = vat.message();
-        turn.sent(post, traceHere(logPost));
-        if ('object' === typeof arg_0) {
-          arg_0['---event-id'] = post;
-        } else {
-          arg_0 = {
-            '---event-id': post,
-            '=': arg_0
-          };
-        }
-        return postMessage.apply(this, arguments);
-      };
-    }
-    override(self);
-    override(MessagePort.prototype);
-    override(Worker.prototype);
-  }());
-
-  // Hook dispatchEvent().
-  (function () {
-    function override(type) {
-      type = declarer(type, 'dispatchEvent');
-      var dispatchEvent = type.dispatchEvent;
-      type.dispatchEvent = function logDispatch(arg_0) {
-        var dispatch = vat.message(),
-          stitch = vat.message(),
-          trace = traceHere(logDispatch),
-          problem,
-          answer;
-        turn.sent(dispatch, trace);
-        turn.sent(stitch, trace);
-        turn.done();
-        trace.calls = trace.calls.slice(0, 1);
-        if (trace.calls.length > 0) {
-          trace.calls[0].span[0][0] += 1;
-          trace.calls[0].span[0][1] = 1;
-        }
-        if ('object' === typeof arg_0.data) {
-          arg_0.data['---event-id'] = dispatch;
-        } else {
-          arg_0.data = {
-            '---event-id': dispatch,
-            '=': arg_0.data
-          };
-        }
-        try {
-          answer = dispatchEvent.apply(this, arguments);
-        } catch (e) {
-          problem = e;
-        }
-        turn = vat.got(stitch, trace);
-        if (problem) {
-          throw problem;
-        }
-        return answer;
-      };
-    }
-    override(self);
     override(Node.prototype);
   }());
 }());
