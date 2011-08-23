@@ -136,19 +136,6 @@
               });
               anchor.number += 1;
             },
-            progressed: function (condition, trace) {
-              sendLog({
-                'class': [ 'org.ref_send.log.Progressed',
-                           'org.ref_send.log.Fulfilled',
-                           'org.ref_send.log.Resolved',
-                           'org.ref_send.log.Event' ],
-                anchor: anchor,
-                timestamp: Date.now(),
-                trace: trace,
-                condition: condition
-              });
-              anchor.number += 1;
-            },
             fulfilled: function (condition, trace) {
               sendLog({
                 'class': [ 'org.ref_send.log.Fulfilled',
@@ -210,13 +197,6 @@
       if (exception) {
         return exception.apply(this, arguments);
       }
-    };
-    console.condition = vat.condition;
-    console.progressed = function logProgress(condition) {
-      turn.progressed(condition, traceHere(logProgress));
-    };
-    console.fulfilled = function logFulfilled(condition) {
-      turn.fulfilled(condition, traceHere(logFulfilled));
     };
   }());
 
