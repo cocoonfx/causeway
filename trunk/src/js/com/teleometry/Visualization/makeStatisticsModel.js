@@ -35,7 +35,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         var trn = new turnObject();
         trn.addNodeToTurn( cellGrid.cells[i].node );
         trn.turn = i;
-        map.set( trn.trnNode, { x: 0, y: 0, alpha: 0, hlight: 0 } );
+        map.set( trn.trnNode, { x: 0, y: 0, alpha: 0, hlight: 0, file: 0, line: 0 } );
         map.get( trn.trnNode ).x = startNdx;
         map.get( trn.trnNode ).alpha = alpha;
 
@@ -72,7 +72,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                     checkFile( globFiles, globCnt, stack[0].source, stack[0].span[0][0], stack[0].span[0][1], label, edge );
 
                     //setting edge alpha and x coordinates
-                    map.set( edge, { x:0, y:0, alpha:0, hlight:0 } );
+                    map.set( edge, { x:0, y:0, alpha:0, hlight:0, file:0, line:0 } );
                     map.get( edge ).x = startNdx;
                     map.get( edge ).alpha = alpha;
 
@@ -325,8 +325,6 @@ function setTransparencyNode( sourceTurns, node, map )
 function setTransparencyEdge( sourceTurns, edge, map )
 {
     var alpha = 1;
-    if( map.get( edge ) == undefined )
-        map.set( edge, { x:0, y:0, alpha:0, hlight:0 } );
 
     map.get( edge ).alpha = alpha;
 
@@ -542,7 +540,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map )
                     var str = new String( edge.traceRecord.class );
                     if( str.match("Fulfilled") != null )
                     {
-                        ctx.fillStyle = 'rgba(200,0,0,'+map.get( edge ).alpha+')';                        
+                        ctx.fillStyle = 'rgba(61,89,171,'+map.get( edge ).alpha+')';                        
                         ctx.beginPath();
                         ctx.moveTo( endx-2.5, starty );
                         ctx.lineTo( endx+2.5, starty );
@@ -697,6 +695,7 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, maxX, map )
             ctx.fillText( str, startx+20, starty );
 
             //setting y coordinates for nodes and edges
+            var toHighlight = 1;
             var j;
             for( j = 0; j < file.lines[i].lnEdges.length; j++ )
             {
@@ -705,6 +704,13 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, maxX, map )
 
                 if( edge.getOrigin().traceRecord.trace.calls.length == 0 )
                     map.get( edge.getOrigin() ).y =  nodey;
+   
+                if( map.get( edge ).hlight == 1 && toHighlight )
+                {
+                    ctx.fillStyle = "rgba(200,0,0,.2)";
+                    ctx.fillRect( startx, starty, 275, 15 );
+                    toHighlight = 0;
+                }
 
                 map.get( edge ).y = starty;
 
