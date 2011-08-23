@@ -17,11 +17,13 @@
   window.document.body.appendChild(product);
 
   var checks;
+  var checkId;
   var buy = window.document.createElement('button');
   buy.appendChild(window.document.createTextNode('buy'));
 
   buy.addEventListener('click', function (event) {
     checks = 3;
+    checkId = console.condition();
     product.contentWindow.postMessage('isAvailable', '*');
     accounts.contentWindow.postMessage('doCreditCheck', '*');
     product.contentWindow.postMessage('canDeliver', '*');
@@ -32,8 +34,11 @@
       console.log("query answered true");
       checks -= 1;
       if (0 === checks) {
+        console.fulfilled(checkId);
         console.log("All queries answered true");
         product.contentWindow.postMessage('placeOrder', '*');
+      } else {
+        console.progressed(checkId);
       }
     } else {
       console.log("query answered false");
