@@ -22,6 +22,6 @@ var sendLog = (function () {
       postMessageToWindow.call(logRef, data, logOrigin);
     });
     buffer = undefined;
-  }, 100);
+  }, 1000);
   return bufferLog;
 }());
