@@ -120,8 +120,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
 
 
 
-    //put files on the screen
-    //redraw( 1 );
+    //put files/nodes/edges on the screen initially
     drawFiles( globFiles, canvas, ctx, maxX, map ); 
     drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map );
 
@@ -161,7 +160,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                           }
  
                           redraw( .2 );
-
+                          return;
                       }//k
                   }//j
               }//i
@@ -231,10 +230,11 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
   
             }
 
-            //draw everything if user clicks anywhere else
-            resetAlpha( 1 );
-            redraw( 1 );
         }//for loop, nodes and edges
+
+        //draw everything if user clicks anywhere else
+        resetAlpha( 1 );
+        redraw( 1 );
 
       }//else
 
