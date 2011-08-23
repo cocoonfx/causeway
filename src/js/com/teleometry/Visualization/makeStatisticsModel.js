@@ -24,17 +24,17 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
     var counterins = 0;
     var counterouts = 0;
 
-    var startNdx = 300;
-    var ndspcg = 10;
-    var trnspcg = 40;
-    var maxX =  0;
-    var cnt = 0;
+    var startNdx = 300; // begin drawing nodes/edges after file names
+    var ndspcg = 10; // spacing between nodes/edges in a turn
+    var trnspcg = 40; // spacing between turns
+    var maxX =  0; // max x value for turns, used for file background
     for( i in cellGrid.cells )
     {
 
         //adding node to turn object
         var trn = new turnObject();
         trn.addNodeToTurn( cellGrid.cells[i].node );
+        trn.turn = i;
         map.set( trn.trnNode, { x: 0, y: 0, alpha: 0, hlight: 0 } );
         map.get( trn.trnNode ).x = startNdx;
         map.get( trn.trnNode ).alpha = alpha;
@@ -61,7 +61,6 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         {
             counterouts++;
 
-            trn.name = edge.getOrigin().getVatName();
             var stack = edge.traceRecord.trace.calls;
             if( stack.length > 0 )
             {
@@ -91,7 +90,6 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         }
 
         sourceTurns[ trn.trnNode.name ] = trn;
-        cnt++;
         startNdx += trnspcg;
       
         if( maxX < startNdx )
@@ -111,10 +109,10 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         }
         for( j in cellGrid.byCols[i] )
         {
-            sourceTurns[ cellGrid.byCols[i][j].node.name ].concurrent = counter; // number of concurrent nodes
+            sourceTurns[ cellGrid.byCols[i][j].node.name ].concurrent = counter; // add number of concurrent nodes
             var k;
             for( k = 0; k < concNodes.length; k++ )
-                sourceTurns[ cellGrid.byCols[i][j].node.name ].addConcToTurn( concNodes[k] ); // concurrent nodes for turn
+                sourceTurns[ cellGrid.byCols[i][j].node.name ].addConcToTurn( concNodes[k] ); // add concurrent nodes for turn
         }
     }
 
@@ -124,7 +122,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
     drawFiles( globFiles, canvas, ctx, maxX, map ); 
     drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map );
 
-    //if use has clicked the canvas
+    //if user has clicked the canvas
     function sourceClick( e )
     {
         var x;
@@ -228,15 +226,15 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                     }
                 }     
   
-            }
+            }// for loop, nodes and edges
 
-        }//for loop, nodes and edges
+        }// else
 
         //draw everything if user clicks anywhere else
         resetAlpha( 1 );
         redraw( 1 );
 
-      }//else
+      }// if valid click
 
     }
 
@@ -304,7 +302,7 @@ function setTransparencyNode( sourceTurns, node, map )
  
     var done = 0;
 
-    //start with out edges, setTransparencyEdge will go through in edges as well
+    //start with 'out' edges, setTransparencyEdge will go through 'in' edges as well
     if( sourceTurns[ node.name ].trnEdges.length > 0 )
     {
         node.outs( function( edge )
@@ -314,7 +312,7 @@ function setTransparencyNode( sourceTurns, node, map )
         });
     }
 
-    if( !done ) // if no out edges, loop through in edges
+    if( !done ) // if no 'out' edges, loop through 'in' edges
     {
         node.ins( function( edge )
         {
@@ -394,9 +392,9 @@ function setTransparentLeft( sourceTurns, src, edge, alpha, map )
 
 function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map )
 {
+    //storing connected vats
     var conVats = {};
 
-    //var counter = 0
     if( canvas.getContext )
     {
         for( x in sourceTurns )
@@ -455,7 +453,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map )
                 var startx = map.get( edge ).x+5;
                 var starty = map.get( edge ).y+5;
 
-
+                //draw solid black turn line
                 if( i == 0 ) // line between node box and first edge box
                 {
                     ctx.beginPath();
@@ -575,7 +573,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map )
             {
                 var src = sourceTurns[ conVats[ sourceTurns[x].name ] ];
                 var ending;
-                if( src.counter > 0 )
+                if( src.trnEdges.length > 0 )
                     ending = src.trnEdges[ src.trnEdges.length-1 ];
                 else
                     ending = src.trnNode;
@@ -589,7 +587,7 @@ function drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map )
                 dottedLine( ctx, srx+7.5, sry+7.5, map.get( edge ).x+7.5, map.get( edge ).y+7.5 );
                 ctx.stroke();
 
-                conVats[ sourceTurns[x].name ] = x;
+                conVats[ sourceTurns[x].name ] = x; //holds last known turn for specific vat
                 
             }
 

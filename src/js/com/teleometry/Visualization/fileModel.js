@@ -5,8 +5,8 @@
 function lineObject()
 {
     this.lineNum;
-    this.col;
-    this.isgot;
+    this.col; // column number
+    this.isgot; //if is a got
     this.message;
  
     this.xcoord;
