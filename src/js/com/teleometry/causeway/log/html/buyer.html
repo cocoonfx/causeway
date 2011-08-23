@@ -21,7 +21,7 @@
   buy.appendChild(window.document.createTextNode('buy'));
 
   buy.addEventListener('click', function (event) {
-    checks = 1;
+    checks = 3;
     product.contentWindow.postMessage('isAvailable', '*');
     accounts.contentWindow.postMessage('doCreditCheck', '*');
     product.contentWindow.postMessage('canDeliver', '*');

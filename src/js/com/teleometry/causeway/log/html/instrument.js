@@ -276,43 +276,6 @@
     };
   }());
 
-  // Hook postMessage().
-  (function () {
-    function override(type) {
-      var postMessage = type.postMessage;
-      type.postMessage = function logPost() {
-        var post = vat.message();
-        turn.sent(post, traceHere(logPost));
-        if ('object' === typeof arguments[0]) {
-          arguments[0]['---event-id'] = post;
-        } else {
-          arguments[0] = {
-            '---event-id': post,
-            '---event-data': arguments[0]
-          };
-        }
-        return postMessage.apply(this, arguments);
-      };
-    }
-    override(declarer(MessagePort.prototype, 'postMessage'));
-    override(declarer(Worker.prototype, 'postMessage'));
-
-    // Watch for new frames to override their postMessage function.
-    var addEventListener = Node.prototype.addEventListener;
-    self.addEventListener('DOMNodeInserted', function (msg) {
-      var target = msg.target;
-      if ('IFRAME' === target.tagName) {
-        addEventListener.call(target, 'load', function () {
-          function ShadowReadOnlyPostMessage () {}
-          ShadowReadOnlyPostMessage.prototype = target.contentWindow;
-          delete target.contentWindow;  // Delete first to enable overwrite.
-          target.contentWindow = new ShadowReadOnlyPostMessage();
-          override(target.contentWindow);
-        }, false);
-      }
-    }, false);
-  }());
-
   // Hook dispatchEvent().
   (function () {
     function override(type) {
@@ -362,6 +325,48 @@
 
   // Hook addEventListener().
   (function () {
+
+    // Hook postMessage().
+    function overridePostMessage(type) {
+      var postMessage = type.postMessage;
+      type.postMessage = function logPost() {
+        var post = vat.message();
+        turn.sent(post, traceHere(logPost));
+        if ('object' === typeof arguments[0]) {
+          arguments[0]['---event-id'] = post;
+        } else {
+          arguments[0] = {
+            '---event-id': post,
+            '---event-data': arguments[0]
+          };
+        }
+        return postMessage.apply(this, arguments);
+      };
+    }
+    function subclassWindow(base) {
+      function ShadowReadOnlyPostMessage() {}
+      ShadowReadOnlyPostMessage.prototype = base;
+      var sub = new ShadowReadOnlyPostMessage();
+      overridePostMessage(sub);
+      return sub;
+    }
+    overridePostMessage(declarer(MessagePort.prototype, 'postMessage'));
+    overridePostMessage(declarer(Worker.prototype, 'postMessage'));
+    (function () {
+      // Watch for new frames to override their postMessage function.
+      var addEventListener = Node.prototype.addEventListener;
+      self.addEventListener('DOMNodeInserted', function (msg) {
+        var target = msg.target;
+        if ('IFRAME' === target.tagName) {
+          addEventListener.call(target, 'load', function () {
+            var sub = subclassWindow(target.contentWindow);
+            delete target.contentWindow;  // Delete first to enable overwrite.
+            target.contentWindow = sub;
+          }, false);
+        }
+      }, false);
+    }());
+
     function wrapListener(listener, addListenerTrace) {
       var listenerId = vat.condition();
       turn.fulfilled(listenerId, addListenerTrace);
@@ -391,9 +396,16 @@
         msg['---stitching-turn'].sentIf(stitch, listenerId);
         turn = vat.got(stitch, addListenerTrace);
         try {
+          if (msg.source) {
+            (function () {
+              var sub = subclassWindow(msg.source);
+              delete msg.source;  // Delete first to enable overwrite.
+              msg.source = sub;
+            }());
+          }
           if (contains(msg.data, '---event-data')) {
-            arguments[0] = (function () {
-              function ShadowReadOnlyEventData () {
+            msg = arguments[0] = (function () {
+              function ShadowReadOnlyEventData() {
                 this.data = msg.data['---event-data'];
               }
               ShadowReadOnlyEventData.prototype = msg;
