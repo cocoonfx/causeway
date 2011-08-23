@@ -10,41 +10,30 @@
   accounts.src = 'accounts.html';
   accounts.width = accounts.height = 0;
   window.document.body.appendChild(accounts);
+  accounts.addEventListener('load', function () {
+    accounts.contentWindow.postMessage('doCreditCheck', '*');
+  }, false);
 
   var product = window.document.createElement('iframe');
   product.src = 'product.html';
   product.width = product.height = 0;
   window.document.body.appendChild(product);
-
-  var checks;
-  var buy = window.document.createElement('button');
-  buy.appendChild(window.document.createTextNode('buy'));
-
-  buy.addEventListener('click', function (event) {
-    checks = 3;
+  product.addEventListener('load', function () {
     product.contentWindow.postMessage('isAvailable', '*');
-    accounts.contentWindow.postMessage('doCreditCheck', '*');
     product.contentWindow.postMessage('canDeliver', '*');
   }, false);
-  window.document.body.appendChild(buy);
+
+  var checks = 3;
   window.addEventListener('message', function (msg) {
     if ('true' === msg.data) {
-      console.log("query answered true");
       checks -= 1;
       if (0 === checks) {
-        console.log("All queries answered true");
         product.contentWindow.postMessage('placeOrder', '*');
       }
     } else {
       console.log("query answered false");
     }
   }, false);
-  window.setTimeout(function () {
-    var click = document.createEvent('MouseEvents');
-    click.initMouseEvent('click', true, true, window,
-                         0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    buy.dispatchEvent(click);
-  }, 1000);
 }());
 </script>
 </body>
