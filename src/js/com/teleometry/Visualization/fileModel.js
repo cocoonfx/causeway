@@ -5,6 +5,8 @@
 function lineObject()
 {
     this.lineNum;
+    this.col;
+    this.isgot;
     this.message;
  
     this.xcoord;
@@ -35,14 +37,14 @@ function fileObject()
     this.lineCnt = 0;
 
     //sets file information
-    this.setFile = function( name, line, message, edge )
+    this.setFile = function( name, line, col, message, edge, ifgot )
     {
         this.name = name;
-        this.addLine( line, message, edge );
+        this.addLine( line, col, message, edge, ifgot );
     };
 
     //adds line to file
-    this.addLine = function( line, message, edge )
+    this.addLine = function( line, col, message, edge, ifgot )
     {
         //does a binary search for insertion index
         var index = this.binSearch( line );
@@ -50,13 +52,15 @@ function fileObject()
         //creates an instance of the line object
         var lobj = new lineObject();
         lobj.lineNum = line;
+        lobj.col = col;
+        lobj.isgot = ifgot;
         lobj.message = message;
         lobj.addEdgeToLine( edge );
  
         //adds line instance to line object array
-        if( this.lineCnt <= 1 ) // avoids binary search info
+        if( this.lines.length <= 1 ) // avoids binary search info
         {
-            if( this.lineCnt > 0 && line < this.lines[0].lineNum )
+            if( this.lineCnt > 0 && line < this.lines[0].lineNum && !ifgot )
             {
                 this.lines.unshift( lobj );
                 this.lineCnt++;
@@ -76,15 +80,25 @@ function fileObject()
                     this.lines.splice( 1, 0, lobj );
                     this.lineCnt++;
                 }
+                else if( ifgot && line == this.lines[0].lineNum )
+                {
+                    this.lines.splice( 1, 0, lobj );
+                    this.lineCnt++;
+                }
                 else
                 {    
                     this.lines.unshift( lobj );
                     this.lineCnt++;
                 }
             }
-            else if( index == this.lines.length-1 )//insertion at the end
+            else if( index >= this.lines.length-1 )//insertion at the end
             {
-                if( line < this.lines[ this.lines.length-1 ].lineNum )
+                if( line < this.lines[ this.lines.length-1 ].lineNum )// && !ifgot )
+                {
+                    this.lines.splice( this.lines.length-1, 0, lobj );
+                    this.lineCnt++;
+                }
+                else if( line == this.lines[ this.lines.length-1 ].lineNum  && !ifgot )
                 {
                     this.lines.splice( this.lines.length-1, 0, lobj );
                     this.lineCnt++;
@@ -97,8 +111,17 @@ function fileObject()
             }
             else //insertion in the middle
             {
-                this.lines.splice( index, 0, lobj );
-                this.lineCnt++;
+                if( line == this.lines[ index ].lineNum && ifgot )
+                {
+                    this.lines.splice( index+1, 0, lobj );
+                    this.lineCnt++;
+                }
+                else
+                {
+                    this.lines.splice( index, 0, lobj );
+                    this.lineCnt++;
+                }
+               
             }
         }
 
@@ -113,10 +136,6 @@ function fileObject()
         while( low <= high )
         {
             index = Math.floor( (low+high)/2 );
-
-            if( line == this.lines[ index ].lineNum )
-                return null;
-
 
             if( low == index && index == high )
             {  
@@ -174,15 +193,15 @@ function getFileIndex( files, fCnt, name )
 }
 
 // adding a file
-function addFile( files, fCnt, name, line, message, edge )
+function addFile( files, fCnt, name, line, col, message, edge, ifgot )
 {
     files[ fCnt[0] ] = new fileObject();
-    files[ fCnt[0] ].setFile( name, line, message, edge );
+    files[ fCnt[0] ].setFile( name, line, col, message, edge, ifgot );
     fCnt[0] += 1;
 }
 
 //checking for a file, adding what is necessary 
-function checkFile( files, fCnt, name, line, message, edge )
+function checkFile( files, fCnt, name, line, col, message, edge, ifgot )
 {
     var i;
     var found = 0;
@@ -195,15 +214,16 @@ function checkFile( files, fCnt, name, line, message, edge )
             var j;
             for( j = 0; j < files[i].lineCnt; j++ )
             {
-                if( files[i].lines[j].lineNum == line )
+                if( files[i].lines[j].lineNum == line && files[i].lines[j].col == col)
                 {
+
                     files[i].lines[j].addEdgeToLine( edge );
                     return;
                 }
             }
             
             //line not found, add line to file
-            files[i].addLine( line, message, edge );
+            files[i].addLine( line, col, message, edge, ifgot );
             found = 1;
             break;
         }
@@ -213,7 +233,7 @@ function checkFile( files, fCnt, name, line, message, edge )
     //file was not found, create new file object
     if( !found )
     {
-        addFile( files, fCnt, name, line, message, edge );
+        addFile( files, fCnt, name, line, col, message, edge, ifgot );
     }
 }
 

@@ -10,6 +10,8 @@ function turnObject()
 
     this.trnEdges = new Array();
 
+    this.trnConc = new Array();
+
     this.addNodeToTurn = function ( node )
     {
         this.name = node.getVatName();
@@ -20,7 +22,12 @@ function turnObject()
     {
         this.trnEdges.push( edge );
         this.counter++;
-    }
+    };
+
+    this.addConcToTurn = function( node )
+    {
+        this.trnConc.push( node );
+    }      
 
 }
 
