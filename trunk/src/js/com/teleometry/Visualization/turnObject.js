@@ -1,16 +1,15 @@
-
+// used to hold nodes and edges within a turn
 function turnObject()
 {
     this.name;
-    this.counter = 0;
     this.turn;
     this.concurrent = 0;
 
-    this.trnNode;
+    this.trnNode; // node
 
-    this.trnEdges = new Array();
+    this.trnEdges = new Array(); // edges for turn
 
-    this.trnConc = new Array();
+    this.trnConc = new Array(); // concurrent nodes
 
     this.addNodeToTurn = function ( node )
     {
@@ -21,22 +20,12 @@ function turnObject()
     this.addEdgeToTurn = function( edge )
     {
         this.trnEdges.push( edge );
-        this.counter++;
     };
 
     this.addConcToTurn = function( node )
     {
         this.trnConc.push( node );
-    }      
+    };      
 
 }
 
-function addTurn( turns, ind, node )
-{
-//document.write("node "+node.name+" ind "+ind+"<br/>");
-    if( turns[ind] == undefined )
-        turns[ ind ] = new turnObject();
-
-    turns[ ind ].addNodeToTurn( node );
-    turns[ ind ].turn = ind;
-}
