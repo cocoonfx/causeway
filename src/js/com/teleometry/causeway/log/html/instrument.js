@@ -204,8 +204,8 @@
   (function () {
     var type = declarer(self, 'setTimeout'),
       setTimeout = type.setTimeout;
-    type.setTimeout = function logTimeout() {
-      var listener = arguments[0],
+    type.setTimeout = function logTimeout(listener) {
+      var argv = Array.prototype.slice.call(arguments),
         timeout = vat.message(),
         setTrace = traceHere(logTimeout);
       turn.sent(timeout, setTrace);
@@ -215,7 +215,7 @@
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setTimeout('.length;
       }
-      arguments[0] = function stack_bottom() {
+      argv[0] = function stack_bottom() {
         turn = vat.got(timeout, setTrace);
         var problem;
         try {
@@ -233,7 +233,7 @@
           throw problem;
         }
       };
-      return setTimeout.apply(this, arguments);
+      return setTimeout.apply(this, argv);
     };
   }());
 
@@ -241,8 +241,8 @@
   (function () {
     var type = declarer(self, 'setInterval'),
       setInterval = type.setInterval;
-    type.setInterval = function logInterval() {
-      var listener = arguments[0],
+    type.setInterval = function logInterval(listener) {
+      var argv = Array.prototype.slice.call(arguments),
         listenerId = vat.condition(),
         setTrace = traceHere(logInterval);
       turn.fulfilled(listenerId, setTrace);
@@ -252,7 +252,7 @@
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setInterval('.length;
       }
-      arguments[0] = function stack_bottom() {
+      argv[0] = function stack_bottom() {
         var interval = vat.message(),
           problem;
         turn = vat.got(interval, setTrace);
@@ -272,7 +272,7 @@
           throw problem;
         }
       };
-      return setInterval.apply(this, arguments);
+      return setInterval.apply(this, argv);
     };
   }());
 
@@ -281,7 +281,7 @@
     function override(type) {
       type = declarer(type, 'dispatchEvent');
       var dispatchEvent = type.dispatchEvent;
-      type.dispatchEvent = function logDispatch() {
+      type.dispatchEvent = function logDispatch(msg) {
         var dispatch = vat.message(),
           stitch = vat.message(),
           trace = traceHere(logDispatch),
@@ -299,12 +299,12 @@
           trace.calls[0].span[0].pop();
         }
 
-        if ('object' === typeof arguments[0].data) {
-          arguments[0].data['---event-id'] = dispatch;
+        if ('object' === typeof msg.data) {
+          msg.data['---event-id'] = dispatch;
         } else {
-          arguments[0].data = {
+          msg.data = {
             '---event-id': dispatch,
-            '---event-data': arguments[0].data
+            '---event-data': msg.data
           };
         }
         try {
@@ -329,18 +329,19 @@
     // Hook postMessage().
     function overridePostMessage(type) {
       var postMessage = type.postMessage;
-      type.postMessage = function logPost() {
-        var post = vat.message();
+      type.postMessage = function logPost(data) {
+        var argv = Array.prototype.slice.call(arguments),
+          post = vat.message();
         turn.sent(post, traceHere(logPost));
-        if ('object' === typeof arguments[0]) {
-          arguments[0]['---event-id'] = post;
+        if ('object' === typeof data) {
+          data['---event-id'] = post;
         } else {
-          arguments[0] = {
+          data = argv[0] = {
             '---event-id': post,
-            '---event-data': arguments[0]
+            '---event-data': data
           };
         }
-        return postMessage.apply(this, arguments);
+        return postMessage.apply(this, argv);
       };
     }
     function subclassWindow(base) {
@@ -391,7 +392,8 @@
         }
 
         // Add a SentIf for this listener invocation to the stitching turn.
-        var stitch = vat.message(),
+        var argv = Array.prototype.slice.call(arguments),
+          stitch = vat.message(),
           problem;
         msg['---stitching-turn'].sentIf(stitch, listenerId);
         turn = vat.got(stitch, addListenerTrace);
@@ -404,7 +406,7 @@
             }());
           }
           if (contains(msg.data, '---event-data')) {
-            msg = arguments[0] = (function () {
+            msg = argv[0] = (function () {
               function ShadowReadOnlyEventData() {
                 this.data = msg.data['---event-data'];
               }
@@ -412,7 +414,7 @@
               return new ShadowReadOnlyEventData();
             }());
           }
-          listener.apply(this, arguments);
+          listener.apply(this, argv);
         } catch (e) {
           problem = e;
           console.exception(e);
@@ -427,10 +429,11 @@
       type = declarer(type, 'addEventListener');
       var addEventListener = type.addEventListener;
       type.addEventListener = function logListener() {
-        if (arguments[1]) {
-          arguments[1] = wrapListener(arguments[1], traceHere(logListener));
+        var argv = Array.prototype.slice.call(arguments);
+        if (argv[1]) {
+          argv[1] = wrapListener(argv[1], traceHere(logListener));
         }
-        return addEventListener.apply(this, arguments);
+        return addEventListener.apply(this, argv);
       };
     }
     override(self);
