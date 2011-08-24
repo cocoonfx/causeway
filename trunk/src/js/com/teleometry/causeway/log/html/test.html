@@ -24,12 +24,12 @@ console.timeEnd('foo');
   }, false);
   var buy = window.document.createElement('button');
   buy.appendChild(window.document.createTextNode('buy'));
-  buy.addEventListener('click', function DoBuy() {
+  buy.addEventListener('click', function () {
     console.log('buying...');
     worker.postMessage('buy');
   }, false);
   window.document.body.appendChild(buy);
-  setTimeout(function clickBuy() {
+  setTimeout(function () {
     console.log('click');
     var click = document.createEvent('MouseEvents');
     click.initMouseEvent('click', true, true, window,

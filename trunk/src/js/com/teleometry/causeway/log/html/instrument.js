@@ -255,8 +255,10 @@
       argv[0] = function stack_bottom() {
         var interval = vat.message(),
           problem;
+        turn = vat.got(vat.message());
+        turn.sentIf(interval, listenerId);
+        turn.done();
         turn = vat.got(interval, setTrace);
-        turn.sentIf(interval, listenerId, setTrace);
         try {
           if ('function' === typeof listener) {
             listener.apply(this, arguments);
