@@ -216,7 +216,14 @@ function checkFile( files, fCnt, name, line, col, message, edge, ifgot )
             {
                 if( files[i].lines[j].lineNum == line && files[i].lines[j].col == col)
                 {
-
+/*
+                    for( var k = 0; k < files[i].lines[j].lnEdges.length; k++ )
+                    {
+                        var oldEdge = files[i].lines[j].lnEdges[k];
+                        if( !ifgot && oldEdge.traceRecord.message == edge.traceRecord.message )
+                            return;
+                    }
+*/
                     files[i].lines[j].addEdgeToLine( edge );
                     return;
                 }
