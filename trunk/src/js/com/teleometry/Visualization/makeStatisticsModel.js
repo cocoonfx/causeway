@@ -1,8 +1,10 @@
 
-function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, canvas, ctx )
+function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx )
 {
     //get message graph
-    var messageGraph = causewayModel.getMessageGraph();
+    var model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
+
+    var messageGraph = model.getMessageGraph();
 
     //holds all file information
     var globFiles = new Array();
@@ -16,7 +18,6 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
   
     var sourceTurns = {};
     var map = new FlexMap();
-
 
     var alpha = 1;
     var dotAlpha = 1; //used for dotted lines connecting process order
@@ -86,7 +87,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         //ether
         if( trn.trnEdges.length == 0 )
         {
-            map.get( trn.trnNode ).y = 80;
+            map.get( trn.trnNode ).y = 20;
         }
 
         sourceTurns[ trn.trnNode.name ] = trn;
@@ -134,8 +135,31 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
             x = e.pageX;
             y = e.pageY;
 
-          //check if user has clicked a source file message
-          if( x > 20 && x < 300 )
+          if( x> 20 && x < 50 ) //check box
+          {
+              var i;
+              for( i = 0; i < globFiles.length; i++ )
+              {
+                  var j;
+                  for( j = 0; j < globFiles[i].lines.length; j++ )
+                  {
+                      var line = globFiles[i].lines[j];
+                      if( y > line.ycoord && y < line.ycoord+10 )
+                      {
+//alert("length "+line.ndCnt);
+                          var k;
+                          for( k = 0; k < line.lnEdges.length; k++)
+                          {
+//alert("origin "+line.lnEdges[k].getTarget().name);
+                              removeChunkCall( line.lnEdges[k] );
+                          }
+
+                          return;
+                      }//k
+                  }//j
+              }//i     
+          }
+          else if( x > 50 && x < 300 ) //check if user has clicked a source file message to highlight
           {
               var i;
               for( i = 0; i < globFiles.length; i++ )
@@ -147,9 +171,11 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
                           resetAlpha( .2 ); //set everything transparent
+//alert("length "+line.lnEdges.length);
                           var k; 
                           for( k = 0; k < line.lnEdges.length; k++)
                           {
+//alert("info "+line.lnEdges[k].traceRecord.message+" line "+line.lineNum+" col "+line.col);
                               if( line.isgot )
                                   setTransparencyNode( sourceTurns, line.lnEdges[k], map );  //set chosen nodes
                               else
@@ -281,7 +307,7 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
                 map.get( sourceTurns[i].trnEdges[j] ).hlight = 0;
             }
         }
-    }
+    };
 
     // redraw after click
     function redraw( dalpha )
@@ -290,8 +316,44 @@ function makeStatisticsModel( causewayModel, hiddenSrcPaths, vatMap, walker, can
         drawFiles( globFiles, canvas, ctx, maxX, map );
         dotAlpha = dalpha;
         drawNodesAndEdges( sourceTurns, canvas, ctx, dotAlpha, map );
-    }
+    };
 
+
+    function removeChunkCall( element )
+    {
+        function normalizeStack( chunk )
+        {
+            if( !('track' in chunk ))
+            {
+                chunk.trace = {calls: []};
+            }
+            return chunk;
+        }
+
+        var source = element.traceRecord.trace.calls[0].source;
+        var span = element.traceRecord.trace.calls[0].span;
+        //document.write("element: "+element.traceRecord.trace.calls[0].span+"<br/>");
+
+        for(var i = 0; i < jsonChunks.length; i++ )
+        {
+            var chunk = jsonChunks[i];
+
+           for( j in chunk['trace']['calls'] )
+           {
+               var piece = chunk['trace']['calls'][j];
+ 
+               if( piece['source'] == source && piece['span'] == span )
+               {
+                   normalizeStack( chunk );
+                   ctx.clearRect( 0, 0, canvas.width, canvas.height );
+                   makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx )
+               }
+           }
+
+        }
+
+
+    };
 
 }
 

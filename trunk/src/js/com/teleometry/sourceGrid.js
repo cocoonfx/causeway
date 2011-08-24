@@ -96,7 +96,7 @@ var doCausalityGridTest;
 
   var model = null;
 
-  function makeWalker(srcLookup,hidden) {
+  function makeWalker(chunks,srcLookup,hidden) {
 
     var walker = makeGraphWalker(srcLookup);
     var vatMap = makeVatMap(model.getMessageGraph());
@@ -105,7 +105,7 @@ var doCausalityGridTest;
     var context = canvas.getContext('2d');
 
     //makeCausalityGridDirector(model, vatMap, walker, canvas, context);
-    makeStatisticsModel( model, hidden, vatMap, walker, canvas, context );
+    makeStatisticsModel( model, chunks, hidden, vatMap, walker, canvas, context );
  }
 
   function makeModel(chunks) {
@@ -122,7 +122,7 @@ var doCausalityGridTest;
     if (pathnames.length > 0) {
       
       var getter = new AsyncGetSource(pathnames.length, function(srcLookup) {
-                                      makeWalker(srcLookup,hidden);
+                                      makeWalker(chunks,srcLookup,hidden);
       });
         
       for (var p = 0, pLen = pathnames.length; p < pLen; p++) {
