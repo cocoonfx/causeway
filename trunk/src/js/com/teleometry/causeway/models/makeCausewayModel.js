@@ -33,12 +33,16 @@ var makeCausewayModel;
       getVatTurns: function() {
         var ordered = {};  // process order
 
+        var seen = new FlexSet();
         messageGraph.top.deepOutsPre(function(edge, target) {
-          var id = target.id;
-          if (id.loop !== 'bottom') {
-            var nodes = ordered[id.loop] || [];
-            nodes.push(target);
-            ordered[id.loop] = nodes;
+          if (!seen.contains(target)) {
+            seen.addElement(target);
+            var id = target.id;
+            if (id.loop !== 'bottom') {
+              var nodes = ordered[id.loop] || [];
+              nodes.push(target);
+              ordered[id.loop] = nodes;
+            }
           }
         });
 
