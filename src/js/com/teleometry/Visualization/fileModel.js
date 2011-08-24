@@ -220,7 +220,7 @@ function checkFile( files, fCnt, name, line, col, message, edge, ifgot )
                     for( var k = 0; k < files[i].lines[j].lnEdges.length; k++ )
                     {
                         var oldEdge = files[i].lines[j].lnEdges[k];
-                        if( !ifgot && oldEdge.traceRecord.message == edge.traceRecord.message )
+                        if( oldEdge.timestamp == edge.timestamp )
                             return;
                     }
 */
