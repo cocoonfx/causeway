@@ -151,9 +151,7 @@
           };
         }
       };
-    }()),
-    turn = vat.got(vat.message());        // TODO: coordinate message id with
-                                          // page that caused load
+    }()), turn;
 
   // Hook Console API.
   (function () {
@@ -444,4 +442,13 @@
     override(Worker.prototype);
     override(Node.prototype);
   }());
+
+  // TODO: coordinate message id with page that caused load
+  turn = vat.got(vat.message(), {
+    calls: [ {
+      name: 'load',
+      source: /^[^#$]*/.exec(location.href),
+      span: [ [ 1, 1 ] ]
+    } ]
+  });
 }());
