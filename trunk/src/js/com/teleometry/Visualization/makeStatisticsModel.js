@@ -146,11 +146,9 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                       var line = globFiles[i].lines[j];
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
-//alert("length "+line.ndCnt);
                           var k;
                           for( k = 0; k < line.lnEdges.length; k++)
                           {
-//alert("origin "+line.lnEdges[k].getTarget().name);
                               removeChunkCall( line.lnEdges[k] );
                           }
 
@@ -171,11 +169,9 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
                           resetAlpha( .2 ); //set everything transparent
-//alert("length "+line.lnEdges.length);
                           var k; 
                           for( k = 0; k < line.lnEdges.length; k++)
                           {
-//alert("info "+line.lnEdges[k].traceRecord.message+" line "+line.lineNum+" col "+line.col);
                               if( line.isgot )
                                   setTransparencyNode( sourceTurns, line.lnEdges[k], map );  //set chosen nodes
                               else
