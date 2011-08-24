@@ -1,4 +1,4 @@
-/*global console, self, sendLog, MessagePort, Node, Worker, XMLHttpRequest*/
+/*global self, sendLog, MessagePort, Node, Worker, XMLHttpRequest*/
 /*jslint indent: 2 */
 (function () {
   "use strict";
@@ -35,7 +35,7 @@
       calls.push({
         name: frame.getFunctionName() ||
               (frame.getTypeName() + '.' + (frame.getMethodName() || '')),
-        source: /^[^?#]*/.exec(frame.getFileName())[0],
+        source: /^[^?#]*/.exec(frame.getFileName())[0], // ^ OK on URL
         span: [ [ frame.getLineNumber(), frame.getColumnNumber() ] ]
       });
     });
@@ -55,6 +55,7 @@
         messages = 0,
         conditions = 0;
       return {
+        loop: loop,
         message: function () {
           messages += 1;
           return loop + '!' + messages;
@@ -151,12 +152,16 @@
           };
         }
       };
-    }()), turn;
+    }()),
+    turn;
 
   // Hook Console API.
   (function () {
+    if (!self.console) {
+      self.console = {};
+    }
     function override(name, classes) {
-      var type = declarer(console, name) || console,
+      var type = declarer(self.console, name) || self.console,
         log = type[name];
       classes.push('org.ref_send.log.Comment');
       classes.push('org.ref_send.log.Event');
@@ -180,7 +185,7 @@
                                   'org.ref_send.log.StartGroup' ]);
     override('groupEnd',        [ 'org.ref_send.log.StopGroup' ]);
 
-    var Console = declarer(console, 'exception') || console,
+    var Console = declarer(self.console, 'exception') || self.console,
       exception = Console.exception;
     Console.exception = function logProblem(e) {
       var reason = {
@@ -208,7 +213,7 @@
         setTrace = traceHere(logTimeout);
       turn.sent(timeout, setTrace);
 
-      // TODO: Use listener location instead of setTimeout trace.
+      // TODO: Use listener source position instead of setTimeout trace.
       setTrace.calls = setTrace.calls.slice(0, 1);
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setTimeout('.length;
@@ -224,7 +229,7 @@
           }
         } catch (e) {
           problem = e;
-          console.exception(e);
+          self.console.exception(e);
         }
         turn.done();
         if (problem) {
@@ -245,7 +250,7 @@
         setTrace = traceHere(logInterval);
       turn.fulfilled(listenerId, setTrace);
 
-      // TODO: Use listener location instead of setInterval trace.
+      // TODO: Use listener source position instead of setInterval trace.
       setTrace.calls = setTrace.calls.slice(0, 1);
       if (setTrace.calls.length > 0) {
         setTrace.calls[0].span[0][1] += 'setInterval('.length;
@@ -265,7 +270,7 @@
           }
         } catch (e) {
           problem = e;
-          console.exception(e);
+          self.console.exception(e);
         }
         turn.done();
         if (problem) {
@@ -326,6 +331,28 @@
   // Hook addEventListener().
   (function () {
 
+    // Hook page load
+    (function () {
+      var trace = {
+          calls: [ {
+            name: 'load',
+            source: /^[^?#]*/.exec(self.location.href)[0],  // ^ OK on URL
+            span: [ [ 1, 1 ] ]
+          } ]
+        },
+        load = vat.got(self.name || vat.loop, trace);
+      turn = load;
+      self.addEventListener('load', function (msg) {
+        if (self.name) {
+          load.sent(self.name + '-return', trace);
+        }
+        var onload = vat.message();
+        load.sent(onload, trace);
+        load.done();
+        msg['---stitching-turn'] = vat.got(onload);
+      }, false);
+    }());
+
     // Hook postMessage().
     function overridePostMessage(type) {
       var postMessage = type.postMessage;
@@ -356,9 +383,10 @@
     (function () {
       // Watch for new frames to override their postMessage function.
       var addEventListener = Node.prototype.addEventListener;
-      self.addEventListener('DOMNodeInserted', function (msg) {
+      self.addEventListener('DOMNodeInserted', function watchDOM(msg) {
         var target = msg.target;
         if ('IFRAME' === target.tagName) {
+          turn.sent(target.name || vat.message(), traceHere(watchDOM));
           addEventListener.call(target, 'load', function () {
             var sub = subclassWindow(target.contentWindow);
             delete target.contentWindow;  // Delete first to enable overwrite.
@@ -372,7 +400,7 @@
       var listenerId = vat.condition();
       turn.fulfilled(listenerId, addListenerTrace);
 
-      // TODO: Use listener location instead of addListener trace
+      // TODO: Use listener source position instead of addListener trace
       addListenerTrace.calls = addListenerTrace.calls.slice(0, 1);
       if (addListenerTrace.calls.length > 0) {
         addListenerTrace.calls[0].span[0][1] += 'addEventListener('.length;
@@ -384,6 +412,10 @@
             if (msg.data && contains(msg.data, '---event-id')) {
               message = msg.data['---event-id'];
               delete msg.data['---event-id'];
+            } else if ('load' === msg.type &&
+                       'IFRAME' === msg.target.tagName &&
+                       msg.target.name) {
+              message = msg.target.name + '-return';
             } else {
               message = vat.message();
             }
@@ -417,7 +449,7 @@
           listener.apply(this, argv);
         } catch (e) {
           problem = e;
-          console.exception(e);
+          self.console.exception(e);
         }
         turn.done();
         if (problem) {
@@ -442,13 +474,4 @@
     override(Worker.prototype);
     override(Node.prototype);
   }());
-
-  // TODO: coordinate message id with page that caused load
-  turn = vat.got(vat.message(), {
-    calls: [ {
-      name: 'load',
-      source: /^[^?#]*/.exec(location.href)[0],
-      span: [ [ 1, 1 ] ]
-    } ]
-  });
 }());

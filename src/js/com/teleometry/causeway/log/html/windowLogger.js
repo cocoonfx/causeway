@@ -1,11 +1,11 @@
-/*global location, open, setTimeout */
+/*global self, open, setTimeout */
 /*jslint indent: 2 */
 
 // Setup the log record output stream.
 var sendLog = (function () {
   "use strict";
-  var logOrigin = /^https?:$/.test(window.location.protocol) ?
-        window.location.protocol + "//" + window.location.host : '*',
+  var logOrigin = /^https?:$/.test(self.location.protocol) ?
+        self.location.protocol + "//" + self.location.host : '*',
     logURL = 'dump.html',
     logRef = open(logURL, 'causeway'),
     postMessageToWindow = logRef.postMessage,
