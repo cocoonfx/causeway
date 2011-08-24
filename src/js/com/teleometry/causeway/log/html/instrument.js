@@ -35,7 +35,7 @@
       calls.push({
         name: frame.getFunctionName() ||
               (frame.getTypeName() + '.' + (frame.getMethodName() || '')),
-        source: frame.getFileName(),
+        source: /^[^?#]*/.exec(frame.getFileName())[0],
         span: [ [ frame.getLineNumber(), frame.getColumnNumber() ] ]
       });
     });
@@ -447,7 +447,7 @@
   turn = vat.got(vat.message(), {
     calls: [ {
       name: 'load',
-      source: /^[^#$]*/.exec(location.href),
+      source: /^[^?#]*/.exec(location.href)[0],
       span: [ [ 1, 1 ] ]
     } ]
   });
