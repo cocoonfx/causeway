@@ -342,14 +342,11 @@
         },
         load = vat.got(self.name || vat.loop, trace);
       turn = load;
-      self.addEventListener('load', function (msg) {
+      self.addEventListener('load', function () {
         if (self.name) {
           load.sent(self.name + '-return', trace);
         }
-        var onload = vat.message();
-        load.sent(onload, trace);
         load.done();
-        msg['---stitching-turn'] = vat.got(onload);
       }, false);
     }());
 
