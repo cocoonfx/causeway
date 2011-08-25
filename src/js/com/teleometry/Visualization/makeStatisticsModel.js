@@ -2,9 +2,9 @@
 function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx )
 {
     //get message graph
-    var model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
+    //var model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
 
-    var messageGraph = model.getMessageGraph();
+    //var messageGraph = model.getMessageGraph();
 
     //holds all file information
     var globFiles = new Array();
