@@ -33,26 +33,53 @@ var makeMessageGraph;
       return node;
     }
 
-    // TODO Ignore duplicate chunks
-
     for (var i = 0, iLen = jsonChunks.length; i < iLen; i++) {
       var chunk = normalizeStack(jsonChunks[i]);
 
-      // ...
-
       var majorType = chunk['class'][chunk['class'].length -2];
       if (majorType === "org.ref_send.log.Sent") {
+
         var origin = getOrMakeTurnNode(chunk.anchor.turn);
+
+        // An EventArc (edge) represents a single message send
+        // from an origin TurnNode to a target TurnNode.
+        // Notice that this chunk belongs to the edge.
 
         var edge = msgMap[chunk.message];
         if (!edge) {
+
+          // Sent event is seen first.
+          // Make the edge with a placeholder target, 'bottom'.
+          // Put the edge in msgMap at this message id.
+          // Later, when-if the Got event is seen this edge
+          // will be found and updated with the actual target.
+
           edge = mg.makeEventArc(origin, bottom);
           msgMap[chunk.message] = edge;
+
         } else if (edge.origin === top) {
+
+          // Got event seen first.
+          // The edge already exists and has a placeholder
+          // origin 'top'. Just update the origin.
+
           edge.setOrigin(origin);
+ 
         } else {
-          console.log('conflict');
+
+          // Got event seen first but the placeholder has
+          // already been updated. Check for a duplicate 
+          // event record. Duplicates can result from network
+          // retries and can be safely ignored.
+
+          var s1 = JSON.stringify(chunk);
+          var s2 = JSON.stringify(edge.traceRecord);
+          if (s1 !== s2) {
+            throw new Error('conflicting Sent for message: ' + chunk.message);
+          }
         }
+
+        // The chunk belongs to the edge.
         edge.traceRecord = chunk;
 
         var condition = chunk.condition;
@@ -67,13 +94,40 @@ var makeMessageGraph;
 
         var edge = msgMap[chunk.message];
         if (!edge) {
+
+          // Got event is seen first.
+          // Make the edge with a placeholder origin, 'top'.
+          // Put the edge in msgMap at this message id.
+          // Later, when-if the Sent event is seen this edge
+          // will be found and updated with the actual origin
+          // and the traceRecord for the edge.
+
           edge = mg.makeEventArc(top, target);
           msgMap[chunk.message] = edge;
+
         } else if (edge.target === bottom) {
+
+          // Sent event seen first.
+          // The edge already exists and has a placeholder
+          // target 'bottom'. Just update the target.
+
           edge.setTarget(target);
+
         } else {
-          console.log('conflict');
+
+          // Sent event seen first but the placeholder has
+          // already been updated. Check for a duplicate 
+          // event record. Duplicates can result from network
+          // retries and can be safely ignored.
+
+          var s1 = JSON.stringify(chunk);
+          var s2 = JSON.stringify(target.traceRecord);
+          if (s1 !== s2) {
+            throw new Error('conflicting Got for message: ' + chunk.message);
+          }
         }
+
+        // The chunk belongs to the target.
         target.traceRecord = chunk;
       } else if (majorType === "org.ref_send.log.Resolved") {
         resolveds.push(chunk);
