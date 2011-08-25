@@ -50,7 +50,7 @@
   }
 
   var vat = (function () {
-      var loop = Math.floor(Math.random() * Math.pow(2, 53)),
+      var loop = 'L' + Math.floor(Math.random() * Math.pow(2, 53)),
         turns = 0,
         messages = 0,
         conditions = 0;
@@ -58,11 +58,11 @@
         loop: loop,
         message: function () {
           messages += 1;
-          return loop + '!' + messages;
+          return loop + '-M' + messages;
         },
         condition: function () {
           conditions += 1;
-          return loop + '@' + conditions;
+          return loop + '-C' + conditions;
         },
         got: function (message, trace) {
           turns += 1;
@@ -331,25 +331,6 @@
   // Hook addEventListener().
   (function () {
 
-    // Hook page load
-    (function () {
-      var trace = {
-          calls: [ {
-            name: 'load',
-            source: /^[^?#]*/.exec(self.location.href)[0],  // ^ OK on URL
-            span: [ [ 1, 1 ] ]
-          } ]
-        },
-        load = vat.got(self.name || vat.loop, trace);
-      turn = load;
-      self.addEventListener('load', function () {
-        if (self.name) {
-          load.sent(self.name + '-return', trace);
-        }
-        load.done();
-      }, false);
-    }());
-
     // Hook postMessage().
     function overridePostMessage(type) {
       var postMessage = type.postMessage;
@@ -380,14 +361,12 @@
     (function () {
       // Watch for new frames to override their postMessage function.
       var addEventListener = Node.prototype.addEventListener;
-      self.addEventListener('DOMNodeInserted', function watchDOM(msg) {
-        var target = msg.target;
-        if ('IFRAME' === target.tagName) {
-          turn.sent(target.name || vat.message(), traceHere(watchDOM));
-          addEventListener.call(target, 'load', function () {
-            var sub = subclassWindow(target.contentWindow);
-            delete target.contentWindow;  // Delete first to enable overwrite.
-            target.contentWindow = sub;
+      self.addEventListener('DOMNodeInserted', function (msg) {
+        if ('IFRAME' === msg.target.tagName) {
+          addEventListener.call(msg.target, 'load', function (msg) {
+            var sub = subclassWindow(msg.target.contentWindow);
+            delete msg.target.contentWindow;  // Delete to enable overwrite.
+            msg.target.contentWindow = sub;
           }, false);
         }
       }, false);
@@ -409,10 +388,6 @@
             if (msg.data && contains(msg.data, '---event-id')) {
               message = msg.data['---event-id'];
               delete msg.data['---event-id'];
-            } else if ('load' === msg.type &&
-                       'IFRAME' === msg.target.tagName &&
-                       msg.target.name) {
-              message = msg.target.name + '-return';
             } else {
               message = vat.message();
             }
@@ -430,7 +405,7 @@
           if (msg.source) {
             (function () {
               var sub = subclassWindow(msg.source);
-              delete msg.source;  // Delete first to enable overwrite.
+              delete msg.source;  // Delete to enable overwrite.
               msg.source = sub;
             }());
           }
@@ -471,4 +446,14 @@
     override(Worker.prototype);
     override(Node.prototype);
   }());
+
+  // Hook page load
+  // TODO: coordinate message id with page that caused navigation
+  turn = vat.got(vat.message(), {
+    calls: [ {
+      name: 'load',
+      source: /^[^?#]*/.exec(self.location.href)[0],  // ^ OK on URL
+      span: [ [ 1, 1 ] ]
+    } ]
+  });
 }());
