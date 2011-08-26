@@ -14,6 +14,7 @@ var checkFile = ( function()
             this.span;
             this.isgot; //if is a got
             this.message;
+            this.show = 1;
 
             this.ycoord;
 
@@ -59,7 +60,7 @@ var checkFile = ( function()
             else
             { 
                 var i;
-                for( i = 0; i < this.lines.length; i++ )
+                for ( i = 0; i < this.lines.length; i++ )
                 {
                     if ( span[0][0] < this.lines[i].span[0][0] )
                     {
