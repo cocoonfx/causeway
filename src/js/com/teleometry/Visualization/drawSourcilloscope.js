@@ -287,6 +287,7 @@ var drawSourcilloscopeGrid = ( function()
                 {
                     //display line numbers and messages
                     var str = file.lines[i].span[0][0] + " " + file.lines[i].message;
+                    var textLen = ctx.measureText( str ).width;
                     ctx.fillStyle = "rgb(0,0,0)";//"black";
                     ctx.font = "8pt Helvetica";
                     ctx.textAlign = "left";
@@ -320,7 +321,7 @@ var drawSourcilloscopeGrid = ( function()
                         if( map.get( edge ).hlight == 1 && toHighlight )
                         {
                             ctx.fillStyle = "rgba(200,0,0,.2)";
-                            ctx.fillRect( startx+20, starty, 250, 15 );
+                            ctx.fillRect( startx+20, starty, textLen, 15 );
                             toHighlight = 0; //no double highlighting for multiple elements on a line
                         }
 
