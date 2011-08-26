@@ -1,17 +1,16 @@
 
-function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx )
+function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx, modelflag )
 {
     //get message graph
-    //var model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
+    var model = causewayModel;
+    if( modelflag != undefined )
+        model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
 
-    //var messageGraph = model.getMessageGraph();
 
     //holds all file information
     var globFiles = new Array();
-    var globCnt = new Array();
-    globCnt[0] = 0;
 
-    var cellGrid = makeCellGrid(causewayModel);
+    var cellGrid = makeCellGrid(model);
 
     canvas.addEventListener( "click", sourceClick, false );
     canvas.addEventListener( "dblclick", sourceDblClick, false );
@@ -49,7 +48,7 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
         if( ndStack.length > 0 )
         {
             var label = walker.getElementLabel( trn.trnNode, vatMap );
-            checkFile( globFiles, globCnt, ndStack[0].source, ndStack[0].span[0][0], ndStack[0].span[0][1], label, trn.trnNode, 1 );
+            var fl = checkFile( globFiles, ndStack[0].source, ndStack[0].span, label, trn.trnNode, 1 );
         }
 
         //var counter = 0;
@@ -70,7 +69,8 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                     var label = walker.getElementLabel(edge,vatMap);
 
                     //adding edges to file object
-                    checkFile( globFiles, globCnt, stack[0].source, stack[0].span[0][0], stack[0].span[0][1], label, edge );
+                    //checkFile( globFiles, stack[0].source, stack[0].span[0][0], stack[0].span[0][1], label, edge );
+                    var fl = checkFile( globFiles, stack[0].source, stack[0].span, label, edge );
 
                     //setting edge alpha and x coordinates
                     map.set( edge, { x:0, y:0, alpha:0, hlight:0, file:0, line:0 } );
@@ -85,7 +85,7 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
         });
 
         //ether
-        if( trn.trnEdges.length == 0 )
+        if( trn.trnNode.traceRecord.trace.calls.length == 0 )//trn.trnEdges.length == 0 )
         {
             map.get( trn.trnNode ).y = 20;
         }
@@ -147,9 +147,9 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
                           var k;
-                          for( k = 0; k < line.lnEdges.length; k++)
+                          for( k = 0; k < line.lnElements.length; k++)
                           {
-                              removeChunkCall( line.lnEdges[k] );
+                              removeChunkCall( line.lnElements[k] );
                           }
 
                           return;
@@ -170,13 +170,13 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                       {
                           resetAlpha( .2 ); //set everything transparent
                           var k; 
-                          for( k = 0; k < line.lnEdges.length; k++)
+                          for( k = 0; k < line.lnElements.length; k++)
                           {
                               if( line.isgot )
-                                  setTransparencyNode( sourceTurns, line.lnEdges[k], map );  //set chosen nodes
+                                  setTransparencyNode( sourceTurns, line.lnElements[k], map );  //set chosen nodes
                               else
-                                  setTransparencyEdge( sourceTurns, line.lnEdges[k], map );  //set chosen edges
-                              map.get( line.lnEdges[k] ).hlight = 1; // highlight nodes/edges
+                                  setTransparencyEdge( sourceTurns, line.lnElements[k], map );  //set chosen edges
+                              map.get( line.lnElements[k] ).hlight = 1; // highlight nodes/edges
                           }
  
                           redraw( .2 );
@@ -342,7 +342,7 @@ function makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap,
                {
                    normalizeStack( chunk );
                    ctx.clearRect( 0, 0, canvas.width, canvas.height );
-                   makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx )
+                   makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx, 1 )
                }
            }
 
@@ -745,7 +745,7 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, maxX, map )
         for( i = 0; i < file.lines.length; i++ )
         {
             //display line numbers and messages
-            var str = file.lines[i].lineNum + " " + file.lines[i].message;
+            var str = file.lines[i].span[0][0] + " " + file.lines[i].message;
             ctx.fillStyle = "rgb(0,0,0)";//"black";
             ctx.font = "8pt Helvetica";
             ctx.textAlign = "left";
@@ -755,14 +755,25 @@ function drawOneFile( file, starty, hspcg, canvas, ctx, maxX, map )
             //setting y coordinates for nodes and edges
             var toHighlight = 1;
             var j;
-            for( j = 0; j < file.lines[i].lnEdges.length; j++ )
+            for( j = 0; j < file.lines[i].lnElements.length; j++ )
             {
-                var startxNd = map.get( file.lines[i].lnEdges[j] ).x;
-                var edge = file.lines[i].lnEdges[j];
+                var startxNd = map.get( file.lines[i].lnElements[j] ).x;
+                var edge = file.lines[i].lnElements[j];
 
-                if( edge.getOrigin().traceRecord.trace.calls.length == 0 )
+                if( !file.lines[i].isgot && edge.getOrigin().traceRecord.trace.calls.length == 0 )
                     map.get( edge.getOrigin() ).y =  nodey;
    
+
+                if( !file.lines[i].isgot && edge.getTarget() != undefined && edge.getTarget().traceRecord.trace.calls.length == 0 )
+                {
+                              map.set( edge.getTarget(), { x: 0, y: 0, alpha: 0, hlight: 0, file: 0, line: 0 } );
+                      map.get( edge.getTarget() ).y = nodey;
+                }
+
+                if( file.lines[i].isgot && edge.traceRecord.trace.calls.length == 0 )
+                    map.get( edge ).y = nodey;
+
+
                 if( map.get( edge ).hlight == 1 && toHighlight )
                 {
                     ctx.fillStyle = "rgba(200,0,0,.2)";
