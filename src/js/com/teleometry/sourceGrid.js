@@ -105,7 +105,9 @@ var doCausalityGridTest;
     var context = canvas.getContext('2d');
 
     //makeCausalityGridDirector(model, vatMap, walker, canvas, context);
-    makeStatisticsModel( model, chunks, hidden, vatMap, walker, canvas, context );
+    //makeStatisticsModel( model, chunks, hidden, vatMap, walker, canvas, context );
+
+    makeSourcilloscopeModel( model, chunks, hidden, vatMap, walker, canvas, context );
  }
 
   function makeModel(chunks) {
