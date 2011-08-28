@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+
+<!--
+ - Copyright (C) 2011 Google Inc. under the terms of the MIT X license
+ - found at http://www.opensource.org/licenses/mit-license.html ...............
+
+-->
+
+<html>
+<head>
+<title>Testing SES/5</title>
+<style type="text/css">
+.outline p          { margin-top: 0em;    margin-bottom: 0em; }
+.outline blockquote { margin-top: 0.05em; margin-bottom: 0.05em; }
+</style>
+</head>
+<body>
+<div id="root" class="outline">Root</div>
+<script src="outline.js"></script>
+<script>
+  function gebi(id) { 
+    return document.getElementById(id); 
+  };
+  var root = outline(gebi('root'));
+  var child1 = outline.add(root, 'child1');
+  var child2 = outline.add(root, 'child2');
+  var child11 = outline.add(child1, 'child11');
+  var child12 = outline.add(child1, 'child12');
+  var child13 = outline.add(child1, 'child13');
+</script>
+</body>
