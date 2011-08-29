@@ -40,13 +40,12 @@ var makeSourcilloscopeModel = ( function()
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
                           line.show *= -1;
-                          //line.lnElements = [];
                           var k;
                           for( k = 0; k < line.lnElements.length; k++)
                           {
-                              removeChunkCall( line.lnElements[k], globFiles[i], line );
+                              //removeChunkCall( line.lnElements[k], globFiles[i], line, k );
                           }
-//drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                           return;
                       }//k
                   }//j
@@ -200,7 +199,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
         }
     };
 
-    function removeChunkCall( element, _file, _line )
+    function removeChunkCall( element, file, line, element )
     {
 
         function normalizeStack( chunk )
@@ -214,7 +213,6 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
 
         var source = element.traceRecord.trace.calls[0].source;
         var span = element.traceRecord.trace.calls[0].span;
-        //document.write("element: "+element.traceRecord.trace.calls[0].span+"<br/>");
 
         for(var i = 0; i < jsonChunks.length; i++ )
         {
@@ -228,14 +226,13 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                {
                    normalizeStack( chunk );
                    ctx.clearRect( 0, 0, canvas.width, canvas.height );
-                   //makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx, 1 );
-sourceTurns = [];
-maxX = 0;
+
+                   sourceTurns = [];
+                   file.line.lnElements.splice( element, 1 );
                    gatherCellInformation( 1 );
         
-                   //append line to files array
                    //draw sourcilloscope
-drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+                   drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                    
                }
            }
