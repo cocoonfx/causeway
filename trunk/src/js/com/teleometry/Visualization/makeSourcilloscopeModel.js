@@ -202,7 +202,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
 
     function removeChunkCall( element, _file, _line )
     {
-alert("here");
+
         function normalizeStack( chunk )
         {
             if( !('track' in chunk ))
@@ -231,7 +231,6 @@ alert("here");
                    //makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx, 1 );
 sourceTurns = [];
 maxX = 0;
-alert("here");
                    gatherCellInformation( 1 );
         
                    //append line to files array
