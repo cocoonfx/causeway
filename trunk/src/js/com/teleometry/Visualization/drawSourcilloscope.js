@@ -294,55 +294,37 @@ var drawSourcilloscopeGrid = ( function()
                     ctx.textBaseline = "top";
                     ctx.fillText( str, startx+20, starty );
 
-                    //setting y coordinates for nodes and edges
+
+                    //draw checkboxes
+                    ctx.beginPath();
+                    ctx.arc( startx+10, starty+6, 5, 0, 2*Math.PI, 1 );
+                    ctx.closePath();
+
+                    if( file.lines[i].show > 0 )
+                    {
+                        ctx.fillStyle = "rgba(200,0,0,.7)";
+                        ctx.fill();
+                    }
+                    else 
+                    {
+                        ctx.strokeStyle = "rgba(200,0,0,1)";
+                        ctx.stroke();
+                    }
+
                     var toHighlight = 1;
-                    var drawOnce = 1;
                     var j;
                     for( j = 0; j < file.lines[i].lnElements.length; j++ )
                     {
                         var startxNd = map.get( file.lines[i].lnElements[j] ).x;
                         var edge = file.lines[i].lnElements[j];
 
-                        if( !file.lines[i].isgot && edge.getOrigin().traceRecord.trace.calls.length == 0 )
-                            map.get( edge.getOrigin() ).y =  nodey;
-
-
-
-                        if( !file.lines[i].isgot && edge.getTarget() != undefined && edge.getTarget().traceRecord.trace.calls.length == 0 )
-                        {
-                                      map.set( edge.getTarget(), { x: 0, y: 0, alpha: 0, hlight: 0, file: 0, line: 0 } );
-                              map.get( edge.getTarget() ).y = nodey;
-                        }
-
-                        if( file.lines[i].isgot && edge.traceRecord.trace.calls.length == 0 )
-                            map.get( edge ).y = nodey;
-
-
+                        //highlight line of text
                         if( map.get( edge ).hlight == 1 && toHighlight )
                         {
                             ctx.fillStyle = "rgba(200,0,0,.2)";
                             ctx.fillRect( startx+20, starty, textLen, 15 );
                             toHighlight = 0; //no double highlighting for multiple elements on a line
                         }
-
-                        //draw checkboxes
-                        ctx.beginPath();
-                        ctx.arc( startx+10, starty+6, 5, 0, 2*Math.PI, 1 );
-                        ctx.closePath();
-
-                        if( file.lines[i].show > 0 && drawOnce )
-                        {
-                            ctx.fillStyle = "rgba(200,0,0,.7)";
-                            ctx.fill();
-                            drawOnce = 0;
-                        }
-                        else if( drawOnce )
-                        {
-                            ctx.strokeStyle = "rgba(200,0,0,1)";
-                            ctx.stroke();
-                            drawOnce = 0;
-                        }
-                        //ctx.fillRect( startx, starty, 15, 15 );
 
                         map.get( edge ).y = starty;
     

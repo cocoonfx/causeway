@@ -28,7 +28,7 @@ var makeSourcilloscopeModel = ( function()
             x = e.pageX;
             y = e.pageY;
 
-          if( x> 20 && x < 50 ) //check box
+          if( x> 15 && x <= 40 ) //check box
           {
               var i;
               for( i = 0; i < globFiles.length; i++ )
@@ -40,18 +40,19 @@ var makeSourcilloscopeModel = ( function()
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
                           line.show *= -1;
+                          //line.lnElements = [];
                           var k;
                           for( k = 0; k < line.lnElements.length; k++)
                           {
-                              //removeChunkCall( line.lnElements[k], globFiles[i], line );
+                              removeChunkCall( line.lnElements[k], globFiles[i], line );
                           }
-drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+//drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                           return;
                       }//k
                   }//j
               }//i     
           }
-          else if( x > 50 && x < 300 ) //check if user has clicked a source file message to highlight
+          else if( x > 40 && x < 300 ) //check if user has clicked a source file message to highlight
           {
               var i;
               for( i = 0; i < globFiles.length; i++ )
@@ -201,7 +202,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
 
     function removeChunkCall( element, _file, _line )
     {
-
+alert("here");
         function normalizeStack( chunk )
         {
             if( !('track' in chunk ))
@@ -228,11 +229,15 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                    normalizeStack( chunk );
                    ctx.clearRect( 0, 0, canvas.width, canvas.height );
                    //makeStatisticsModel( causewayModel, jsonChunks, hiddenSrcPaths, vatMap, walker, canvas, ctx, 1 );
+sourceTurns = [];
+maxX = 0;
+alert("here");
                    gatherCellInformation( 1 );
         
                    //append line to files array
                    //draw sourcilloscope
-
+drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+                   
                }
            }
 
