@@ -1,20 +1,20 @@
 
 var makeSourcilloscopeModel = ( function()
 {
-        var globFiles = [];
-        var sourceTurns = {};
-        var map = new FlexMap();
+    var globFiles = [];
+    var sourceTurns = {};
+    var map = new FlexMap();
 
-        var canvas;
-        var ctx;
-        var model;
-        var jsonChunks;
-        var hiddenSrcPaths;
-        var vatMap;
-        var walker;
+    var canvas;
+    var ctx;
+    var model;
+    var jsonChunks;
+    var hiddenSrcPaths;
+    var vatMap;
+    var walker;
 
-        var maxX;
-        var dotAlpha;
+    var maxX;
+    var dotAlpha;
 
     //if user has clicked the canvas
     function sourceClick( e )
@@ -43,8 +43,11 @@ var makeSourcilloscopeModel = ( function()
                           var k;
                           for( k = 0; k < line.lnElements.length; k++)
                           {
-                              //removeChunkCall( line.lnElements[k], globFiles[i], line, k );
+                              removeChunkCall( line.lnElements[k], line, k );
                           }
+sourceTurns = [];
+gatherCellInformation(1);
+ctx.clearRect( 0, 0, canvas.width, canvas.height );
 drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                           return;
                       }//k
@@ -199,7 +202,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
         }
     };
 
-    function removeChunkCall( element, file, line, element )
+    function removeChunkCall( element, line, index )
     {
 
         function normalizeStack( chunk )
@@ -216,24 +219,23 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
 
         for(var i = 0; i < jsonChunks.length; i++ )
         {
-            var chunk = jsonChunks[i];
-
+           var chunk = jsonChunks[i];
            for( j in chunk['trace']['calls'] )
            {
                var piece = chunk['trace']['calls'][j];
-
-               if( piece['source'] == source && piece['span'] == span )
+               if( piece['source'] == source && piece['span'][0][0] == span[0][0] && piece['span'][0][1] == span[0][1] )
                {
                    normalizeStack( chunk );
-                   ctx.clearRect( 0, 0, canvas.width, canvas.height );
-
-                   sourceTurns = [];
-                   file.line.lnElements.splice( element, 1 );
-                   gatherCellInformation( 1 );
-        
-                   //draw sourcilloscope
-                   drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
-                   
+                   if( line != undefined )
+                     line.lnElements.splice( index, 1 );
+                   if( line != undefined )
+                   {
+                     element.outs( function( edge )
+                     {
+                         removeChunkCall( edge );          
+                     });
+                   }                   
+                   return;              
                }
            }
 
@@ -364,7 +366,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
             var trn = new turnObject();
             trn.addNodeToTurn( cellGrid.cells[i].node );
             trn.turn = i;
-            map.set( trn.trnNode, { x: 0, y: 0, alpha: 0, hlight: 0 } );
+            map.set( trn.trnNode, { x: 0, y: 0, alpha: 0, hlight: 0, line:null } );
             map.get( trn.trnNode ).x = startNdx;
             map.get( trn.trnNode ).alpha = alpha;
 
