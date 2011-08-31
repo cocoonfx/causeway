@@ -96,7 +96,7 @@ var doCausalityGridTest;
 
   var model = null;
 
-  function makeWalker(chunks,srcLookup,hidden) {
+  function makeWalker(chunksCopy,srcLookup,hidden) {
 
     var walker = makeGraphWalker(srcLookup);
     var vatMap = makeVatMap(model.getMessageGraph());
@@ -107,12 +107,41 @@ var doCausalityGridTest;
     //makeCausalityGridDirector(model, vatMap, walker, canvas, context);
     //makeStatisticsModel( model, chunks, hidden, vatMap, walker, canvas, context );
 
-    makeSourcilloscopeModel( model, chunks, hidden, vatMap, walker, canvas, context );
+    makeSourcilloscopeModel( model, chunksCopy, hidden, vatMap, walker, canvas, context );
  }
+
+  function deepJSONCopy(input) {
+    if (null === input || 'object' !== typeof input) {
+      return input;
+    }
+    var output, key;
+    if (Array.isArray(input)) {
+      output = [];
+      for (key = 0; key !== input.length; key += 1) {
+        output[key] = deepJSONCopy(input[key]);
+      }
+    } else {
+      output = {};
+      for (key in input) {
+        if (Object.prototype.hasOwnProperty.call(input, key)) {
+          output[key] = deepJSONCopy(input[key]);
+        }
+      }
+    }
+    return output;
+  }
 
   function makeModel(chunks) {
 
     var srcURL = "";
+
+    var chunksCopy = deepJSONCopy(chunks);
+    for (var i = 0; i < chunksCopy.length; i += 1)
+    {
+      if (!('trace' in chunksCopy[i])) {
+        chunksCopy[i].trace = {calls: []};
+      }
+    }
 
     var hidden = new FlexSet();
     hidden.addElement("makeCausewayLogger.js");
@@ -124,7 +153,7 @@ var doCausalityGridTest;
     if (pathnames.length > 0) {
       
       var getter = new AsyncGetSource(pathnames.length, function(srcLookup) {
-                                      makeWalker(chunks,srcLookup,hidden);
+                                      makeWalker(chunksCopy,srcLookup,hidden);
       });
         
       for (var p = 0, pLen = pathnames.length; p < pLen; p++) {
