@@ -20,6 +20,8 @@ var makeCausewayModel;
   makeCausewayModel = function makeCausewayModel(jsonChunks,
                                                  hiddenSrcPaths) {
 
+    jsonChunks = JSON.parse(JSON.stringify(jsonChunks));
+
     var messageGraph = makeMessageGraph(jsonChunks);
 
     filterMessageGraph(messageGraph, hiddenSrcPaths);
