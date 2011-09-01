@@ -16,6 +16,9 @@ var makeSourcilloscopeModel = ( function()
     var maxX;
     var dotAlpha;
 
+    var linesToRemove = []; //key type: integer, value type: line object                       
+    var chunkMap = new FlexMap(); // key type: line object, value type: chunk
+
     //if user has clicked the canvas
     function sourceClick( e )
     {
@@ -27,34 +30,99 @@ var makeSourcilloscopeModel = ( function()
         {
             x = e.pageX;
             y = e.pageY;
+          
+          if( x < 35 ) {
+              for(var i = 0; i < globFiles.length; i++ ) {
+                  if( y > globFiles[i].ycoord && y < globFiles[i].ycoord+20 ) {
+                      globFiles[i].show = !globFiles[i].show;
+                      jsonChunksCopy = deepJSONCopy(jsonChunks);
+                      for(var j = 0; j < globFiles[i].lines.length; j++ ) {
+                          var line = globFiles[i].lines[j];
+                          if( line.show ) {
+                              line.show = !line.show;
+                              if( chunkMap.get(line) == undefined )
+                                  chunkMap.set( line, {chunk:null} );
+                              chunkMap.get(line).chunk = findChunk( line );
+                              linesToRemove.push(line);
+                          }
+                          else {
+                              line.show = !line.show;
+                              for(var k = 0; k < linesToRemove.length; k += 1) {
+                                  if( line === linesToRemove[k]) {
+                                      linesToRemove.splice(k,1);
+                                  }
+                              }
+                          }
+                      }
+                      for (var k=0; k < linesToRemove.length; k+=1 ) { // in chunksToRemove ) {
+                              removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k]).chunk );
+                      }
 
-          if( x> 15 && x <= 40 ) //check box
+                      sourceTurns = [];
+                      for(var k = 0; k < globFiles.length; k++ ) {
+                          for(var q = 0; q < globFiles[k].lines.length; q++) {
+                              globFiles[k].lines[q].lnElements = [];
+                          }
+                      }
+
+                      gatherCellInformation(jsonChunksCopy);
+                      drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+                      return;                      
+                  }
+              }
+          }
+                      
+
+          if( x> 35 && x <= 60 ) //check box
           {
-              var i;
-              for( i = 0; i < globFiles.length; i++ )
+              for(var i = 0; i < globFiles.length; i++ )
               {
-                  var j;
-                  for( j = 0; j < globFiles[i].lines.length; j++ )
+                  for(var j = 0; j < globFiles[i].lines.length; j++ )
                   {
                       var line = globFiles[i].lines[j];
                       if( y > line.ycoord && y < line.ycoord+10 )
                       {
-                          line.show *= -1;
-                          var k;
-                          for( k = 0; k < line.lnElements.length; k++)
+                          jsonChunksCopy = deepJSONCopy(jsonChunks);
+
+
+                          if( line.show )
                           {
-                              removeChunkCall( line.lnElements[k], line, k );
+
+                              line.show = !line.show;
+                              if( chunkMap.get(line) == undefined )
+                                  chunkMap.set( line, {chunk:null} );
+                              chunkMap.get(line).chunk = findChunk( line );
+
+                              linesToRemove.push(line);
                           }
-sourceTurns = [];
-gatherCellInformation(1);
-ctx.clearRect( 0, 0, canvas.width, canvas.height );
-drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
+                          else
+                          {
+                              line.show = !line.show;
+                              for(var k = 0; k < linesToRemove.length; k += 1) {
+                                  if( line === linesToRemove[k]) {
+                                      linesToRemove.splice(k,1);
+                                  }
+                              }
+                          }
+                          for (var k=0; k < linesToRemove.length; k+=1 ) { // in chunksToRemove ) {
+                                  removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k]).chunk );
+                          }
+
+                          sourceTurns = [];
+                          for(var k = 0; k < globFiles.length; k++ ) {
+                              for(var q = 0; q < globFiles[k].lines.length; q++) {
+                                  globFiles[k].lines[q].lnElements = [];
+                              }
+                          }
+
+                          gatherCellInformation(jsonChunksCopy);
+                          drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                           return;
                       }//k
                   }//j
               }//i     
           }
-          else if( x > 40 && x < 300 ) //check if user has clicked a source file message to highlight
+          else if( x > 60 && x < 320 ) //check if user has clicked a source file message to highlight
           {
               var i;
               for( i = 0; i < globFiles.length; i++ )
@@ -84,7 +152,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
 
 
           }
-          else if ( x > 300 && y < 30 ) // user clicked turn bar at the top
+          else if ( x > 320 && y < 30 ) // user clicked turn bar at the top
           {
             for( i in sourceTurns )
             {
@@ -202,43 +270,90 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
         }
     };
 
-    function removeChunkCall( element, line, index )
-    {
-
-        function normalizeStack( chunk )
-        {
-            if( !('track' in chunk ))
-            {
-                chunk.trace = {calls: []};
+    function deepJSONCopy(input) {
+        if (null === input || 'object' !== typeof input) {
+            return input;
+        }
+        var output, key;
+        if (Array.isArray(input)) {
+            output = [];
+            for (key = 0; key !== input.length; key += 1) {
+                output[key] = deepJSONCopy(input[key]);
             }
+        } else {
+            output = {};
+            for (key in input) {
+                if (Object.prototype.hasOwnProperty.call(input, key)) {
+                    output[key] = deepJSONCopy(input[key]);
+                }
+            }
+        }
+        return output;
+    }
+
+
+    function findChunk( line )
+    {
+   
+        for( var i = 0; i < line.lnElements.length; i += 1) 
+        {
+            var source = line.lnElements[i].traceRecord.trace.calls[0].source;
+            var span = line.lnElements[i].traceRecord.trace.calls[0].span;
+
+            for( var j = 0; j < jsonChunks.length; j++ )            
+            {
+                var chunk = jsonChunks[j];
+                if( chunk['trace'] != undefined )
+                {
+                    for( k in chunk['trace']['calls'] )
+                    {
+                       var piece = chunk['trace']['calls'][k];
+                       if( piece['source'] == source && piece['span'][0][0] == span[0][0] && piece['span'][0][1] == span[0][1] )
+                       {
+                           return deepJSONCopy( chunk );
+                       }
+                    }
+                }
+   
+            }
+        }
+
+    }
+
+    function removeChunk( jsonChunksCopy, chunk )
+    {
+        function normalizeStack( chunk ) {
+            if( !('track' in chunk ))
+                chunk.trace = {calls: []};
             return chunk;
         }
 
-        var source = element.traceRecord.trace.calls[0].source;
-        var span = element.traceRecord.trace.calls[0].span;
-
-        for(var i = 0; i < jsonChunks.length; i++ )
+        for(var i = 0; i < jsonChunksCopy.length; i++ )
         {
-           var chunk = jsonChunks[i];
-           for( j in chunk['trace']['calls'] )
+           if( jsonChunksCopy[i]['trace'] != undefined )
            {
-               var piece = chunk['trace']['calls'][j];
-               if( piece['source'] == source && piece['span'][0][0] == span[0][0] && piece['span'][0][1] == span[0][1] )
-               {
-                   normalizeStack( chunk );
-                   if( line != undefined )
-                     line.lnElements.splice( index, 1 );
-                   if( line != undefined )
-                   {
-                     element.outs( function( edge )
-                     {
-                         removeChunkCall( edge );          
-                     });
-                   }                   
-                   return;              
-               }
-           }
 
+               for( j in jsonChunksCopy[i]['trace']['calls'] )
+               {
+                   var jpiece = jsonChunksCopy[i]['trace']['calls'][j];
+                   //var cpiece
+                   for( k in chunk['trace']['calls'] )
+                   {
+                       var cpiece = chunk['trace']['calls'][k];
+
+                       if( jpiece['source'] ==  cpiece['source'] 
+                           && jpiece['span'][0][0] == cpiece['span'][0][0] 
+                           && jpiece['span'][0][1] == cpiece['span'][0][1] )
+                       {
+
+                           normalizeStack( jsonChunksCopy[i] );
+
+                           return;              
+                       }
+                   }
+               }
+
+            }
         }
 
 
@@ -340,11 +455,12 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
     };
 
 
-    function gatherCellInformation( modelFlag )
+    function gatherCellInformation( jsonChunksCopy )
     {
         //get message graph
-        if( modelFlag != undefined )
-            model = makeCausewayModel( jsonChunks, hiddenSrcPaths );
+        if( jsonChunksCopy != undefined )
+            model = makeCausewayModel( jsonChunksCopy, hiddenSrcPaths );
+
 
         var cellGrid = makeCellGrid(model);
 
@@ -354,7 +470,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
         var counterins = 0;
         var counterouts = 0;
 
-        var startNdx = 300; // begin drawing nodes/edges after file names
+        var startNdx = 320; // begin drawing nodes/edges after file names
         var ndspcg = 10; // spacing between nodes/edges in a turn
         var trnspcg = 40; // spacing between turns
         maxX =  0; // max x value for turns, used for file background
@@ -455,6 +571,8 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
         ctx = _ctx;
         model = _causewayModel;
         jsonChunks = _jsonChunks;
+        //jsonChunksCopy = deepJSONCopy(jsonChunks);
+
         hiddenSrcPaths = _hiddenSrcPaths;
         vatMap = _vatMap;
         walker = _walker;

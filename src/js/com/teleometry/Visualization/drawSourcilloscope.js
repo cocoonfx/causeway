@@ -4,45 +4,34 @@ var drawSourcilloscopeGrid = (function () {
 
     function drawNodesAndEdges(sourceTurns, canvas, ctx, dotAlpha, map) {
         //storing connected vats
-        var conVats = {};
+        var conVats = {}; // key type: vat name, value type: sourceTurns index value
 
 	if (canvas.getContext) {
+
 	    for (x in sourceTurns) {
-                var node = sourceTurns[x].trnNode;
+                var nodeMap = map.get(sourceTurns[x].trnNode);
 
                 //bar for concurrency
                 ctx.fillStyle = "rgba(100,100,100,"+Math.max(1-(2*sourceTurns[x].concurrent/10),0)+")";
-                ctx.fillRect(map.get(node).x+10, 10, sourceTurns[x].trnEdges.length*10+20, 10);
+                ctx.fillRect(nodeMap.x+10, 10, sourceTurns[x].trnEdges.length*10+20, 10);
 
-                var str = ""+sourceTurns[x].concurrent+"";
                 ctx.fillStyle = "rgb(0,0,0)";//"black";
                 ctx.font = "8pt Helvetica";
                 ctx.textAlign = "left";
                 ctx.textBaseline = "top";
-                ctx.fillText(str, map.get(node).x , 9);
-
-   
-                var startNdx = map.get(node).x+5;
-                var startNdy = map.get(node).y+5;
+                ctx.fillText(""+sourceTurns[x].concurrent, nodeMap.x , 9);
 
                 //draw nodes
                 ctx.beginPath();
-                ctx.fillStyle = 'rgba(0,0,0,'+map.get(node).alpha+')';
-                ctx.moveTo(startNdx, startNdy);
-                ctx.lineTo(startNdx+5, startNdy);
-                ctx.lineTo(startNdx+5, startNdy+5);
-                ctx.lineTo(startNdx, startNdy+5);
-                ctx.closePath();
-                ctx.fill();
+                ctx.fillStyle = 'rgba(0,0,0,'+nodeMap.alpha+')';
+                ctx.fillRect(nodeMap.x+5, nodeMap.y+5, 5, 5);
 
-                //highlight picked nodes
-                if (map.get(node).hlight === 1) {
+                //highlight picked nodes with halos
+                if (nodeMap.hlight === 1) {
                     ctx.fillStyle = "rgba(178,34,34,.2)";
-                    ctx.fillRect(map.get(node).x, map.get(node).y, 15, 15);
+                    ctx.fillRect(nodeMap.x, nodeMap.y, 15, 15);
                 }
 
-                var conx;
-                var cony;
 
                 //setting transparancy flag for turns, so not entire turn is opaque if not all edges are shown
                 var alphaFlag = 0;
@@ -51,110 +40,88 @@ var drawSourcilloscopeGrid = (function () {
                         alphaFlag = i;
                 }
 
-                var diffbez = 10;
+                var conx = nodeMap.x+7.5;
+                var cony = nodeMap.y+7.5;
+
+                var diffbez = 10; //used for bezier curves to leave and enter nodes at various angles
                 for (var i = 0; i < sourceTurns[x].trnEdges.length; i += 1) {
                     var edge = sourceTurns[x].trnEdges[i];
-                    var startx = map.get(edge).x+5;
-                    var starty = map.get(edge).y+5;
+                    var edgeMap = map.get(edge);
 
-                    if (i === 0) {
-                        conx = startNdx+2.5;
-                        cony = startNdy+2.5;
-                    }
+//                    var startx = edgeMap.x+5;
+//                    var starty = edgeMap.y+5;
 
                     //solid black lines between edge nodes within a turn
                     ctx.beginPath();
-                    if (dotAlpha === 1 && map.get(edge).alpha !== 1) //opaque for process order
+                    if (dotAlpha === 1 && edgeMap.alpha !== 1) //opaque for process order
                         ctx.strokeStyle = 'rgba(0,0,0,1)';
-                    else if (alphaFlag === 0) // when user clicks turn for concurrency
-                        ctx.strokeStyle = 'rgba(0,0,0,'+map.get(edge).alpha+')';
                     else if (i < alphaFlag)
-                        ctx.strokeStyle = 'rgba(0,0,0,'+map.get(node).alpha+')'; // opaque until last opaque edge
+                        ctx.strokeStyle = 'rgba(0,0,0,'+nodeMap.alpha+')'; // opaque until last opaque edge
                     else
-                        ctx.strokeStyle = 'rgba(0,0,0,'+map.get(edge).alpha+')';
+                        ctx.strokeStyle = 'rgba(0,0,0,'+edgeMap.alpha+')';
 
                     ctx.moveTo(conx, cony);
-                    ctx.lineTo(startx+2.5, starty+2.5);
+                    ctx.lineTo(edgeMap.x+7.5, edgeMap.y+7.5);
                     ctx.stroke();
 
-                    conx = startx+2.5;
-                    cony = starty+2.5;
+                    conx = edgeMap.x+7.5;
+                    cony = edgeMap.y+7.5;
 
                     //draw edge nodes
                     ctx.beginPath();
-                    ctx.fillStyle = 'rgba(178,34,34,'+map.get(edge).alpha+')';
-                    ctx.moveTo(startx, starty);
-                    ctx.lineTo(startx+5, starty);
-                    ctx.lineTo(startx+5, starty+5);
-                    ctx.lineTo(startx, starty+5);
-                    ctx.closePath();
-                    ctx.fill();
+                    ctx.fillStyle = 'rgba(178,34,34,'+edgeMap.alpha+')';
+                    ctx.fillRect(edgeMap.x+5, edgeMap.y+5, 5, 5);
 
-                    // highlight picked edges
-                    if (map.get(edge).hlight === 1) {
+                    // highlight picked edges with halo
+                    if (edgeMap.hlight === 1) {
                         ctx.fillStyle = "rgba(178,34,34,.2)";
-                        ctx.fillRect(map.get(edge).x, map.get(edge).y, 15, 15);
+                        ctx.fillRect(edgeMap.x, edgeMap.y, 15, 15);
                     }
 
                     //begin drawing on right of box
-                    startx += 2.5;
-                    starty += 2.5;
+//                    startx += 2.5;
+//                    starty += 2.5;
 
                     var target = edge.getTarget();
 
                     //connect sent edges with bezier curves or mark fulfilleds 
                     if (sourceTurns[target.name] !== undefined) {
-                        var endx;
-                        var endy;
 
-                        endx = map.get(sourceTurns[target.name].trnNode).x+7.5;
-                        endy = map.get(sourceTurns[target.name].trnNode).y+7.5;
-
-                        //help differentiate bezier curves
-                        var eb;
-                        var sb;
-                        if (starty < endy) {
-                            sb = starty - diffbez;
-                            eb = endy + diffbez;
-                        }
-                        else {
-                            sb = starty + diffbez;
-                            eb = endy - diffbez;
-                        }
+                        var endx = map.get(sourceTurns[target.name].trnNode).x+7.5;
+                        var endy = map.get(sourceTurns[target.name].trnNode).y+7.5;
 
                         ctx.beginPath();
-                        ctx.moveTo(startx, starty);
+                        ctx.moveTo(edgeMap.x+7.5, edgeMap.y+7.5);
 
                         //if fulfilled, mark the node
                         var str = new String( edge.traceRecord.class );
                         if (str.match("Fulfilled") !== null) {
-                            var sign = (endy-starty)/(Math.abs(endy-starty));
-                            ctx.fillStyle = 'rgba(61,89,171,'+map.get( edge ).alpha+')';
-                            ctx.moveTo( endx-2.5, starty );
-                            ctx.lineTo( endx+2.5, starty );
-                            ctx.lineTo( endx, starty+20*sign ); //endy
+                            var sign = (endy-edgeMap.y+7.5)/(Math.abs(endy-edgeMap.y+7.5));
+                            ctx.fillStyle = 'rgba(61,89,171,'+edgeMap.alpha+')';
+                            ctx.moveTo( endx-2.5, edgeMap.y+7.5 );
+                            ctx.lineTo( endx+2.5, edgeMap.y+7.5 );
+                            ctx.lineTo( endx, edgeMap.y+7.5+20*sign ); //endy
                             ctx.closePath();
                             ctx.fill();
-                            ctx.strokeStyle = 'rgba(61,89,171,'+map.get( edge ).alpha+')';
-                            ctx.moveTo( endx, starty+20*sign );
+                            ctx.strokeStyle = 'rgba(61,89,171,'+edgeMap.alpha+')';
+                            ctx.moveTo( endx, edgeMap.y+7.5+20*sign );
                             ctx.lineTo( endx, endy );
-                            //dottedLine( ctx, endx, starty+20*sign, endx, endy );
                             ctx.stroke();
                         }
                         else { // if sent, draw bezier
                             //help differentiate bezier curves
                             var eb,sb;
-                            if (starty < endy) {
-                                sb = starty - diffbez;
+                            if (edgeMap.y+7.5 < endy) {
+                                sb = edgeMap.y+7.5 - diffbez;
                                 eb = endy + diffbez;
                             }
                             else {
-                                sb = starty + diffbez;
+                                sb = edgeMap.y+7.5 + diffbez;
                                 eb = endy - diffbez;
                             }
 
-                            ctx.bezierCurveTo(startx+(endx-startx), sb, endx-(endx-startx), eb, endx, endy);
-                            ctx.strokeStyle = 'rgba(178,34,34,'+map.get(edge).alpha+' )';
+                            ctx.bezierCurveTo(edgeMap.x+7.5+(endx-edgeMap.x+7.5), sb, endx-(endx-edgeMap.x+7.5), eb, endx, endy);
+                            ctx.strokeStyle = 'rgba(178,34,34,'+edgeMap.alpha+' )';
                             ctx.stroke();
                             diffbez+=5;
                         }
@@ -163,24 +130,20 @@ var drawSourcilloscopeGrid = (function () {
                 }
 
                 //line connecting nodes between vats, process order
-                if (conVats[ sourceTurns[x].name] === undefined ) {
-                    conVats[ sourceTurns[x].name ] = x;
+                if (conVats[sourceTurns[x].name] === undefined) {
+                    conVats[sourceTurns[x].name] = x;
                 }
                 else {
                     var src = sourceTurns[conVats[sourceTurns[x].name]];
                     var ending;
                     if (src.trnEdges.length > 0)
-                        ending = src.trnEdges[src.trnEdges.length-1];
+                        elementMap = map.get(src.trnEdges[src.trnEdges.length-1]);
                     else
-                        ending = src.trnNode;
+                        elementMap = map.get(src.trnNode);
 
-                    var srx = map.get(ending).x;
-                    var sry = map.get(ending).y;
-
-                    var edge = sourceTurns[x].trnNode;
                     ctx.beginPath();
                     ctx.strokeStyle = "rgba(0,0,0,"+dotAlpha+")";//"black";
-                    dottedLine(ctx, srx+7.5, sry+7.5, map.get(edge).x+7.5, map.get(edge).y+7.5);
+                    dottedLine(ctx, elementMap.x+7.5, elementMap.y+7.5, nodeMap.x+7.5, nodeMap.y+7.5);
                     ctx.stroke();
 
                     conVats[sourceTurns[x].name] = x; //holds last known turn for specific vat
@@ -213,22 +176,23 @@ var drawSourcilloscopeGrid = (function () {
         var vecy = disty/distance;
 
         //begining dot from start point
-        var curx = vecx*10;
-        var cury = vecy*10;
+        var x = startx+vecx*10;
+        var y = starty+vecy*10;
+
 
         //loop drawing lines
-        while (Math.sqrt((startx-startx+curx)*(startx-startx+curx) + (starty-starty+cury)*(starty-starty+cury)) < distance) {
+        while (Math.sqrt((startx-x)*(startx-x) + (starty-y)*(starty-y)) < distance) {
             //space of 2.5
-            ctx.lineTo(startx+curx, starty+cury);
+            ctx.lineTo(x, y);
 
-            curx += vecx*2.5;
-            cury += vecy*2.5;
+            x += vecx*2.5;
+            y += vecy*2.5;
 
             //draw for distance of 20
-            ctx.moveTo(startx+curx, starty+cury);
+            ctx.moveTo(x, y);
 
-            curx += vecx*20;
-            cury += vecy*20;
+            x += vecx*20;
+            y += vecy*20;
         }
         ctx.lineTo(endx, endy);
 
@@ -236,9 +200,11 @@ var drawSourcilloscopeGrid = (function () {
 
     function drawFiles(globFiles, canvas, ctx, maxX, map) {
 
-        function drawOneFile(file, starty, hspcg, canvas, ctx, maxX, map) {
+        var spacing = 20;
 
-            var startx = 20;
+        function drawOneFile(file, starty) {
+
+            var startx = 40;
             var nodey = starty;
 
             if (canvas.getContext) {
@@ -249,13 +215,27 @@ var drawSourcilloscopeGrid = (function () {
                 ctx.textBaseline = "top";
                 ctx.fillText(file.name, startx, starty);
 
-                //draw marks on top of file boxes, aesthetics only
-                ctx.strokeStyle = "rgba(178,34,34,1)";
-                ctx.moveTo(startx, starty);
-                ctx.lineTo(startx+50, starty);
-                ctx.stroke();
+                
+                ctx.fillStyle = "rgba(178,34,34,.7)";
+                ctx.beginPath()
 
-                starty += hspcg;
+                if( file.show ) {
+                    ctx.moveTo( startx-19+2.5, starty+2.5 );
+                    ctx.lineTo( startx-19+15, starty+2.5 );
+                    ctx.lineTo( startx-19+8.75, starty+15 );
+                }
+                else {
+                    ctx.moveTo( startx-19+2.5, starty+2.5 );
+                    ctx.lineTo( startx-19+2.5, starty+15 );
+                    ctx.lineTo( startx-19+15, starty+8.75 );
+                }
+                ctx.closePath();
+                ctx.fill();
+
+                starty += spacing;
+
+                if( !file.show )
+                    return starty;
 
                 for (var i = 0; i < file.lines.length; i += 1) {
                     //display line numbers and messages
@@ -272,7 +252,7 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.arc(startx+10, starty+6, 5, 0, 2*Math.PI, 1);
                     ctx.closePath();
 
-                    if (file.lines[i].show > 0) { 
+                    if (file.lines[i].show === true) { 
                         ctx.fillStyle = "rgba(178,34,34,.7)";
                         ctx.fill();
                     }
@@ -281,47 +261,57 @@ var drawSourcilloscopeGrid = (function () {
                         ctx.stroke();
                     }
 
-                    var toHighlight = true;
+                    var toHighlight = false;
                     for (var j = 0; j < file.lines[i].lnElements.length; j += 1) {
-                        var startxNd = map.get( file.lines[i].lnElements[j] ).x;
                         var edge = file.lines[i].lnElements[j];
 
                         //highlight line of text
-                        if (map.get(edge).hlight === 1 && toHighlight) {
-                            ctx.fillStyle = "rgba(178,34,34,.2)";
-                            ctx.fillRect(startx+20, starty, textLen, 15);
-                            toHighlight = false; //no double highlighting for multiple elements on a line
+                        if (map.get(edge).hlight === 1 ) { 
+                            toHighlight = true;
                         }
 
                         map.get(edge).y = starty;    
                         file.lines[i].ycoord = starty;
                     }
-                    starty += hspcg;
+ 
+                    if( toHighlight ) {
+                        ctx.fillStyle = "rgba(178,34,34,.2)";
+                        ctx.fillRect(startx+20, starty, textLen, 15);
+                    }
+
+                    starty += spacing;
                 }
 
             }
 
-            //file shading
-            ctx.beginPath()
-            ctx.fillStyle = "rgba(200, 200, 200, 0.25)";
-            ctx.fillRect(startx, nodey, maxX, starty-nodey);
-
             return starty;
-        };
+        }
 
-
-        var hspcg = 20;
         var starty = 40;
+        var shadingy = starty;
         //looping through all files
         for (var i = 0; i < globFiles.length; i += 1) {
             //individualy visualizing files
-            starty = drawOneFile(globFiles[i], starty, hspcg, canvas, ctx, maxX, map);
-            starty += hspcg;
+            globFiles[i].ycoord = starty;
+            starty = drawOneFile(globFiles[i], starty);
+
+            //file shading
+            ctx.beginPath()
+            ctx.fillStyle = "rgba(200, 200, 200, 0.25)";
+            ctx.fillRect(20, shadingy, maxX, starty-shadingy);
+  
+            starty += spacing;
+            shadingy = starty;
         }
    
-    };
+    }
 
-
+    // globFiles - Array of files
+    // sourceTurns - array of turns holding got and sent information
+    // canvas,ctx - canvas draw variables
+    // maxX - max horizontal x value, used to bound background shading
+    // dotAlpha - alpha for dotted lines for process order
+    // nowipe - flag to limit canvas clearing
     return function (globFiles, sourceTurns, canvas, ctx, maxX, map, dotAlpha, noWipe) {
 
         if (noWipe === undefined)

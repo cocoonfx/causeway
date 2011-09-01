@@ -96,7 +96,7 @@ var doCausalityGridTest;
 
   var model = null;
 
-  function makeWalker(chunksCopy,srcLookup,hidden) {
+  function makeWalker(chunks,srcLookup,hidden) {
 
     var walker = makeGraphWalker(srcLookup);
     var vatMap = makeVatMap(model.getMessageGraph());
@@ -105,44 +105,14 @@ var doCausalityGridTest;
     var context = canvas.getContext('2d');
 
     //makeCausalityGridDirector(model, vatMap, walker, canvas, context);
-    //makeStatisticsModel( model, chunks, hidden, vatMap, walker, canvas, context );
 
-    makeSourcilloscopeModel( model, chunksCopy, hidden, vatMap, walker, canvas, context );
+    makeSourcilloscopeModel( model, chunks, hidden, vatMap, walker, canvas, context );
  }
 
-  function deepJSONCopy(input) {
-    if (null === input || 'object' !== typeof input) {
-      return input;
-    }
-    var output, key;
-    if (Array.isArray(input)) {
-      output = [];
-      for (key = 0; key !== input.length; key += 1) {
-        output[key] = deepJSONCopy(input[key]);
-      }
-    } else {
-      output = {};
-      for (key in input) {
-        if (Object.prototype.hasOwnProperty.call(input, key)) {
-          output[key] = deepJSONCopy(input[key]);
-        }
-      }
-    }
-    return output;
-  }
 
   function makeModel(chunks) {
 
     var srcURL = "";
-
-    var chunksCopy = deepJSONCopy(chunks);
-    for (var i = 0; i < chunksCopy.length; i += 1)
-    {
-      if (!('trace' in chunksCopy[i])) {
-        chunksCopy[i].trace = {calls: []};
-      }
-    }
-
     var hidden = new FlexSet();
     hidden.addElement("makeCausewayLogger.js");
     hidden.addElement("workersExample.html");
@@ -153,7 +123,7 @@ var doCausalityGridTest;
     if (pathnames.length > 0) {
       
       var getter = new AsyncGetSource(pathnames.length, function(srcLookup) {
-                                      makeWalker(chunksCopy,srcLookup,hidden);
+                                      makeWalker(chunks,srcLookup,hidden);
       });
         
       for (var p = 0, pLen = pathnames.length; p < pLen; p++) {
