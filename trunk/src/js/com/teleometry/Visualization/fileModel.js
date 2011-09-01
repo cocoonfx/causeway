@@ -10,7 +10,7 @@ var checkFile = (function () {
         this.span = span;
         this.message = message;
         this.isgot = isgot; //if is a got
-        this.show = 1;
+        this.show = true;
 
         this.ycoord = 0;
 
@@ -29,7 +29,9 @@ var checkFile = (function () {
 
         //file name
         this.name = name;
-      
+        this.ycoord = 0;
+        this.show = true;      
+
         //array of line objects
         this.lines = [];
 
