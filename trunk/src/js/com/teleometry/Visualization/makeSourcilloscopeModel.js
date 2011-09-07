@@ -41,8 +41,9 @@ var makeSourcilloscopeModel = ( function()
                           if( line.show ) {
                               line.show = !line.show;
                               if( chunkMap.get(line) == undefined )
-                                  chunkMap.set( line, {chunk:null} );
-                              chunkMap.get(line).chunk = findChunk( line );
+                                  chunkMap.set( line, [] );
+//                              chunkMap.get(line).chunk = findChunk( line );
+                              findChunk( line );
                               linesToRemove.push(line);
                           }
                           else {
@@ -55,7 +56,9 @@ var makeSourcilloscopeModel = ( function()
                           }
                       }
                       for (var k=0; k < linesToRemove.length; k+=1 ) { // in chunksToRemove ) {
-                              removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k]).chunk );
+                          for(var q=0; q < chunkMap.get(linesToRemove[k]).length; q += 1) {
+                              removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q] );
+                          }
                       }
 
                       sourceTurns = [];
@@ -90,9 +93,9 @@ var makeSourcilloscopeModel = ( function()
 
                               line.show = !line.show;
                               if( chunkMap.get(line) == undefined )
-                                  chunkMap.set( line, {chunk:null} );
-                              chunkMap.get(line).chunk = findChunk( line );
-
+                                  chunkMap.set( line, [] );
+                              //chunkMap.get(line).chunk = findChunk( line );
+                              findChunk( line );
                               linesToRemove.push(line);
                           }
                           else
@@ -105,7 +108,9 @@ var makeSourcilloscopeModel = ( function()
                               }
                           }
                           for (var k=0; k < linesToRemove.length; k+=1 ) { // in chunksToRemove ) {
-                                  removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k]).chunk );
+                              for(var q=0; q < chunkMap.get(linesToRemove[k]).length; q += 1) {
+                                  removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q] );
+                              }
                           }
 
                           sourceTurns = [];
@@ -300,6 +305,7 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
             var source = line.lnElements[i].traceRecord.trace.calls[0].source;
             var span = line.lnElements[i].traceRecord.trace.calls[0].span;
 
+            var found = false;
             for( var j = 0; j < jsonChunks.length; j++ )            
             {
                 var chunk = jsonChunks[j];
@@ -310,11 +316,15 @@ drawSourcilloscopeGrid( globFiles, sourceTurns, canvas, ctx, maxX, map, 1 );
                        var piece = chunk['trace']['calls'][k];
                        if( piece['source'] == source && piece['span'][0][0] == span[0][0] && piece['span'][0][1] == span[0][1] )
                        {
-                           return deepJSONCopy( chunk );
+//                           return deepJSONCopy( chunk );
+                             chunkMap.get(line).push( deepJSONCopy( chunk ) );
+                             found = true;
+                             break;
                        }
                     }
                 }
-   
+                if(found)
+                    break;
             }
         }
 
