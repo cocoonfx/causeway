@@ -2,6 +2,10 @@
 
 var drawSourcilloscopeGrid = (function () {
 
+
+    //First, Draw bars and numbers to show Concurrency
+    //Next, draw got nodes and loop through all outgoing edges, drawing them as well
+    //Also, check for targets and draw corresponding arcs
     function drawNodesAndEdges(sourceTurns, canvas, ctx, dotAlpha, map) {
         //storing connected vats
         var conVats = {}; // key type: vat name, value type: sourceTurns index value
@@ -48,8 +52,6 @@ var drawSourcilloscopeGrid = (function () {
                     var edge = sourceTurns[x].trnEdges[i];
                     var edgeMap = map.get(edge);
 
-//                    var startx = edgeMap.x+5;
-//                    var starty = edgeMap.y+5;
 
                     //solid black lines between edge nodes within a turn
                     ctx.beginPath();
@@ -77,10 +79,6 @@ var drawSourcilloscopeGrid = (function () {
                         ctx.fillStyle = "rgba(178,34,34,.2)";
                         ctx.fillRect(edgeMap.x, edgeMap.y, 15, 15);
                     }
-
-                    //begin drawing on right of box
-//                    startx += 2.5;
-//                    starty += 2.5;
 
                     var target = edge.getTarget();
 
@@ -135,7 +133,7 @@ var drawSourcilloscopeGrid = (function () {
                 }
                 else {
                     var src = sourceTurns[conVats[sourceTurns[x].name]];
-                    var ending;
+                    var elementMap;
                     if (src.trnEdges.length > 0)
                         elementMap = map.get(src.trnEdges[src.trnEdges.length-1]);
                     else
@@ -147,7 +145,6 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.stroke();
 
                     conVats[sourceTurns[x].name] = x; //holds last known turn for specific vat
-
                 }
 
             }
@@ -159,9 +156,7 @@ var drawSourcilloscopeGrid = (function () {
             ctx.stroke();
 
         }
-
-
-    };
+    }
 
     function dottedLine(ctx, startx, starty, endx, endy) {
 
@@ -320,7 +315,7 @@ var drawSourcilloscopeGrid = (function () {
         drawFiles(globFiles, canvas, ctx, maxX, map);
         drawNodesAndEdges(sourceTurns, canvas, ctx, dotAlpha, map);
 
-    };
+    }
     
 
 
