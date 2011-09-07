@@ -4,11 +4,12 @@ var drawSourcilloscopeGrid = (function () {
 
 
     //First, Draw bars and numbers to show Concurrency
-    //Next, draw got nodes and loop through all outgoing edges, drawing them as well
-    //Also, check for targets and draw corresponding arcs
+    //Next, draw got nodes and loop through all outgoing edges, 
+    //drawing them as well Also, check for targets and draw corresponding arcs
     function drawNodesAndEdges(sourceTurns, canvas, ctx, dotAlpha, map) {
         //storing connected vats
-        var conVats = {}; // key type: vat name, value type: sourceTurns index value
+        // key type: vat name, value type: sourceTurns index value
+        var conVats = {}; 
 
 	if (canvas.getContext) {
 
@@ -16,8 +17,10 @@ var drawSourcilloscopeGrid = (function () {
                 var nodeMap = map.get(sourceTurns[x].trnNode);
 
                 //bar for concurrency
-                ctx.fillStyle = "rgba(100,100,100,"+Math.max(1-(2*sourceTurns[x].concurrent/10),0)+")";
-                ctx.fillRect(nodeMap.x+10, 10, sourceTurns[x].trnEdges.length*10+20, 10);
+                ctx.fillStyle = "rgba(100,100,100,"
+                            +Math.max(1-(2*sourceTurns[x].concurrent/10),0)+")";
+                ctx.fillRect(nodeMap.x+10, 10, 
+                             sourceTurns[x].trnEdges.length*10+20, 10);
 
                 ctx.fillStyle = "rgb(0,0,0)";//"black";
                 ctx.font = "8pt Helvetica";
@@ -37,7 +40,8 @@ var drawSourcilloscopeGrid = (function () {
                 }
 
 
-                //setting transparancy flag for turns, so not entire turn is opaque if not all edges are shown
+                //setting transparancy flag for turns, 
+                //so not entire turn is opaque if not all edges are shown
                 var alphaFlag = 0;
                 for (i = 0; i < sourceTurns[x].trnEdges.length; i += 1) {
                     if ( map.get( sourceTurns[x].trnEdges[i] ).alpha === 1)
@@ -46,8 +50,9 @@ var drawSourcilloscopeGrid = (function () {
 
                 var conx = nodeMap.x+7.5;
                 var cony = nodeMap.y+7.5;
-
-                var diffbez = 10; //used for bezier curves to leave and enter nodes at various angles
+                //used for bezier curves to leave and
+                //enter nodes at various angle
+                var diffbez = 10;
                 for (var i = 0; i < sourceTurns[x].trnEdges.length; i += 1) {
                     var edge = sourceTurns[x].trnEdges[i];
                     var edgeMap = map.get(edge);
@@ -55,10 +60,11 @@ var drawSourcilloscopeGrid = (function () {
 
                     //solid black lines between edge nodes within a turn
                     ctx.beginPath();
-                    if (dotAlpha === 1 && edgeMap.alpha !== 1) //opaque for process order
+                    //opaque for process order
+                    if (dotAlpha === 1 && edgeMap.alpha !== 1) 
                         ctx.strokeStyle = 'rgba(0,0,0,1)';
                     else if (i < alphaFlag)
-                        ctx.strokeStyle = 'rgba(0,0,0,'+nodeMap.alpha+')'; // opaque until last opaque edge
+                        ctx.strokeStyle = 'rgba(0,0,0,'+nodeMap.alpha+')';
                     else
                         ctx.strokeStyle = 'rgba(0,0,0,'+edgeMap.alpha+')';
 
@@ -94,7 +100,8 @@ var drawSourcilloscopeGrid = (function () {
                         //if fulfilled, mark the node
                         var str = new String( edge.traceRecord.class );
                         if (str.match("Fulfilled") !== null) {
-                            var sign = (endy-edgeMap.y+7.5)/(Math.abs(endy-edgeMap.y+7.5));
+                            var sign = (endy-edgeMap.y+7.5)/
+                                       (Math.abs(endy-edgeMap.y+7.5));
                             ctx.fillStyle = 'rgba(61,89,171,'+edgeMap.alpha+')';
                             ctx.moveTo( endx-2.5, edgeMap.y+7.5 );
                             ctx.lineTo( endx+2.5, edgeMap.y+7.5 );
@@ -118,7 +125,8 @@ var drawSourcilloscopeGrid = (function () {
                                 eb = endy - diffbez;
                             }
 
-                            ctx.bezierCurveTo(edgeMap.x+7.5+(endx-edgeMap.x+7.5), sb, endx-(endx-edgeMap.x+7.5), eb, endx, endy);
+                            ctx.bezierCurveTo(edgeMap.x+7.5+(endx-edgeMap.x+7.5), 
+                                          sb, endx-(endx-edgeMap.x+7.5), eb, endx, endy);
                             ctx.strokeStyle = 'rgba(178,34,34,'+edgeMap.alpha+' )';
                             ctx.stroke();
                             diffbez+=5;
@@ -141,10 +149,11 @@ var drawSourcilloscopeGrid = (function () {
 
                     ctx.beginPath();
                     ctx.strokeStyle = "rgba(0,0,0,"+dotAlpha+")";//"black";
-                    dottedLine(ctx, elementMap.x+7.5, elementMap.y+7.5, nodeMap.x+7.5, nodeMap.y+7.5);
+                    dottedLine(ctx, elementMap.x+7.5, elementMap.y+7.5, 
+                               nodeMap.x+7.5, nodeMap.y+7.5);
                     ctx.stroke();
-
-                    conVats[sourceTurns[x].name] = x; //holds last known turn for specific vat
+                    //holds last known turn for specific vat
+                    conVats[sourceTurns[x].name] = x; 
                 }
 
             }
