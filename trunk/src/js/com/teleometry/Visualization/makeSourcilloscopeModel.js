@@ -126,11 +126,13 @@ var makeSourcilloscopeModel = (function() {
                               resetAlpha(.2); //set everything transparent
                               for (k = 0; k < line.lnElements.length; k += 1) {
                                   if(line.isgot) {
-                                      setTransparencyNode(sourceTurns, line.lnElements[k], map);  //set chosen nodes
+                                      //start from node
+                                      setTransparencyNode(sourceTurns, line.lnElements[k], map);  
                                   } else {
-                                      setTransparencyEdge(sourceTurns, line.lnElements[k], map);  //set chosen edges
+                                      //start from edge
+                                      setTransparencyEdge(sourceTurns, line.lnElements[k], map); 
                                   }
-                                  map.get(line.lnElements[k]).hlight = 1; // highlight nodes/edges
+                                  map.get(line.lnElements[k]).hlight = true; // highlight nodes/edges
                               }
                               drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
                               return;
@@ -149,14 +151,14 @@ var makeSourcilloscopeModel = (function() {
                         // show only nodes that can be executed concurrently with chosen turn
                         for (k = 0; k < turn.trnConc.length; k += 1) {
                             map.get(turn.trnConc[k]).alpha = 1;
-                            map.get(turn.trnConc[k]).hlight = 1;
+                            map.get(turn.trnConc[k]).hlight = true;
                         }
                         drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
                         return true;
                     } else if (y > nodeInfo.y - 15 && y < nodeInfo.y + 15) { //user hit node
                         resetAlpha(.2);
                         setTransparencyNode(sourceTurns, node, map)
-                        nodeInfo.hlight = 1;
+                        nodeInfo.hlight = true;
                         drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
                         return true;
                     }
@@ -169,7 +171,7 @@ var makeSourcilloscopeModel = (function() {
                         &&  y > edgeInfo.y - 5 && y < edgeInfo.y + 15) {
                             resetAlpha(.2);
                             setTransparencyEdge(sourceTurns, edge, map);
-                            edgeInfo.hlight = 1;
+                            edgeInfo.hlight = true;
                             drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
                             return true;
                         }
@@ -188,41 +190,40 @@ var makeSourcilloscopeModel = (function() {
 
     //draws process order only
     function sourceDblClick(e) {
-        var x, y,
-            i,
-            node;
+        var x, y,     //clicked coordinates
+            nodeInfo; //turn node information
 
         //if click is in defined space
         if (e.pageX !== undefined && e.pageY !== undefined) {
             x = e.pageX;
             y = e.pageY;
 
-            for (i in sourceTurns) {
+            list(sourceTurns, function(turn) {
                 //check if user has clicked a got node
-                node = sourceTurns[i].trnNode;
-                if (x > map.get(node).x - 15 && x < map.get(node).x + 15
-                 && y > map.get(node).y - 15 && y < map.get(node).y + 15) {
+                nodeInfo = map.get(turn.trnNode);
+                if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15
+                 && y > nodeInfo.y - 15 && y < nodeInfo.y + 15) {
                     resetAlpha(.2);
                     drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, 1);
-                    return;
+                    return true;
                 }
-            }
+            });
         }
     }//dblclick
 
     //setting alpha for nodes and edges
     function resetAlpha(alpha) {
-        var i, j;
+        var i;
 
-        for (i in sourceTurns) {
-            map.get(sourceTurns[i].trnNode).alpha = alpha;
-            map.get(sourceTurns[i].trnNode).hlight = 0;
+        list(sourceTurns, function(turn) {
+            map.get(turn.trnNode).alpha = alpha;
+            map.get(turn.trnNode).hlight = false;
 
-            for (j = 0; j < sourceTurns[i].trnEdges.length; j += 1) {
-                map.get(sourceTurns[i].trnEdges[j]).alpha = alpha;
-                map.get(sourceTurns[i].trnEdges[j]).hlight = 0;
+            for (i = 0; i < turn.trnEdges.length; i += 1) {
+                map.get(turn.trnEdges[i]).alpha = alpha;
+                map.get(turn.trnEdges[i]).hlight = false;
             }
-        }
+        });
     }
 
     function deepJSONCopy(input) {
@@ -251,7 +252,6 @@ var makeSourcilloscopeModel = (function() {
             source,  //source to match
             span,    //span to match
             chunk,   //chunks 
-            piece,   //specific piece of chunk
             found;   //found boolean
 
         for (i = 0; i < line.lnElements.length; i += 1) {
@@ -261,14 +261,12 @@ var makeSourcilloscopeModel = (function() {
             for (j = 0; j < jsonChunks.length; j += 1) {
                 chunk = jsonChunks[j];
                 if (chunk['trace'] !== undefined) {
-                    for(k in chunk['trace']['calls']) {
-                       piece = chunk['trace']['calls'][k];
+                    found = list(chunk['trace']['calls'], function(piece) {
                        if(piece['source'] == source && piece['span'][0][0] == span[0][0] && piece['span'][0][1] == span[0][1]) {
                              chunkMap.get(line).push(deepJSONCopy(chunk));
-                             found = true;
-                             break;
+                             return true;
                        }
-                    }
+                    });
                 }
                 if (found) {
                     break;
@@ -278,9 +276,8 @@ var makeSourcilloscopeModel = (function() {
     }
 
     function removeChunk (jsonChunksCopy, chunk) {
-        var i, j, k, //loop variables
-            cpiece,  //chunk piece from chunk argument
-            jpiece;  //chunk piece from jsonChunksCopy
+        var i, //loop variable
+            done = false;
 
         function normalizeStack(chunk) {
             if(!('track' in chunk))
@@ -289,17 +286,21 @@ var makeSourcilloscopeModel = (function() {
         }
         for (i = 0; i < jsonChunksCopy.length; i += 1) {
             if (jsonChunksCopy[i]['trace'] !== undefined) {
-                for(j in jsonChunksCopy[i]['trace']['calls']) {
-                    jpiece = jsonChunksCopy[i]['trace']['calls'][j];
-                    for( k in chunk['trace']['calls'] ) {
-                        cpiece = chunk['trace']['calls'][k];
+                done = list(jsonChunksCopy[i]['trace']['calls'], function(jpiece) {
+                    done = list(chunk['trace']['calls'], function(cpiece) {
                         if (jpiece['source'] === cpiece['source'] 
                          && jpiece['span'][0][0] === cpiece['span'][0][0] 
                          && jpiece['span'][0][1] === cpiece['span'][0][1]) {
                             normalizeStack( jsonChunksCopy[i] );
-                            return;              
+                            return true;              
                         }
+                    });
+                    if(done) {
+                        return true;
                     }
+                });
+                if(done) {
+                    return;
                 }
             }  
         }
@@ -325,16 +326,15 @@ var makeSourcilloscopeModel = (function() {
     }
 
     function setTransparencyEdge(sourceTurns, edge, map) {
-        var alpha = 1,
-            //src; // specific sourceTurn    
-            originName, 
-            targetName;
+        var alpha = 1,   //transparency set to opaque
+            originName,  //name of edge origin
+            targetName;  //name of edge target
 
         function setTransparentRight(turn) {
             var i,
                 target; // edge target
 
-            map.get( turn.trnNode ).alpha = alpha; //node transparency
+            map.get(turn.trnNode).alpha = alpha; //node transparency
             for (i = 0; i < turn.trnEdges.length; i += 1) {
                 map.get(turn.trnEdges[i]).alpha = alpha; // edge transparency
                 //continue to the right, out edges
@@ -349,7 +349,7 @@ var makeSourcilloscopeModel = (function() {
             var i,
                 origin; // edge origin
 
-            map.get( turn.trnNode ).alpha = alpha; // node transparency
+            map.get(turn.trnNode).alpha = alpha; // node transparency
             for (i = 0; i < turn.trnEdges.length; i += 1) {
                 if (turn.trnEdges[i] === edge) {
                     map.get(turn.trnEdges[i]).alpha = alpha; // edge transparency
@@ -364,7 +364,7 @@ var makeSourcilloscopeModel = (function() {
             }
         }
 
-        map.get( edge ).alpha = alpha;
+        map.get(edge).alpha = alpha;
         originName = edge.getOrigin().name;
         targetName = edge.getTarget().name;
 
@@ -383,18 +383,9 @@ var makeSourcilloscopeModel = (function() {
     }
 
     function gatherCellInformation(jsonChunksCopy) {
-        var i, j, k,
+        var i,
             cellGrid,
-            alpha = 1,
-            startNdx = 320, //begin drawing nodes/edges after files 
-            ndspcg = 10,    //spacing between nodes/edges in turn
-            trnspcg = 40,   //spacking between turns
-            trn,            //turn object
-            cell,           //one cell of cellGrid
-            stack,          //stack from log file for nodes/edges
-            label,          //sent message
-            counter,        //counts concurrency within turn
-            concNodes;      //stores concurrent nodes 
+            startNdx = 320; //begin drawing nodes/edges after files 
 
         //get message graph when filtering
         if (jsonChunksCopy !== undefined) {
@@ -405,23 +396,29 @@ var makeSourcilloscopeModel = (function() {
         dotAlpha = 1; //used for dotted lines connecting process order
         maxX =  0; // max x value for turns, used for file background
 
-        for (i in cellGrid.cells) {
+        list(cellGrid.cells, function(cell) {
+            var alpha = 1,
+                ndspcg = 10,    //spacing between nodes/edges in turn
+                trnspcg = 40,   //spacking between turns
+                trn,            //turn object
+                stack,          //stack from log file for nodes/edges
+                label;          //sent message
+
             //adding node to turn object
-            trn = new turnObject();
-            trn.addNodeToTurn(cellGrid.cells[i].node);
-            trn.turn = i;
-            map.set(trn.trnNode,{x:0, y:0, alpha:0, hlight:0});
+            trn = new TurnObject(cell.node.getVatName(), cell.node);
+            map.set(trn.trnNode,{x:0, y:0, alpha:0, hlight:false});
             map.get(trn.trnNode).x = startNdx;
             map.get(trn.trnNode).alpha = alpha;
 
             startNdx += ndspcg;
-            cell = cellGrid.cells[i];
 
             //stack trace for gots
             stack = cell.node.traceRecord.trace.calls;
             if (stack.length > 0) {
-                label = walker.getElementLabel(trn.trnNode, vatMap);
-                checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, 1);
+                if (!hiddenSrcPaths.contains(stack[0].source)) {
+                    label = walker.getElementLabel(trn.trnNode, vatMap);
+                    checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, 1);
+                }
             }
 
             cell.node.outs(function(edge) {
@@ -432,7 +429,7 @@ var makeSourcilloscopeModel = (function() {
                         //adding edges to file object
                         checkFile(globFiles, stack[0].source, stack[0].span, label, edge);
                         //setting edge alpha and x coordinates
-                        map.set(edge, {x:0, y:0, alpha:0, hlight:0});
+                        map.set(edge, {x:0, y:0, alpha:0, hlight:false});
                         map.get(edge).x = startNdx;
                         map.get(edge).alpha = alpha;
 
@@ -449,29 +446,30 @@ var makeSourcilloscopeModel = (function() {
             sourceTurns[trn.trnNode.name] = trn;
             startNdx += trnspcg;
 
+            //setting maximum x value for file shading
             if(maxX < startNdx) {
                 maxX = startNdx;
             }
-        }
+        });
 
         //loop for concurrency
-        for (i in cellGrid.byCols) {
-            counter = 0;
-            concNodes = [];
-            for (j in cellGrid.byCols[i]) {
+        list(cellGrid.byCols, function(column) {
+            var counter = 0,    //counts concurrency within turn
+                concNodes = []; //stores concurrent nodes
+            list(column, function(colCell) {
                 //keep track of nodes that can be executed together
-                concNodes.push(cellGrid.byCols[i][j].node); 
+                concNodes.push(colCell.node); 
                 counter++;
-            }
-            for (j in cellGrid.byCols[i] ) {
+            });
+            list(column, function(colCell) {
                 // add number of concurrent nodes
-                sourceTurns[cellGrid.byCols[i][j].node.name].concurrent = counter; 
-                for (k = 0; k < concNodes.length; k += 1) {
+                sourceTurns[colCell.node.name].concurrent = counter; 
+                for (i = 0; i < concNodes.length; i += 1) {
                     // add number of concurrent nodes for turn
-                    sourceTurns[cellGrid.byCols[i][j].node.name].addConcToTurn(concNodes[k]); 
+                    sourceTurns[colCell.node.name].addConcToTurn(concNodes[i]); 
                 }
-            }
-        }
+            });
+        });
     }
 
     return function( _causewayModel, _jsonChunks, _hiddenSrcPaths, _vatMap, _walker, _canvas, _ctx ) {

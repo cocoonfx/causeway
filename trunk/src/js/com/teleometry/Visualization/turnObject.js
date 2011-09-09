@@ -1,31 +1,20 @@
 // used to hold nodes and edges within a turn
-function turnObject()
+function TurnObject(name, node)
 {
-    this.name;
-    this.turn;
+    this.name = name;
+    this.trnNode = node
+
+    this.trnEdges = []; // edges for turn
+
+    this.trnConc = []; // concurrent nodes
     this.concurrent = 0;
-
-    this.trnNode; // node
-
-    this.trnEdges = new Array(); // edges for turn
-
-    this.trnConc = new Array(); // concurrent nodes
-
-    this.addNodeToTurn = function ( node )
-    {
-        this.name = node.getVatName();
-        this.trnNode = node;
-    };
-
-    this.addEdgeToTurn = function( edge )
-    {
-        this.trnEdges.push( edge );
-    };
-
-    this.addConcToTurn = function( node )
-    {
-        this.trnConc.push( node );
-    };      
-
 }
+
+TurnObject.prototype.addEdgeToTurn = function(edge) {
+    this.trnEdges.push(edge);
+};
+
+TurnObject.prototype.addConcToTurn = function(node) {
+    this.trnConc.push(node);
+};
 
