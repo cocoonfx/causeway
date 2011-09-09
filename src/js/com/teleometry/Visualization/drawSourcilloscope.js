@@ -1,38 +1,40 @@
 var drawSourcilloscopeGrid = (function () {
     "use strict";
 
+    function list(map, predicate) {
+        var key;
+        for (key in map) {
+            if (Object.prototype.hasOwnProperty.call(map, key)) {
+                predicate(map[key], key);
+            }
+        }
+    }
+
     function dottedLine(ctx, startx, starty, endx, endy) {
 
+        var distx = endx - startx, 
+            disty = endy - starty, 
+            distance = Math.sqrt(distx * distx + disty * disty), 
+            vecx = distx / distance, 
+            vecy = disty / distance, 
+            x = startx + vecx * 10, 
+            y = starty + vecy * 10;
+
         ctx.moveTo(startx, starty);
-
-        var distx, disty, distance, vecx, vecy, x, y;
-
-        distx = endx - startx;
-        disty = endy - starty;
-        distance = Math.sqrt(distx * distx + disty * disty);
-
-        //converting to vectors
-        vecx = distx / distance;
-        vecy = disty / distance;
-
-        //begining dot from start point
-        x = startx + vecx * 10;
-        y = starty + vecy * 10;
-
         //loop drawing lines
         while (Math.sqrt((startx - x) * (startx - x) + (starty - y) * (starty - y)) < distance) {
-            //space of 2.5
             ctx.lineTo(x, y);
 
+            //spacing of 2.5
             x += vecx * 2.5;
             y += vecy * 2.5;
-
-            //draw for distance of 20
             ctx.moveTo(x, y);
 
+            //draw distance of 20
             x += vecx * 20;
             y += vecy * 20;
         }
+        //connect with the end point
         ctx.lineTo(endx, endy);
     }
 
@@ -45,38 +47,37 @@ var drawSourcilloscopeGrid = (function () {
         // key type: vat name, value type: sourceTurns index value
         var i,
             conVats = {}, // storing last turn in proc order, [vat name] = sourceturns index
-            x,            //index into sourceTurns
-            edge,         //stores edge
-            target,       //stoers edge target node
-            targetInfo,   //target information from map
-            nodeInfo,     //stores node information from map
-            edgeInfo,     //stores edge information from map
-            alphaFlag,    //used to count edge alphas 
             conx, cony,   //stores previous draw position for turn
-            endx, endy,   //end x and y values for arcs
-            sign,         //used to establish draw direction
-            str,          //string variable
-            diffbez,      //diff angle for bezier curves
-            sb, eb,       //holds bezier control pts
             src,          //source file from prev vat
             elementMap;   //map information for prev element
 
         if (canvas.getContext) {
+            list(sourceTurns, function(turn) {
+                var edge,         //stores edge
+                    target,       //stores edge target node
+                    targetInfo,   //target information from map
+                    nodeInfo,     //stores node information from map
+                    edgeInfo,     //stores edge information from map
+                    alphaFlag,    //used to count edge alphas 
+                    endx, endy,   //end x and y values for arcs
+                    sign,         //used to establish draw direction
+                    str,          //string variable
+                    diffbez,      //diff angle for bezier curves
+                    sb, eb;       //holds bezier control pts
 
-            for (x in sourceTurns) {
-                nodeInfo = map.get(sourceTurns[x].trnNode);
+                nodeInfo = map.get(turn.trnNode);
 
                 //bar for concurrency
                 ctx.fillStyle = "rgba(100,100,100," 
-                                + Math.max(1 - (2 * sourceTurns[x].concurrent / 10), 0) + ")";
+                                + Math.max(1 - (2 * turn.concurrent / 10), 0) + ")";
                 ctx.fillRect(nodeInfo.x + 10, 10, 
-                             sourceTurns[x].trnEdges.length * 10 + 20, 10);
+                             turn.trnEdges.length * 10 + 20, 10);
 
                 ctx.fillStyle = "rgb(0,0,0)";//"black";
                 ctx.font = "8pt Helvetica";
                 ctx.textAlign = "left";
                 ctx.textBaseline = "top";
-                ctx.fillText('' + sourceTurns[x].concurrent, nodeInfo.x, 9);
+                ctx.fillText('' + turn.concurrent, nodeInfo.x, 9);
 
                 //draw nodes
                 ctx.beginPath();
@@ -93,8 +94,8 @@ var drawSourcilloscopeGrid = (function () {
                 //setting transparancy flag for turns, 
                 //so not entire turn is opaque if not all edges are shown
                 alphaFlag = 0;
-                for (i = 0; i < sourceTurns[x].trnEdges.length; i += 1) {
-                    if (map.get(sourceTurns[x].trnEdges[i]).alpha === 1) {
+                for (i = 0; i < turn.trnEdges.length; i += 1) {
+                    if (map.get(turn.trnEdges[i]).alpha === 1) {
                         alphaFlag = i;
                     }
                 }
@@ -105,8 +106,8 @@ var drawSourcilloscopeGrid = (function () {
                 //used for bezier curves to leave and
                 //enter nodes at various angle
                 diffbez = 10;
-                for (i = 0; i < sourceTurns[x].trnEdges.length; i += 1) {
-                    edge = sourceTurns[x].trnEdges[i];
+                for (i = 0; i < turn.trnEdges.length; i += 1) {
+                    edge = turn.trnEdges[i];
                     edgeInfo = map.get(edge);
 
 
@@ -181,10 +182,10 @@ var drawSourcilloscopeGrid = (function () {
                 }
 
                 //line connecting nodes between vats, process order
-                if (conVats[sourceTurns[x].name] === undefined) {
-                    conVats[sourceTurns[x].name] = x;
+                if (conVats[turn.name] === undefined) {
+                    conVats[turn.name] = turn.trnNode.name;
                 } else {
-                    src = sourceTurns[conVats[sourceTurns[x].name]];
+                    src = sourceTurns[conVats[turn.name]];
                     if (src.trnEdges.length > 0) {
                         elementMap = map.get(src.trnEdges[src.trnEdges.length - 1]);
                     } else {
@@ -197,10 +198,10 @@ var drawSourcilloscopeGrid = (function () {
                                nodeInfo.x + 7.5, nodeInfo.y + 7.5);
                     ctx.stroke();
                     //holds last known turn for specific vat
-                    conVats[sourceTurns[x].name] = x; 
+                    conVats[turn.name] = turn.trnNode.name; 
                 }
 
-            }
+            });
 
             //weird draw bug, wont go away unless I draw something irrelevant last
             ctx.beginPath();
