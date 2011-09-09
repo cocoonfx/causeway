@@ -85,7 +85,7 @@ var drawSourcilloscopeGrid = (function () {
                 ctx.fillRect(nodeInfo.x + 5, nodeInfo.y + 5, 5, 5);
 
                 //highlight picked nodes with halos
-                if (nodeInfo.hlight === 1) {
+                if (nodeInfo.hlight) {
                     ctx.fillStyle = "rgba(178,34,34,.2)";
                     ctx.fillRect(nodeInfo.x, nodeInfo.y, 15, 15);
                 }
@@ -134,7 +134,7 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.fillRect(edgeInfo.x + 5, edgeInfo.y + 5, 5, 5);
 
                     // highlight picked edges with halo
-                    if (edgeInfo.hlight === 1) {
+                    if (edgeInfo.hlight) {
                         ctx.fillStyle = "rgba(178,34,34,.2)";
                         ctx.fillRect(edgeInfo.x, edgeInfo.y, 15, 15);
                     }
@@ -275,7 +275,7 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.arc(startx + 10, starty + 6, 5, 0, 2 * Math.PI, 1);
                     ctx.closePath();
 
-                    if (file.lines[i].show === true) { 
+                    if (file.lines[i].show) { 
                         ctx.fillStyle = "rgba(178,34,34,.7)";
                         ctx.fill();
                     } else {
@@ -288,7 +288,7 @@ var drawSourcilloscopeGrid = (function () {
                         element = file.lines[i].lnElements[j];
 
                         //highlight line of text
-                        if (map.get(element).hlight === 1) { 
+                        if (map.get(element).hlight) { 
                             toHighlight = true;
                         }
 
