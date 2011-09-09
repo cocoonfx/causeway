@@ -15,6 +15,18 @@ var makeSourcilloscopeModel = (function() {
         linesToRemove = [],       //key type: integer, value type: line object                       
         chunkMap = new FlexMap(); // key type: line object, value type: chunk
 
+    function list(map, predicate) {
+        var key, answer;
+        for (key in map) {
+            if (Object.prototype.hasOwnProperty.call(map, key)) {
+                answer = predicate(map[key], key);
+                if (undefined !== answer) {
+                    return answer;
+                }
+            }
+        }
+    }
+
     //if user has clicked the canvas
     function sourceClick(e) {
         var x, y,       //clicked coordinates
@@ -71,7 +83,7 @@ var makeSourcilloscopeModel = (function() {
                   }
               }
           } 
-          else if (x > 35 && x <= 320) { //line chosen         
+          else if (x > 35 && x <= 320) { //specific line chosen         
               for (i = 0; i < globFiles.length; i += 1) {
                   for (j = 0; j < globFiles[i].lines.length; j += 1) {
                       line = globFiles[i].lines[j];
@@ -127,31 +139,31 @@ var makeSourcilloscopeModel = (function() {
                   }//j
               }//i     
           } else { //if user has clicked past the files
-            for ( i in sourceTurns ) { //loop through turns
+             var done = list(sourceTurns, function(turn) {
                 //check if user has clicked a got node
-                node = sourceTurns[i].trnNode;
+                node = turn.trnNode;
                 nodeInfo = map.get(node);
                 if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15) {
                     if (y<30) { //user clicked turn bar at top
                         resetAlpha(.2);
                         // show only nodes that can be executed concurrently with chosen turn
-                        for (k = 0; k < sourceTurns[i].trnConc.length; k += 1) {
-                            map.get(sourceTurns[i].trnConc[k]).alpha = 1;
-                            map.get(sourceTurns[i].trnConc[k]).hlight = 1;
+                        for (k = 0; k < turn.trnConc.length; k += 1) {
+                            map.get(turn.trnConc[k]).alpha = 1;
+                            map.get(turn.trnConc[k]).hlight = 1;
                         }
                         drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                        return;
+                        return true;
                     } else if (y > nodeInfo.y - 15 && y < nodeInfo.y + 15) { //user hit node
                         resetAlpha(.2);
                         setTransparencyNode(sourceTurns, node, map)
                         nodeInfo.hlight = 1;
                         drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                        return;
+                        return true;
                     }
                 } else {
                     //check if user has clicked an edge
-                    for (j = 0; j < sourceTurns[i].trnEdges.length; j += 1) {
-                        edge = sourceTurns[i].trnEdges[j];
+                    for (j = 0; j < turn.trnEdges.length; j += 1) {
+                        edge = turn.trnEdges[j];
                         edgeInfo = map.get(edge);
                         if (x > edgeInfo.x - 10 && x < edgeInfo.x + 10
                         &&  y > edgeInfo.y - 5 && y < edgeInfo.y + 15) {
@@ -159,11 +171,14 @@ var makeSourcilloscopeModel = (function() {
                             setTransparencyEdge(sourceTurns, edge, map);
                             edgeInfo.hlight = 1;
                             drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                            return;
+                            return true;
                         }
                     }
                 }//node or edge
-            }// for loop
+            });// loop through sourceTurns
+            if (done) {
+                return;
+            }
         }// else
         //draw everything if user clicks anywhere else
         resetAlpha(1);
