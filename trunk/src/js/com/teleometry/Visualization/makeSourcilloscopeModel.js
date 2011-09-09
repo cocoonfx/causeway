@@ -17,18 +17,20 @@ var makeSourcilloscopeModel = (function() {
 
     //if user has clicked the canvas
     function sourceClick(e) {
-        var x, y,
+        var x, y,       //clicked coordinates
             i, j, k, q, //loop variables
-            line,
-            node,
-            edge;
+            line,       //line var for files
+            node,       //node to look at
+            edge,       //edge to look at
+            nodeInfo,   //node info from map
+            edgeInfo;   //edge info from map
 
         //if click is in defined space
         if (e.pageX !== undefined && e.pageY !== undefined) {
             x = e.pageX;
             y = e.pageY;
           
-          if (x < 35) {
+          if (x <= 35) { // file collapse
               for (i = 0; i < globFiles.length; i += 1) {
                   if (y > globFiles[i].ycoord && y < globFiles[i].ycoord + 20) {
                       globFiles[i].show = !globFiles[i].show;
@@ -50,9 +52,9 @@ var makeSourcilloscopeModel = (function() {
                               }
                           }
                       }
-                      for ( k = 0; k < linesToRemove.length; k += 1) { 
+                      for (k = 0; k < linesToRemove.length; k += 1) { 
                           for (q = 0; q < chunkMap.get(linesToRemove[k]).length; q += 1) {
-                              removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q] );
+                              removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q]);
                           }
                       }
 
@@ -69,109 +71,99 @@ var makeSourcilloscopeModel = (function() {
                   }
               }
           } 
-          else if (x > 35 && x <= 60) { //check box          
+          else if (x > 35 && x <= 320) { //line chosen         
               for (i = 0; i < globFiles.length; i += 1) {
                   for (j = 0; j < globFiles[i].lines.length; j += 1) {
                       line = globFiles[i].lines[j];
                       if (y > line.ycoord && y < line.ycoord + 10) {
-                          jsonChunksCopy = deepJSONCopy(jsonChunks);
-                          if (line.show) {
-                              line.show = !line.show;
-                              if (chunkMap.get(line) === undefined) {
-                                  chunkMap.set(line, []);
-                              }
-                              findChunk(line);
-                              linesToRemove.push(line);
-                          } else {
-                              line.show = !line.show;
-                              for (k = 0; k < linesToRemove.length; k += 1) {
-                                  if (line === linesToRemove[k]) {
-                                      linesToRemove.splice(k,1);
+                          if (x <= 60) { //filter line
+                              jsonChunksCopy = deepJSONCopy(jsonChunks);
+                              if (line.show) {
+                                  line.show = !line.show;
+                                  if (chunkMap.get(line) === undefined) {
+                                      chunkMap.set(line, []);
+                                  }
+                                  findChunk(line);
+                                  linesToRemove.push(line);
+                              } else {
+                                  line.show = !line.show;
+                                  for (k = 0; k < linesToRemove.length; k += 1) {
+                                      if (line === linesToRemove[k]) {
+                                          linesToRemove.splice(k,1);
+                                          break; 
+                                      }
                                   }
                               }
-                          }
-                          for (k = 0; k < linesToRemove.length; k+=1) {
-                              for (q = 0; q < chunkMap.get(linesToRemove[k]).length; q += 1) {
-                                  removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q]);
+                              for (k = 0; k < linesToRemove.length; k+=1) {
+                                  for (q = 0; q < chunkMap.get(linesToRemove[k]).length; q += 1) {
+                                      removeChunk(jsonChunksCopy, chunkMap.get(linesToRemove[k])[q]);
+                                  }
                               }
-                          }
 
-                          sourceTurns = [];
-                          for (k = 0; k < globFiles.length; k += 1) {
-                              for (q = 0; q < globFiles[k].lines.length; q += 1) {
-                                  globFiles[k].lines[q].lnElements = [];
+                              sourceTurns = [];
+                              for (k = 0; k < globFiles.length; k += 1) {
+                                  for (q = 0; q < globFiles[k].lines.length; q += 1) {
+                                      globFiles[k].lines[q].lnElements = [];
+                                  }
                               }
-                          }
 
-                          gatherCellInformation(jsonChunksCopy);
-                          drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, 1);
-                          return;
+                              gatherCellInformation(jsonChunksCopy);
+                              drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, 1);
+                              return;
+                          } else { //highlight line
+                              resetAlpha(.2); //set everything transparent
+                              for (k = 0; k < line.lnElements.length; k += 1) {
+                                  if(line.isgot) {
+                                      setTransparencyNode(sourceTurns, line.lnElements[k], map);  //set chosen nodes
+                                  } else {
+                                      setTransparencyEdge(sourceTurns, line.lnElements[k], map);  //set chosen edges
+                                  }
+                                  map.get(line.lnElements[k]).hlight = 1; // highlight nodes/edges
+                              }
+                              drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
+                              return;
+                          }
                       }//k
                   }//j
               }//i     
-          }
-          else if (x > 60 && x < 320) { //check if user has clicked a source file message to highlight
-              for (i = 0; i < globFiles.length; i += 1) {
-                  for (j = 0; j < globFiles[i].lines.length; j += 1) {
-                      line = globFiles[i].lines[j];
-                      if (y > line.ycoord && y < line.ycoord + 10) {
-                          resetAlpha(.2); //set everything transparent
-                          for (k = 0; k < line.lnElements.length; k += 1) {
-                              if(line.isgot) {
-                                  setTransparencyNode(sourceTurns, line.lnElements[k], map);  //set chosen nodes
-                              } else {
-                                  setTransparencyEdge(sourceTurns, line.lnElements[k], map);  //set chosen edges
-                              }
-                              map.get(line.lnElements[k]).hlight = 1; // highlight nodes/edges
-                          }
-                          drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                          return;
-                      }//k
-                  }//j
-              }//i
-          }
-          else if (x > 320 && y < 30) { // user clicked turn bar at the top
-            for (i in sourceTurns) {
-                //find turn
-                node = sourceTurns[i].trnNode;
-                if (x > map.get(node).x - 15 && x < map.get(node).x + 15) {
-                    resetAlpha(.2);
-                    // show only nodes that can be executed concurrently with chosen turn
-                    for (k = 0; k < sourceTurns[i].trnConc.length; k += 1) {
-                        map.get(sourceTurns[i].trnConc[k]).alpha = 1;
-                        map.get(sourceTurns[i].trnConc[k]).hlight = 1;
-                    }
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                    return;
-                }
-            }//for
-          }
-          else { //if user has clicked a node or edge
+          } else { //if user has clicked past the files
             for ( i in sourceTurns ) { //loop through turns
                 //check if user has clicked a got node
                 node = sourceTurns[i].trnNode;
-                if (x > map.get(node).x - 15 && x < map.get(node).x + 15
-                 && y > map.get(node).y - 15 && y < map.get(node).y + 15) {
-                    resetAlpha(.2);
-                    setTransparencyNode(sourceTurns, node, map)
-                    map.get(node).hlight = 1;
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
-                    return;
-                }
-
-                //check if user has clicked an edge
-                for (j = 0; j < sourceTurns[i].trnEdges.length; j += 1) {
-                    edge = sourceTurns[i].trnEdges[j];
-                    if (x > map.get(edge).x - 10 && x < map.get(edge).x + 10
-                    &&  y > map.get(edge).y - 5 && y < map.get(edge).y + 15) {
+                nodeInfo = map.get(node);
+                if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15) {
+                    if (y<30) { //user clicked turn bar at top
                         resetAlpha(.2);
-                        setTransparencyEdge(sourceTurns, edge, map);
-                        map.get(edge).hlight = 1;
+                        // show only nodes that can be executed concurrently with chosen turn
+                        for (k = 0; k < sourceTurns[i].trnConc.length; k += 1) {
+                            map.get(sourceTurns[i].trnConc[k]).alpha = 1;
+                            map.get(sourceTurns[i].trnConc[k]).hlight = 1;
+                        }
+                        drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
+                        return;
+                    } else if (y > nodeInfo.y - 15 && y < nodeInfo.y + 15) { //user hit node
+                        resetAlpha(.2);
+                        setTransparencyNode(sourceTurns, node, map)
+                        nodeInfo.hlight = 1;
                         drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
                         return;
                     }
-                }
-            }// for loop, nodes and edges
+                } else {
+                    //check if user has clicked an edge
+                    for (j = 0; j < sourceTurns[i].trnEdges.length; j += 1) {
+                        edge = sourceTurns[i].trnEdges[j];
+                        edgeInfo = map.get(edge);
+                        if (x > edgeInfo.x - 10 && x < edgeInfo.x + 10
+                        &&  y > edgeInfo.y - 5 && y < edgeInfo.y + 15) {
+                            resetAlpha(.2);
+                            setTransparencyEdge(sourceTurns, edge, map);
+                            edgeInfo.hlight = 1;
+                            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, map, .2);
+                            return;
+                        }
+                    }
+                }//node or edge
+            }// for loop
         }// else
         //draw everything if user clicks anywhere else
         resetAlpha(1);
@@ -319,7 +311,9 @@ var makeSourcilloscopeModel = (function() {
 
     function setTransparencyEdge(sourceTurns, edge, map) {
         var alpha = 1,
-            src; // specific sourceTurn    
+            //src; // specific sourceTurn    
+            originName, 
+            targetName;
 
         function setTransparentRight(turn) {
             var i,
@@ -356,16 +350,19 @@ var makeSourcilloscopeModel = (function() {
         }
 
         map.get( edge ).alpha = alpha;
-        if (edge.getOrigin().name !== "top: 0") {
-            src = sourceTurns[edge.getOrigin().name]; //find relevant sourceTurn object
-            map.get( src.trnNode ).alpha = alpha;
+        originName = edge.getOrigin().name;
+        targetName = edge.getTarget().name;
+
+        if (originName !== "top: 0") {
+            src = sourceTurns[originName]; //find relevant sourceTurn object
+            map.get(src.trnNode).alpha = alpha;
             //check right, out
-            if (sourceTurns[edge.getTarget().name] !== undefined && edge.getTarget().name !== "bottom: 0") {
-                setTransparentRight(sourceTurns[edge.getTarget().name]); 
+            if (sourceTurns[targetName] !== undefined && targetName !== "bottom: 0") {
+                setTransparentRight(sourceTurns[targetName]); 
             }
             //check left, in
-            if (sourceTurns[edge.getOrigin().name] !== undefined && edge.getOrigin().name !== "top: 0") {
-                setTransparentLeft(sourceTurns[edge.getOrigin().name], edge);
+            if (sourceTurns[originName] !== undefined && originName !== "top: 0") {
+                setTransparentLeft(sourceTurns[originName], edge);
             }
         }
     }
@@ -447,13 +444,16 @@ var makeSourcilloscopeModel = (function() {
             counter = 0;
             concNodes = [];
             for (j in cellGrid.byCols[i]) {
-                concNodes.push(cellGrid.byCols[i][j].node); //keep track of nodes that can be executed together
+                //keep track of nodes that can be executed together
+                concNodes.push(cellGrid.byCols[i][j].node); 
                 counter++;
             }
             for (j in cellGrid.byCols[i] ) {
-                sourceTurns[cellGrid.byCols[i][j].node.name].concurrent = counter; // add number of concurrent nodes
+                // add number of concurrent nodes
+                sourceTurns[cellGrid.byCols[i][j].node.name].concurrent = counter; 
                 for (k = 0; k < concNodes.length; k += 1) {
-                    sourceTurns[cellGrid.byCols[i][j].node.name].addConcToTurn(concNodes[k]); // add concurrent nodes for turn
+                    // add number of concurrent nodes for turn
+                    sourceTurns[cellGrid.byCols[i][j].node.name].addConcToTurn(concNodes[k]); 
                 }
             }
         }
