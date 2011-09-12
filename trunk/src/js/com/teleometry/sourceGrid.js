@@ -106,7 +106,7 @@ var doCausalityGridTest;
 
     //makeCausalityGridDirector(model, vatMap, walker, canvas, context);
 
-    makeSourcilloscopeModel( model, chunks, hidden, vatMap, walker, canvas, context );
+    makeSourcilloscopeModel(chunks, hidden, vatMap, walker, canvas, context);
  }
 
 

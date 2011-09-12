@@ -16,5 +16,6 @@ TurnObject.prototype.addEdgeToTurn = function(edge) {
 
 TurnObject.prototype.addConcToTurn = function(node) {
     this.trnConc.push(node);
+    this.concurrent += 1;
 };
 
