@@ -45,7 +45,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             trn = new TurnObject(cell.node.getVatName(), cell.node);
             glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false, 
                                        image: null, border:  false});
-
+            
             startNdx += NODE_SPACING;
 
             //stack trace for gots
@@ -111,11 +111,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
         glyphMap.get(turn.trnNode).alpha = 1; //node transparency
         turn.trnNode.outs(function (nextEdge) {
-            glyphMap.get(nextEdge).alpha = 1; // edge transparency
-            //continue to the right, out edges
-            target = nextEdge.getTarget();
-            if (target !== undefined && target.name !== "bottom: 0") {
-                setTransparentRight(sourceTurns[target.name]);
+            if(glyphMap.get(nextEdge)) {
+                glyphMap.get(nextEdge).alpha = 1; // edge transparency
+                //continue to the right, out edges
+                target = nextEdge.getTarget();
+                if (target !== undefined && target.name !== "bottom: 0") {
+                    setTransparentRight(sourceTurns[target.name]);
+                }
             }
         });
     }//setTransparentRight()
@@ -126,10 +128,12 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         glyphMap.get(turn.trnNode).alpha = 1; // node transparency
         turn.trnNode.ins(function (nextEdge) {
             //continue to the left, in edges
-            glyphMap.get(edge).alpha = 1;
-            origin = nextEdge.getOrigin();
-            if (origin !== undefined && origin.name !== "top: 0") {
-                setTransparentLeft(sourceTurns[origin.name], nextEdge);
+            if(glyphMap.get(nextEdge)) {
+                glyphMap.get(nextEdge).alpha = 1;
+                origin = nextEdge.getOrigin();
+                if (origin !== undefined && origin.name !== "top: 0") {
+                    setTransparentLeft(sourceTurns[origin.name], nextEdge);
+                }
             }
         });
     }//setTransparentLeft()
@@ -153,14 +157,14 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         glyphMap.get(node).alpha = 1;
         node.outs(function (edge) {
             var targetName = edge.getTarget().name;
-            if (targetName !== "bottom: 0") {
+            if (glyphMap.get(edge)) { //(targetName !== "bottom: 0") {
                 glyphMap.get(edge).alpha = 1;
                 setTransparentRight(sourceTurns[targetName]);
             }
         });
         node.ins(function (edge) {
             var originName = edge.getOrigin().name;
-            if (originName !== "top: 0") {
+            if (glyphMap.get(edge)) {//(originName !== "top: 0") {
                 glyphMap.get(edge).alpha = 1;
                 setTransparentLeft(sourceTurns[originName], edge);
             }
@@ -409,6 +413,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                     lineMap.set(line, {image: null, border: false});
                 lineGlyph = lineMap.get(line);
 
+                //line.lnElements.forEach(function (element) {
                 for(var i = 0; i < line.lnElements.length; i++) {
 
                     nodeGlyph = glyphMap.get(line.lnElements[i]);
