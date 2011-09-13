@@ -5,8 +5,9 @@ var checkFile = (function () {
     //line object.
     //Holds line number and message send information
     //Keeps an array of nodes corresponding to a message send
-    function LineObject(span, message, isgot) {
+    function LineObject(source, span, message, isgot) {
 
+        this.source = source;
         this.span = span;
         this.message = message;
         this.isgot = isgot; //if is a got
@@ -38,10 +39,10 @@ var checkFile = (function () {
     }
 
     //adds line to file
-    FileObject.prototype.addLine = function (span, message, element, ifgot) {
+    FileObject.prototype.addLine = function (source, span, message, element, ifgot) {
 
         //creates an instance of the line object
-        var i, lobj = new LineObject(span, message, ifgot);
+        var i, lobj = new LineObject(source, span, message, ifgot);
         lobj.addElementToLine(element);
 
         for (i = 0; i < this.lines.length; i += 1) {
@@ -62,18 +63,18 @@ var checkFile = (function () {
     };
 
 
-    function addFile(files, name, span, message, element, ifgot) {
-        var fobj = new FileObject(name);
-        fobj.addLine(span, message, element, ifgot);
+    function addFile(files, source, span, message, element, ifgot) {
+        var fobj = new FileObject(source);
+        fobj.addLine(source, span, message, element, ifgot);
         files.push(fobj);
     }
 
-    return function (files, name, span, message, element, ifgot) {
+    return function (files, source, span, message, element, ifgot) {
 
         var i, j, line;
         for (i = 0; i < files.length; i += 1) {
 
-            if (files[i].name === name) {
+            if (files[i].name === source) {
                 //check for line
                 for (j = 0; j < files[i].lines.length; j += 1) {
                     line = files[i].lines[j];
@@ -84,14 +85,14 @@ var checkFile = (function () {
                 }
             
                 //line not found, add line to file
-                files[i].addLine(span, message, element, ifgot);
+                files[i].addLine(source, span, message, element, ifgot);
                 return;
             }
    
         }//for i
 
         //file was not found, create new file object
-        addFile(files, name, span, message, element, ifgot);
+        addFile(files, source, span, message, element, ifgot);
 
     };
 
