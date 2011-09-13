@@ -5,6 +5,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     var globFiles = [],           //array of files
         sourceTurns = {},         //holds turn information
         glyphMap = new FlexMap(), //map for extra node/edge info
+        lineMap = new FlexMap(),
         maxX,                     //maximum x value for visualization
         dotAlpha,                 //alpha for the dotted lines for process order
         linesToRemove = [],       //key type: integer, value type: line object                       
@@ -27,11 +28,11 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         }
     }//list()
 
-    function gatherCellInformation(jsonChunks) {
+    function gatherCellInformation(jsonChunksCurrent) {
         var cellGrid,       //holds cell grid information
             startNdx = GRID_START; //begin drawing nodes/edges after files 
 
-        cellGrid = makeCellGrid(makeCausewayModel(jsonChunks, hiddenSrcPaths));
+        cellGrid = makeCellGrid(makeCausewayModel(jsonChunksCurrent, hiddenSrcPaths));
         dotAlpha = 1; //used for dotted lines connecting process order
         maxX =  0;    //max x value for turns, used for file background
 
@@ -42,7 +43,8 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
             //adding node to turn object
             trn = new TurnObject(cell.node.getVatName(), cell.node);
-            glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false});
+            glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false, 
+                                       image: null, border:  false});
 
             startNdx += NODE_SPACING;
 
@@ -50,15 +52,16 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             stack = cell.node.traceRecord.trace.calls;
             if (stack.length > 0) {
                 label = walker.getElementLabel(trn.trnNode, vatMap);
-                checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, 1);
+                checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, true);
             }
 
             cell.node.outs(function (edge) {
                 stack = edge.traceRecord.trace.calls;
                 if (stack.length > 0) {
                     label = walker.getElementLabel(edge, vatMap);
-                    checkFile(globFiles, stack[0].source, stack[0].span, label, edge);
-                    glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false});
+                    checkFile(globFiles, stack[0].source, stack[0].span, label, edge, false);
+                    glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false,
+                                        image: null, border: false});
 
                     trn.addEdgeToTurn(edge);
                     startNdx += NODE_SPACING;
@@ -152,14 +155,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             var targetName = edge.getTarget().name;
             if (targetName !== "bottom: 0") {
                 glyphMap.get(edge).alpha = 1;
-                setTransparentRight(sourceTurns[targetName], edge);
+                setTransparentRight(sourceTurns[targetName]);
             }
         });
         node.ins(function (edge) {
             var originName = edge.getOrigin().name;
-            if (edge.getOrigin().name !== "top: 0") {
+            if (originName !== "top: 0") {
                 glyphMap.get(edge).alpha = 1;
-                originName = edge.getOrigin().name;
                 setTransparentLeft(sourceTurns[originName], edge);
             }
         });
@@ -191,26 +193,15 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             return output;
         }//deepJSONCopy()
 
-        function removeChunk(jsonChunksCopy, line) {
-            var done = false;  //complete flag
-
-            function normalizeStack(chunk) {
-                if (!('track' in chunk)) {
-                    chunk.trace.calls = [];
-                }
-                return chunk;
-            }
+        function removeChunk(line) {
+            var jpiece; //calls array from chunk
             jsonChunksCopy.forEach(function (jchunk) {
-                if (jchunk.trace !== undefined) {
-                    done = list(jchunk.trace.calls, function (jpiece) {
-                        if (jpiece.source === line.source
-                         && jpiece.span[0][0] === line.span[0][0]
-                         && jpiece.span[0][1] === line.span[0][1]) {
-                            normalizeStack(jchunk);
-                            return true;
-                        }
-                    });
-                    if (done) {
+                if (jchunk.trace && jchunk.trace.calls.length > 0) {
+                    jpiece = jchunk.trace.calls[0];
+                    if (jpiece.source === line.source
+                     && jpiece.span[0][0] === line.span[0][0]
+                     && jpiece.span[0][1] === line.span[0][1]) {
+                        jchunk.trace.calls = [];
                         return;
                     }
                 }
@@ -229,7 +220,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
         function removeAllChunks() {
             linesToRemove.forEach( function(rmline) {
-                removeChunk(jsonChunksCopy, rmline);
+                removeChunk(rmline);
             });
         }//removeAllChunks()
 
@@ -266,7 +257,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             for (i = 0; i < globFiles.length; i += 1) {
                 for (j = 0; j < globFiles[i].lines.length; j += 1) {
                     line = globFiles[i].lines[j];
-                    if (y > line.ycoord && y < line.ycoord + 10) {
+                    if (y > line.ycoord && y < line.ycoord + 20) {
                         if (x <= LINE_FILTER) { //filter line
                             jsonChunksCopy = deepJSONCopy(jsonChunks);
                             if (line.show) {
@@ -286,9 +277,10 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                                 } else {
                                     setTransparencyEdge(line.lnElements[k]);
                                 }
-                                glyphMap.get(line.lnElements[k]).hlight = true; // highlight nodes/edges
+                                glyphMap.get(line.lnElements[k]).hlight = true;
                             }
-                            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
+                            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, 
+                                                   ctx, maxX, glyphMap, 0.2);
                             return true;
                         }
                     }
@@ -305,13 +297,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             var i,          //loop variable
                 node,       //node to look at
                 edge,       //edge to look at
-                nodeInfo,   //node info from map
-                edgeInfo;   //edge info from map
+                nodeGlyph,   //node info from map
+                edgeGlyph;   //edge info from map
 
             //check if user has clicked a got node
             node = turn.trnNode;
-            nodeInfo = glyphMap.get(node);
-            if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15) {
+            nodeGlyph = glyphMap.get(node);
+            if (x > nodeGlyph.x && x < nodeGlyph.x + 15) {
                 if (y < TURNBAR_COORD) { //user clicked turn bar at top
                     resetAlpha(0.2);
                     // show only nodes that can be executed concurrently with chosen turn
@@ -319,26 +311,29 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                         glyphMap.get(turn.trnConc[i]).alpha = 1;
                         glyphMap.get(turn.trnConc[i]).hlight = true;
                     }
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
+                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, 
+                                           ctx, maxX, glyphMap, 0.2);
                     return true;
-                } else if (y > nodeInfo.y - 15 && y < nodeInfo.y + 15) { //user hit node
+                } else if (y > nodeGlyph.y && y < nodeGlyph.y + 15) { //user hit node
                     resetAlpha(0.2);
                     setTransparencyNode(node);
-                    nodeInfo.hlight = true;
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
+                    nodeGlyph.hlight = true;
+                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, 
+                                           ctx, maxX, glyphMap, 0.2);
                     return true;
                 }
             } else {
                 //check if user has clicked an edge
                 for (i = 0; i < turn.trnEdges.length; i += 1) {
                     edge = turn.trnEdges[i];
-                    edgeInfo = glyphMap.get(edge);
-                    if (x > edgeInfo.x - 10 && x < edgeInfo.x + 10
-                    &&  y > edgeInfo.y - 5 && y < edgeInfo.y + 15) {
+                    edgeGlyph = glyphMap.get(edge);
+                    if (x > edgeGlyph.x && x < edgeGlyph.x + 15
+                    &&  y > edgeGlyph.y && y < edgeGlyph.y + 15) {
                         resetAlpha(0.2);
                         setTransparencyEdge(edge);
-                        edgeInfo.hlight = true;
-                        drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
+                        edgeGlyph.hlight = true;
+                        drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, 
+                                               ctx, maxX, glyphMap, 0.2);
                         return true;
                     }
                 }
@@ -378,7 +373,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     function sourceDblClick(e) {
         var x = e.pageX, //clicked x coordinate
             y = e.pageY, //clicked y coordinate
-            nodeInfo;    //turn node information
+            nodeGlyph;    //turn node information
 
         //if click is not in defined space
         if (x === undefined || y === undefined) {
@@ -387,9 +382,9 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
  
         list(sourceTurns, function (turn) {
             //check if user has clicked a got node
-            nodeInfo = glyphMap.get(turn.trnNode);
-            if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15
-             && y > nodeInfo.y - 15 && y < nodeInfo.y + 15) {
+            nodeGlyph = glyphMap.get(turn.trnNode);
+            if (x > nodeGlyph.x && x < nodeGlyph.x + 15
+             && y > nodeGlyph.y && y < nodeGlyph.y + 15) {
                 resetAlpha(0.2);
                 drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 1);
                 return true;
@@ -397,8 +392,65 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         });
     }//sourceDblClick()
 
+    function mouseMove(e) {
+        var x = e.pageX,
+            y = e.pageY,
+            lineGlyph,
+            //lineMap = new FlexMap(),
+            nodeGlyph;
+        var imageData;
+ 
+        if (x === undefined || y === undefined)
+            return;
+  
+        globFiles.forEach(function (file) {
+            file.lines.forEach(function (line) {
+                if(lineMap.get(line) === undefined)
+                    lineMap.set(line, {image: null, border: false});
+                lineGlyph = lineMap.get(line);
+
+                for(var i = 0; i < line.lnElements.length; i++) {
+
+                    nodeGlyph = glyphMap.get(line.lnElements[i]);
+                    if (x > nodeGlyph.x && x < nodeGlyph.x + 15
+                     && y > nodeGlyph.y && y < nodeGlyph.y + 15
+                     && nodeGlyph.hlight === false && lineGlyph.border === false) {
+                        lineGlyph.image = ctx.getImageData(60, nodeGlyph.y, line.textLen, 15);
+                        ctx.fillStyle = 'rgba(178,34,34,.15)';
+                        ctx.fillRect(60, nodeGlyph.y, line.textLen, 15);
+                        ctx.fill();
+                        lineGlyph.border = true;
+                        nodeGlyph.border = true;
+                        break;
+               
+                    }
+                    else if( (x < nodeGlyph.x || x > nodeGlyph.x+15
+                          ||  y < nodeGlyph.y || y > nodeGlyph.y+15 )
+                           && nodeGlyph.hlight === false 
+                           && lineGlyph.border === true && nodeGlyph.border === true)
+                    {
+                        if(lineGlyph.image !== null) {
+                            ctx.putImageData(lineGlyph.image, 60, nodeGlyph.y);
+                            lineGlyph.border = false;
+                            nodeGlyph.border = false;
+                            break;
+                        }
+                    }
+
+                }
+            });
+        });
+    }
+
     canvas.addEventListener("click", sourceClick, false);
     canvas.addEventListener("dblclick", sourceDblClick, false);
+
+    var vn = document.getElementById("gridCanvas");
+    //canvas.addEventListener ("onmousemove", mouseMove, false);
+    canvas.onmousemove = function(e) {
+        mouseMove(e);
+    }
+
 
     gatherCellInformation(jsonChunks);
 

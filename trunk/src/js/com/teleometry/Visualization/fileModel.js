@@ -11,6 +11,7 @@ var checkFile = (function () {
         this.span = span;
         this.message = message;
         this.isgot = isgot; //if is a got
+        this.textLen = 0;
         this.show = true;
 
         this.ycoord = 0;
