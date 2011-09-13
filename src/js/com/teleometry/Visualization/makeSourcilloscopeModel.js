@@ -4,11 +4,10 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
     var globFiles = [],           //array of files
         sourceTurns = {},         //holds turn information
-        GlyphMap = new FlexMap(), //map for extra node/edge info
+        glyphMap = new FlexMap(), //map for extra node/edge info
         maxX,                     //maximum x value for visualization
         dotAlpha,                 //alpha for the dotted lines for process order
         linesToRemove = [],       //key type: integer, value type: line object                       
-        ChunkMap = new FlexMap(), // key type: line object, value type: chunk
         NODE_SPACING = 10,        //spacing between nodes/edges in turn
         TURN_SPACING = 40,        //spacking between turns
         FILE_COORD = 35,          //spacial coordinate of file collapse
@@ -30,7 +29,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
     function gatherCellInformation(jsonChunks) {
         var cellGrid,       //holds cell grid information
-            startNdx = 320; //begin drawing nodes/edges after files 
+            startNdx = GRID_START; //begin drawing nodes/edges after files 
 
         cellGrid = makeCellGrid(makeCausewayModel(jsonChunks, hiddenSrcPaths));
         dotAlpha = 1; //used for dotted lines connecting process order
@@ -43,36 +42,32 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
             //adding node to turn object
             trn = new TurnObject(cell.node.getVatName(), cell.node);
-            GlyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false});
+            glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false});
 
             startNdx += NODE_SPACING;
 
             //stack trace for gots
             stack = cell.node.traceRecord.trace.calls;
             if (stack.length > 0) {
-                if (!hiddenSrcPaths.contains(stack[0].source)) {
-                    label = walker.getElementLabel(trn.trnNode, vatMap);
-                    checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, 1);
-                }
+                label = walker.getElementLabel(trn.trnNode, vatMap);
+                checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, 1);
             }
 
             cell.node.outs(function (edge) {
                 stack = edge.traceRecord.trace.calls;
                 if (stack.length > 0) {
-                    if (!hiddenSrcPaths.contains(stack[0].source)) {
-                        label = walker.getElementLabel(edge, vatMap);
-                        checkFile(globFiles, stack[0].source, stack[0].span, label, edge);
-                        GlyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false});
+                    label = walker.getElementLabel(edge, vatMap);
+                    checkFile(globFiles, stack[0].source, stack[0].span, label, edge);
+                    glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false});
 
-                        trn.addEdgeToTurn(edge);
-                        startNdx += NODE_SPACING;
-                    }
+                    trn.addEdgeToTurn(edge);
+                    startNdx += NODE_SPACING;
                 }
             });
 
             //ether
             if (trn.trnNode.traceRecord.trace.calls.length === 0) {
-                GlyphMap.get(trn.trnNode).y = 20;
+                glyphMap.get(trn.trnNode).y = 20;
             }
             sourceTurns[trn.trnNode.name] = trn;
             startNdx += TURN_SPACING;
@@ -96,85 +91,78 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
     //setting alpha for nodes and edges
     function resetAlpha(alpha) {
-        var i; //loop variable
 
         list(sourceTurns, function (turn) {
-            GlyphMap.get(turn.trnNode).alpha = alpha;
-            GlyphMap.get(turn.trnNode).hlight = false;
+            glyphMap.get(turn.trnNode).alpha = alpha;
+            glyphMap.get(turn.trnNode).hlight = false;
 
-            for (i = 0; i < turn.trnEdges.length; i += 1) {
-                GlyphMap.get(turn.trnEdges[i]).alpha = alpha;
-                GlyphMap.get(turn.trnEdges[i]).hlight = false;
-            }
+            turn.trnEdges.forEach(function (edge) {
+                glyphMap.get(edge).alpha = alpha;
+                glyphMap.get(edge).hlight = false;
+            });
         });
     }//resetAlpha()
 
-    function setTransparencyEdge(sourceTurns, edge, GlyphMap) {
-        var originName,  //name of edge origin
-            targetName;  //name of edge target
+    function setTransparentRight(turn) {
+        var target; //edge target
 
-        function setTransparentRight(turn) {
-            var i,      //loop variable
-                target; //edge target
-
-            GlyphMap.get(turn.trnNode).alpha = 1; //node transparency
-            for (i = 0; i < turn.trnEdges.length; i += 1) {
-                GlyphMap.get(turn.trnEdges[i]).alpha = 1; // edge transparency
-                //continue to the right, out edges
-                target = turn.trnEdges[i].getTarget();
-                if (target !== undefined && target.name !== "bottom: 0") {
-                    setTransparentRight(sourceTurns[target.name]);
-                }
+        glyphMap.get(turn.trnNode).alpha = 1; //node transparency
+        turn.trnNode.outs(function (nextEdge) {
+            glyphMap.get(nextEdge).alpha = 1; // edge transparency
+            //continue to the right, out edges
+            target = nextEdge.getTarget();
+            if (target !== undefined && target.name !== "bottom: 0") {
+                setTransparentRight(sourceTurns[target.name]);
             }
-        }//setTransparentRight()
+        });
+    }//setTransparentRight()
 
-        function setTransparentLeft(turn, edge) {
-            var origin; //edge origin
+    function setTransparentLeft(turn, edge) {
+        var origin; //edge origin
 
-            GlyphMap.get(turn.trnNode).alpha = 1; // node transparency
-            GlyphMap.get(edge).alpha = 1; // edge transparency
-            turn.trnNode.ins(function (nextEdge) {
-                //continue to the left, in edges
-                origin = nextEdge.getOrigin();
-                if (origin !== undefined && origin.name !== "top: 0") {
-                    setTransparentLeft(sourceTurns[origin.name], nextEdge);
-                }
-            });
-        }//setTransparentLeft()
+        glyphMap.get(turn.trnNode).alpha = 1; // node transparency
+        turn.trnNode.ins(function (nextEdge) {
+            //continue to the left, in edges
+            glyphMap.get(edge).alpha = 1;
+            origin = nextEdge.getOrigin();
+            if (origin !== undefined && origin.name !== "top: 0") {
+                setTransparentLeft(sourceTurns[origin.name], nextEdge);
+            }
+        });
+    }//setTransparentLeft()
 
-        GlyphMap.get(edge).alpha = 1;
-        originName = edge.getOrigin().name;
-        targetName = edge.getTarget().name;
 
+    function setTransparencyEdge(edge) {
+        var originName = edge.getOrigin().name,  //name of edge origin
+            targetName = edge.getTarget().name;  //name of edge target
+
+        glyphMap.get(edge).alpha = 1;
+        if (targetName !== "bottom: 0") {
+            setTransparentRight(sourceTurns[targetName]);
+        }
         if (originName !== "top: 0") {
-            GlyphMap.get(sourceTurns[originName].trnNode).alpha = 1;
-            //check right, out
-            if (sourceTurns[targetName] !== undefined && targetName !== "bottom: 0") {
-                setTransparentRight(sourceTurns[targetName]);
-            }
-            //check left, in
-            if (sourceTurns[originName] !== undefined && originName !== "top: 0") {
-                setTransparentLeft(sourceTurns[originName], edge);
-            }
+            glyphMap.get(sourceTurns[originName].trnNode).alpha = 1;
+            setTransparentLeft(sourceTurns[originName], edge);
         }
     }//setTransparencyEdge()
 
-    function setTransparencyNode(sourceTurns, node, GlyphMap) {
-        var done = false; //complete flag
-
-        GlyphMap.get(node).alpha = 1;
-        //start with 'out' edges, setTransparencyEdge will go through 'in' edges as well
-        if (sourceTurns[node.name].trnEdges.length > 0) {
-            node.outs(function (edge) {
-                setTransparencyEdge(sourceTurns, edge, GlyphMap);
-                done = true;
-            });
-        }
-        if (!done) { // if no 'out' edges, loop through 'in' edges
-            node.ins(function (edge) {
-                setTransparencyEdge(sourceTurns, edge, GlyphMap);
-            });
-        }
+    function setTransparencyNode(node) {
+        glyphMap.get(node).alpha = 1;
+        node.outs(function (edge) {
+            var targetName = edge.getTarget().name;
+            if (targetName !== "bottom: 0") {
+                glyphMap.get(edge).alpha = 1;
+                setTransparentRight(sourceTurns[targetName], edge);
+            }
+        });
+        node.ins(function (edge) {
+            var originName = edge.getOrigin().name;
+            if (edge.getOrigin().name !== "top: 0") {
+                glyphMap.get(edge).alpha = 1;
+                originName = edge.getOrigin().name;
+                setTransparentLeft(sourceTurns[originName], edge);
+            }
+        });
     }//setTransparencyNode()
 
     function interactWithFiles(x, y) {
@@ -203,39 +191,8 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             return output;
         }//deepJSONCopy()
 
-        function findChunk(line) {
-            var i, j,    //loop variables
-                source,  //source to match
-                span,    //span to match
-                chunk,   //chunks 
-                found;   //found boolean
-
-            for (i = 0; i < line.lnElements.length; i += 1) {
-                source = line.lnElements[i].traceRecord.trace.calls[0].source;
-                span = line.lnElements[i].traceRecord.trace.calls[0].span;
-                found = false;
-                for (j = 0; j < jsonChunks.length; j += 1) {
-                    chunk = jsonChunks[j];
-                    if (chunk.trace !== undefined) {
-                        found = list(chunk.trace.calls, function (piece) {
-                            if (piece.source === source 
-                             && piece.span[0][0] === span[0][0] 
-                             && piece.span[0][1] === span[0][1]) {
-                                ChunkMap.get(line).push(chunk);
-                                return true;
-                            }
-                        });
-                    }
-                    if (found) {
-                        break;
-                    }
-                }//j
-            }//i
-        }//findChunk()
-
-        function removeChunk(jsonChunksCopy, chunk) {
-            var i,             //loop variable
-                done = false;  //complete flag
+        function removeChunk(jsonChunksCopy, line) {
+            var done = false;  //complete flag
 
             function normalizeStack(chunk) {
                 if (!('track' in chunk)) {
@@ -243,18 +200,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                 }
                 return chunk;
             }
-            for (i = 0; i < jsonChunksCopy.length; i += 1) {
-                if (jsonChunksCopy[i].trace !== undefined) {
-                    done = list(jsonChunksCopy[i].trace.calls, function (jpiece) {
-                        done = list(chunk.trace.calls, function (cpiece) {
-                            if (jpiece.source === cpiece.source
-                             && jpiece.span[0][0] === cpiece.span[0][0]
-                             && jpiece.span[0][1] === cpiece.span[0][1]) {
-                                normalizeStack(jsonChunksCopy[i]);
-                                return true;
-                            }
-                        });
-                        if (done) {
+            jsonChunksCopy.forEach(function (jchunk) {
+                if (jchunk.trace !== undefined) {
+                    done = list(jchunk.trace.calls, function (jpiece) {
+                        if (jpiece.source === line.source
+                         && jpiece.span[0][0] === line.span[0][0]
+                         && jpiece.span[0][1] === line.span[0][1]) {
+                            normalizeStack(jchunk);
                             return true;
                         }
                     });
@@ -262,16 +214,8 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                         return;
                     }
                 }
-            }
+            });
         }//removeChunk() 
-
-        function addChunkToList(line) {
-            if (ChunkMap.get(line) === undefined) {
-                ChunkMap.set(line, []);
-            }
-            findChunk(line);
-            linesToRemove.push(line);
-        }//addChunkToList()
 
         function removeChunkFromList(line) {
             var i; //loop variable
@@ -284,47 +228,40 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         }//removeChunkFromList()
 
         function removeAllChunks() {
-            var i, j; //loop variables
-
-            for (i = 0; i < linesToRemove.length; i += 1) {
-                for (j = 0; j < ChunkMap.get(linesToRemove[i]).length; j += 1) {
-                    removeChunk(jsonChunksCopy, ChunkMap.get(linesToRemove[i])[j]);
-                }
-            }
+            linesToRemove.forEach( function(rmline) {
+                removeChunk(jsonChunksCopy, rmline);
+            });
         }//removeAllChunks()
 
         function resetAndDraw() {
-            var i, j; //loop variables
-
             sourceTurns = [];
-            for (i = 0; i < globFiles.length; i += 1) {
-                for (j = 0; j < globFiles[i].lines.length; j += 1) {
-                    globFiles[i].lines[j].lnElements = [];
-                }
-            }
+            globFiles.forEach(function (file) {
+                file.lines.forEach(function (line) {
+                    line.lnElements = [];
+                });
+            });
             gatherCellInformation(jsonChunksCopy);
-            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 1);  
+            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 1);  
         }//resetAndDraw()
 
 
         if (x <= FILE_COORD) { // file collapse
-            for (i = 0; i < globFiles.length; i += 1) {
-                if (y > globFiles[i].ycoord && y < globFiles[i].ycoord + 20) {
-                    globFiles[i].show = !globFiles[i].show;
+            globFiles.forEach(function (file) {
+                if (y > file.ycoord && y < file.ycoord + 20) {
+                    file.show = !file.show;
                     jsonChunksCopy = deepJSONCopy(jsonChunks);
-                    for (j = 0; j < globFiles[i].lines.length; j += 1) {
-                        line = globFiles[i].lines[j];
-                        if (!globFiles[i].show) {
-                            addChunkToList(line);
+                    file.lines.forEach(function (line) {
+                        if (!file.show) {
+                            linesToRemove.push(line);
                         } else {
                             removeChunkFromList(line);
                         }
-                    }
+                    });
                     removeAllChunks();
                     resetAndDraw();
                     return true;
                 }
-            }
+            });
         } else { //specific line chosen
             for (i = 0; i < globFiles.length; i += 1) {
                 for (j = 0; j < globFiles[i].lines.length; j += 1) {
@@ -333,7 +270,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                         if (x <= LINE_FILTER) { //filter line
                             jsonChunksCopy = deepJSONCopy(jsonChunks);
                             if (line.show) {
-                                addChunkToList(line);
+                                linesToRemove.push(line);
                             } else {
                                 removeChunkFromList(line);
                             }
@@ -345,13 +282,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                             resetAlpha(0.2); //set everything transparent
                             for (k = 0; k < line.lnElements.length; k += 1) {
                                 if (line.isgot) {
-                                    setTransparencyNode(sourceTurns, line.lnElements[k], GlyphMap);
+                                    setTransparencyNode(line.lnElements[k]);
                                 } else {
-                                    setTransparencyEdge(sourceTurns, line.lnElements[k], GlyphMap);
+                                    setTransparencyEdge(line.lnElements[k]);
                                 }
-                                GlyphMap.get(line.lnElements[k]).hlight = true; // highlight nodes/edges
+                                glyphMap.get(line.lnElements[k]).hlight = true; // highlight nodes/edges
                             }
-                            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 0.2);
+                            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
                             return true;
                         }
                     }
@@ -373,35 +310,35 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
             //check if user has clicked a got node
             node = turn.trnNode;
-            nodeInfo = GlyphMap.get(node);
+            nodeInfo = glyphMap.get(node);
             if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15) {
                 if (y < TURNBAR_COORD) { //user clicked turn bar at top
                     resetAlpha(0.2);
                     // show only nodes that can be executed concurrently with chosen turn
                     for (i = 0; i < turn.trnConc.length; i += 1) {
-                        GlyphMap.get(turn.trnConc[i]).alpha = 1;
-                        GlyphMap.get(turn.trnConc[i]).hlight = true;
+                        glyphMap.get(turn.trnConc[i]).alpha = 1;
+                        glyphMap.get(turn.trnConc[i]).hlight = true;
                     }
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 0.2);
+                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
                     return true;
                 } else if (y > nodeInfo.y - 15 && y < nodeInfo.y + 15) { //user hit node
                     resetAlpha(0.2);
-                    setTransparencyNode(sourceTurns, node, GlyphMap);
+                    setTransparencyNode(node);
                     nodeInfo.hlight = true;
-                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 0.2);
+                    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
                     return true;
                 }
             } else {
                 //check if user has clicked an edge
                 for (i = 0; i < turn.trnEdges.length; i += 1) {
                     edge = turn.trnEdges[i];
-                    edgeInfo = GlyphMap.get(edge);
+                    edgeInfo = glyphMap.get(edge);
                     if (x > edgeInfo.x - 10 && x < edgeInfo.x + 10
                     &&  y > edgeInfo.y - 5 && y < edgeInfo.y + 15) {
                         resetAlpha(0.2);
-                        setTransparencyEdge(sourceTurns, edge, GlyphMap);
+                        setTransparencyEdge(edge);
                         edgeInfo.hlight = true;
-                        drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 0.2);
+                        drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 0.2);
                         return true;
                     }
                 }
@@ -433,7 +370,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         //draw everything if user clicks anywhere else
         if (!done) {
             resetAlpha(1);
-            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 1);
+            drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 1);
         }
     }//sourceClick()
 
@@ -450,11 +387,11 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
  
         list(sourceTurns, function (turn) {
             //check if user has clicked a got node
-            nodeInfo = GlyphMap.get(turn.trnNode);
+            nodeInfo = glyphMap.get(turn.trnNode);
             if (x > nodeInfo.x - 15 && x < nodeInfo.x + 15
              && y > nodeInfo.y - 15 && y < nodeInfo.y + 15) {
                 resetAlpha(0.2);
-                drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, 1);
+                drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, 1);
                 return true;
             }
         });
@@ -466,5 +403,5 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     gatherCellInformation(jsonChunks);
 
     //put files/nodes/edges on the screen initially
-    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, GlyphMap, dotAlpha, 1);      
+    drawSourcilloscopeGrid(globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, dotAlpha, 1);      
 }
