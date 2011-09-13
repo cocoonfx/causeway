@@ -43,9 +43,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
             //adding node to turn object
             trn = new TurnObject(cell.node.getVatName(), cell.node);
-            glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false, 
-                                       image: null, border:  false});
-            
+            glyphMap.set(trn.trnNode, {x: startNdx, y: 0, alpha: 1, hlight: false, border:  false});
             startNdx += NODE_SPACING;
 
             //stack trace for gots
@@ -60,8 +58,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                 if (stack.length > 0) {
                     label = walker.getElementLabel(edge, vatMap);
                     checkFile(globFiles, stack[0].source, stack[0].span, label, edge, false);
-                    glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false,
-                                        image: null, border: false});
+                    glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false, border: false});
 
                     trn.addEdgeToTurn(edge);
                     startNdx += NODE_SPACING;
@@ -259,6 +256,8 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             });
         } else { //specific line chosen
             for (i = 0; i < globFiles.length; i += 1) {
+                if(!globFiles[i].show)
+                    continue;
                 for (j = 0; j < globFiles[i].lines.length; j += 1) {
                     line = globFiles[i].lines[j];
                     if (y > line.ycoord && y < line.ycoord + 20) {
@@ -412,10 +411,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                 if(lineMap.get(line) === undefined)
                     lineMap.set(line, {image: null, border: false});
                 lineGlyph = lineMap.get(line);
-
-                //line.lnElements.forEach(function (element) {
                 for(var i = 0; i < line.lnElements.length; i++) {
-
                     nodeGlyph = glyphMap.get(line.lnElements[i]);
                     if (x > nodeGlyph.x && x < nodeGlyph.x + 15
                      && y > nodeGlyph.y && y < nodeGlyph.y + 15
