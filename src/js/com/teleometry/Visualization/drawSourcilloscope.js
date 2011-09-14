@@ -260,7 +260,6 @@ var drawSourcilloscopeGrid = (function () {
 
                 file.lines.forEach(function (line) {
                     var str = line.span[0][0] + " " + line.message,
-                    //    textLen = ctx.measureText(str).width,
                         toHighlight = false;
 
                     line.textLen = ctx.measureText(str).width;
@@ -269,11 +268,11 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.font = "8pt Helvetica";
                     ctx.textAlign = "left";
                     ctx.textBaseline = "top";
-                    ctx.fillText(str, startx + 20, starty);
+                    ctx.fillText(str, startx + 20, starty+1);
 
                     //draw circles for active/hidden source lines
                     ctx.beginPath();
-                    ctx.arc(startx + 10, starty + 6, 5, 0, 2 * Math.PI, 1);
+                    ctx.arc(startx + 10, starty + 7, 5, 0, 2 * Math.PI, 1);
                     ctx.closePath();
 
                     if (line.show) { 
@@ -296,7 +295,7 @@ var drawSourcilloscopeGrid = (function () {
                     line.ycoord = starty;
                     if (toHighlight) {
                         ctx.strokeStyle = EDGE_COLOR + '.85)';
-                        ctx.strokeRect(startx + 19, starty, line.textLen+3, 14);
+                        ctx.strokeRect(startx + 19, starty-1, line.textLen+2, 17);
                     }
 
                     starty += SPACING;

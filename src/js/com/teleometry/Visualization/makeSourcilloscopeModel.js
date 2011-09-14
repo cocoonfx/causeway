@@ -256,8 +256,9 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             });
         } else { //specific line chosen
             for (i = 0; i < globFiles.length; i += 1) {
-                if(!globFiles[i].show)
+                if(!globFiles[i].show) {
                     continue;
+                }
                 for (j = 0; j < globFiles[i].lines.length; j += 1) {
                     line = globFiles[i].lines[j];
                     if (y > line.ycoord && y < line.ycoord + 20) {
@@ -415,7 +416,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                     nodeGlyph = glyphMap.get(line.lnElements[i]);
                     if (x > nodeGlyph.x && x < nodeGlyph.x + 15
                      && y > nodeGlyph.y && y < nodeGlyph.y + 15
-                     && nodeGlyph.hlight === false && lineGlyph.border === false) {
+                     && lineGlyph.border === false) {
                         lineGlyph.image = ctx.getImageData(60, nodeGlyph.y, line.textLen, 15);
                         ctx.fillStyle = 'rgba(178,34,34,.15)';
                         ctx.fillRect(60, nodeGlyph.y, line.textLen, 15);
@@ -427,7 +428,6 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                     }
                     else if( (x < nodeGlyph.x || x > nodeGlyph.x+15
                           ||  y < nodeGlyph.y || y > nodeGlyph.y+15 )
-                           && nodeGlyph.hlight === false 
                            && lineGlyph.border === true && nodeGlyph.border === true)
                     {
                         if(lineGlyph.image !== null) {
@@ -445,9 +445,6 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
 
     canvas.addEventListener("click", sourceClick, false);
     canvas.addEventListener("dblclick", sourceDblClick, false);
-
-    var vn = document.getElementById("gridCanvas");
-    //canvas.addEventListener ("onmousemove", mouseMove, false);
     canvas.onmousemove = function(e) {
         mouseMove(e);
     }
