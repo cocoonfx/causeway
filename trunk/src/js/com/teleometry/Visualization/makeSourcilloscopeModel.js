@@ -154,14 +154,14 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         glyphMap.get(node).alpha = 1;
         node.outs(function (edge) {
             var targetName = edge.getTarget().name;
-            if (glyphMap.get(edge)) { //(targetName !== "bottom: 0") {
+            if (targetName !== "bottom: 0" && glyphMap.get(edge)) { //(targetName !== "bottom: 0") {
                 glyphMap.get(edge).alpha = 1;
                 setTransparentRight(sourceTurns[targetName]);
             }
         });
         node.ins(function (edge) {
             var originName = edge.getOrigin().name;
-            if (glyphMap.get(edge)) {//(originName !== "top: 0") {
+            if (originName !== "top: 0" && glyphMap.get(edge)) {//(originName !== "top: 0") {
                 glyphMap.get(edge).alpha = 1;
                 setTransparentLeft(sourceTurns[originName], edge);
             }
