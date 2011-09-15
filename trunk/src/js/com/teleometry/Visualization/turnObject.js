@@ -5,7 +5,7 @@ function TurnObject(name, node)
     this.trnNode = node
 
     this.trnEdges = []; // edges for turn
-    this.trnConc = []; // concurrent nodes
+    this.trnConc = [];  // concurrent nodes
 }
 
 TurnObject.prototype.addEdgeToTurn = function(edge) {

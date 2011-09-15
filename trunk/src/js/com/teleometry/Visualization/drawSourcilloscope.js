@@ -14,7 +14,7 @@ var drawSourcilloscopeGrid = (function () {
                 predicate(map[key], key);
             }
         }
-    }
+    }//list()
 
     function dottedLine(ctx, startx, starty, endx, endy) {
 
@@ -42,15 +42,12 @@ var drawSourcilloscopeGrid = (function () {
         }
         //connect with the end point
         ctx.lineTo(endx, endy);
-    }
+    }//dottedLine()
 
     //First, Draw bars and numbers to show Concurrency
     //Next, draw got nodes and loop through all outgoing edges, 
     //drawing them as well Also, check for targets and draw corresponding arcs
     function drawNodesAndEdges(sourceTurns, canvas, ctx, dotAlpha, glyphMap) {
-        //storing connected vats, last turn in process order
-
-        // key type: vat name, value type: sourceTurns index value
         var i,
             conVats = {}, // storing last turn in proc order, [vat name] = sourceturns index
             conx, cony,   //stores previous draw position for turn
@@ -96,7 +93,6 @@ var drawSourcilloscopeGrid = (function () {
                     ctx.fillRect(nodeGlyph.x, nodeGlyph.y, 15, 15);
                 }
 
-
                 //setting transparancy flag for turns, 
                 //so not entire turn is opaque if not all edges are shown
                 alphaFlag = 0;
@@ -112,6 +108,7 @@ var drawSourcilloscopeGrid = (function () {
                 //used for bezier curves to leave and
                 //enter nodes at various angle
                 diffbez = 10;
+                //drawing sent events
                 for (i = 0; i < turn.trnEdges.length; i += 1) {
                     edge = turn.trnEdges[i];
                     edgeGlyph = glyphMap.get(edge);
@@ -216,13 +213,13 @@ var drawSourcilloscopeGrid = (function () {
             ctx.stroke();
 
         }
-    }
+    }//drawNodesAndEdges()
 
     function drawFiles(globFiles, canvas, ctx, maxX, glyphMap) {
 
-        var SPACING = 20, //vert spacing
-            starty = 40,  //starting y value
-            shadingy = starty;     //y coord of file shading
+        var SPACING = 20,      //vert spacing
+            starty = 40,       //starting y value
+            shadingy = starty; //y coord of file shading
 
         function drawOneFile(file) {
             var startx = 40;
@@ -288,7 +285,7 @@ var drawSourcilloscopeGrid = (function () {
                         if (glyphMap.get(element).hlight) { 
                             toHighlight = true;
                         }
-
+                        //set y coordinates for got/sent events
                         glyphMap.get(element).y = starty;    
                     });
  
@@ -301,7 +298,7 @@ var drawSourcilloscopeGrid = (function () {
                     starty += SPACING;
                 });
             }
-        }
+        }//drawOneFile()
 
         //looping through all files
         globFiles.forEach(function (file) {
@@ -317,7 +314,7 @@ var drawSourcilloscopeGrid = (function () {
             starty += SPACING;
             shadingy = starty;
         });
-    }
+    }//drawFiles()
 
     // globFiles - Array of files
     // sourceTurns - array of turns holding got and sent information

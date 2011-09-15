@@ -36,7 +36,6 @@ var checkFile = (function () {
 
         //array of line objects
         this.lines = [];
-
     }
 
     //adds line to file
@@ -63,7 +62,6 @@ var checkFile = (function () {
         this.lines.push(lobj);
     };
 
-
     function addFile(files, source, span, message, element, ifgot) {
         var fobj = new FileObject(source);
         fobj.addLine(source, span, message, element, ifgot);
@@ -71,7 +69,6 @@ var checkFile = (function () {
     }
 
     return function (files, source, span, message, element, ifgot) {
-
         var i, j, line;
         for (i = 0; i < files.length; i += 1) {
 
@@ -84,20 +81,14 @@ var checkFile = (function () {
                         return;
                     }
                 }
-            
                 //line not found, add line to file
                 files[i].addLine(source, span, message, element, ifgot);
                 return;
             }
-   
-        }//for i
-
+        }
         //file was not found, create new file object
         addFile(files, source, span, message, element, ifgot);
-
     };
-
-
 }());
 
 
