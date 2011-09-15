@@ -5,7 +5,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     var globFiles = [],           //array of files
         sourceTurns = {},         //holds turn information
         glyphMap = new FlexMap(), //map for extra node/edge info
-        lineMap = new FlexMap(),
+        lineMap = new FlexMap(),  //map for mouseover highlighting
         maxX,                     //maximum x value for visualization
         dotAlpha,                 //alpha for the dotted lines for process order
         linesToRemove = [],       //key type: integer, value type: line object                       
@@ -29,7 +29,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     }//list()
 
     function gatherCellInformation(jsonChunksCurrent) {
-        var cellGrid,       //holds cell grid information
+        var cellGrid,              //holds cell grid information
             startNdx = GRID_START; //begin drawing nodes/edges after files 
 
         cellGrid = makeCellGrid(makeCausewayModel(jsonChunksCurrent, hiddenSrcPaths));
@@ -53,6 +53,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                 checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, true);
             }
 
+            //stack trace for sent events
             cell.node.outs(function (edge) {
                 stack = edge.traceRecord.trace.calls;
                 if (stack.length > 0) {
@@ -110,7 +111,6 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         turn.trnNode.outs(function (nextEdge) {
             if(glyphMap.get(nextEdge)) {
                 glyphMap.get(nextEdge).alpha = 1; // edge transparency
-                //continue to the right, out edges
                 target = nextEdge.getTarget();
                 if (target !== undefined && target.name !== "bottom: 0") {
                     setTransparentRight(sourceTurns[target.name]);
@@ -126,7 +126,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         turn.trnNode.ins(function (nextEdge) {
             //continue to the left, in edges
             if(glyphMap.get(nextEdge)) {
-                glyphMap.get(nextEdge).alpha = 1;
+                glyphMap.get(nextEdge).alpha = 1; //edge transparency
                 origin = nextEdge.getOrigin();
                 if (origin !== undefined && origin.name !== "top: 0") {
                     setTransparentLeft(sourceTurns[origin.name], nextEdge);
@@ -154,14 +154,14 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         glyphMap.get(node).alpha = 1;
         node.outs(function (edge) {
             var targetName = edge.getTarget().name;
-            if (targetName !== "bottom: 0" && glyphMap.get(edge)) { //(targetName !== "bottom: 0") {
+            if (targetName !== "bottom: 0" && glyphMap.get(edge)) { 
                 glyphMap.get(edge).alpha = 1;
                 setTransparentRight(sourceTurns[targetName]);
             }
         });
         node.ins(function (edge) {
             var originName = edge.getOrigin().name;
-            if (originName !== "top: 0" && glyphMap.get(edge)) {//(originName !== "top: 0") {
+            if (originName !== "top: 0" && glyphMap.get(edge)) {
                 glyphMap.get(edge).alpha = 1;
                 setTransparentLeft(sourceTurns[originName], edge);
             }
@@ -301,8 +301,8 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             var i,          //loop variable
                 node,       //node to look at
                 edge,       //edge to look at
-                nodeGlyph,   //node info from map
-                edgeGlyph;   //edge info from map
+                nodeGlyph,  //node info from glyphMap
+                edgeGlyph;  //edge info from glyphMap
 
             //check if user has clicked a got node
             node = turn.trnNode;
@@ -377,7 +377,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     function sourceDblClick(e) {
         var x = e.pageX, //clicked x coordinate
             y = e.pageY, //clicked y coordinate
-            nodeGlyph;    //turn node information
+            nodeGlyph;   //turn node information
 
         //if click is not in defined space
         if (x === undefined || y === undefined) {
@@ -397,43 +397,44 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
     }//sourceDblClick()
 
     function mouseMove(e) {
-        var x = e.pageX,
-            y = e.pageY,
-            lineGlyph,
-            //lineMap = new FlexMap(),
-            nodeGlyph;
-        var imageData;
+        var x = e.pageX, //x coordinate of mouse click
+            y = e.pageY; //y coordinate of mouse click
  
         if (x === undefined || y === undefined)
             return;
   
         globFiles.forEach(function (file) {
             file.lines.forEach(function (line) {
+                var lineGlyph,    //line information from lineMap
+                    elementGlyph, //element information from glyphMap
+                    imageData;    //image data from source line
+
                 if(lineMap.get(line) === undefined)
                     lineMap.set(line, {image: null, border: false});
                 lineGlyph = lineMap.get(line);
                 for(var i = 0; i < line.lnElements.length; i++) {
-                    nodeGlyph = glyphMap.get(line.lnElements[i]);
-                    if (x > nodeGlyph.x && x < nodeGlyph.x + 15
-                     && y > nodeGlyph.y && y < nodeGlyph.y + 15
+                    elementGlyph = glyphMap.get(line.lnElements[i]);
+                    //if mouse is hovering over a got/sent event, highlight
+                    if (x > elementGlyph.x && x < elementGlyph.x + 15
+                     && y > elementGlyph.y && y < elementGlyph.y + 15
                      && lineGlyph.border === false) {
-                        lineGlyph.image = ctx.getImageData(60, nodeGlyph.y, line.textLen, 15);
+                        //copy non-highlighted line image before highlighting
+                        lineGlyph.image = ctx.getImageData(LINE_FILTER, elementGlyph.y, line.textLen, 15);
                         ctx.fillStyle = 'rgba(178,34,34,.15)';
-                        ctx.fillRect(60, nodeGlyph.y, line.textLen, 15);
+                        ctx.fillRect(60, elementGlyph.y, line.textLen, 15);
                         ctx.fill();
                         lineGlyph.border = true;
-                        nodeGlyph.border = true;
+                        elementGlyph.border = true;
                         break;
                
-                    }
-                    else if( (x < nodeGlyph.x || x > nodeGlyph.x+15
-                          ||  y < nodeGlyph.y || y > nodeGlyph.y+15 )
-                           && lineGlyph.border === true && nodeGlyph.border === true)
-                    {
+                    } //if mouse is not on got/sent event, paste non-highlighted line
+                    else if( (x < elementGlyph.x || x > elementGlyph.x+15
+                          ||  y < elementGlyph.y || y > elementGlyph.y+15 )
+                           && lineGlyph.border === true && elementGlyph.border === true) {
                         if(lineGlyph.image !== null) {
-                            ctx.putImageData(lineGlyph.image, 60, nodeGlyph.y);
+                            ctx.putImageData(lineGlyph.image, LINE_FILTER, elementGlyph.y);
                             lineGlyph.border = false;
-                            nodeGlyph.border = false;
+                            elementGlyph.border = false;
                             break;
                         }
                     }
@@ -441,14 +442,13 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                 }
             });
         });
-    }
+    }//mouseMove()
 
     canvas.addEventListener("click", sourceClick, false);
     canvas.addEventListener("dblclick", sourceDblClick, false);
     canvas.onmousemove = function(e) {
         mouseMove(e);
     }
-
 
     gatherCellInformation(jsonChunks);
 
