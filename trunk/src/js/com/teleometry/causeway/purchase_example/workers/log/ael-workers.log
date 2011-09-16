@@ -1,0 +1,1377 @@
+[{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "message": "umid:0.004761622054502368:buyer",
+ "timestamp": 1312083788187,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": "doWebWorkersTest, doWebWorkersTest",
+    "source": "mainBuyer.js",
+    "span": [ [ 122, 14 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "workersExample.html",
+    "span": [ [ 8, 180 ] ]
+   },
+   {
+    "name": "onload, onload",
+    "source": "workersExample.html",
+    "span": [ [ 9, 4 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 2,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "message": "umid:0.33898594975471497:buyer",
+ "timestamp": 1312083788328,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": "doWebWorkersTest, doWebWorkersTest",
+    "source": "mainBuyer.js",
+    "span": [ [ 124, 15 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "workersExample.html",
+    "span": [ [ 8, 180 ] ]
+   },
+   {
+    "name": "onload, onload",
+    "source": "workersExample.html",
+    "span": [ [ 9, 4 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 3,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "message": "umid:0.7076346904505044:buyer",
+ "timestamp": 1312083788334,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": "doWebWorkersTest, doWebWorkersTest",
+    "source": "mainBuyer.js",
+    "span": [ [ 126, 14 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "workersExample.html",
+    "span": [ [ 8, 180 ] ]
+   },
+   {
+    "name": "onload, onload",
+    "source": "workersExample.html",
+    "span": [ [ 9, 4 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Fulfilled",
+  "org.ref_send.log.Resolved",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 4,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "condition": "ucid:0.6911164959892631:buyer",
+ "timestamp": 1312083788343,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.aelBase.addEventListener, addEventListener",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 289, 45 ] ]
+   },
+   {
+    "name": "doWebWorkersTest, doWebWorkersTest",
+    "source": "mainBuyer.js",
+    "span": [ [ 129, 14 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "workersExample.html",
+    "span": [ [ 8, 180 ] ]
+   },
+   {
+    "name": "onload, onload",
+    "source": "workersExample.html",
+    "span": [ [ 9, 4 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Fulfilled",
+  "org.ref_send.log.Resolved",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 5,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "condition": "ucid:0.12917879596352577:buyer",
+ "timestamp": 1312083788348,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.aelBase.addEventListener, addEventListener",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 289, 45 ] ]
+   },
+   {
+    "name": "doWebWorkersTest, doWebWorkersTest",
+    "source": "mainBuyer.js",
+    "span": [ [ 153, 15 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "workersExample.html",
+    "span": [ [ 8, 180 ] ]
+   },
+   {
+    "name": "onload, onload",
+    "source": "workersExample.html",
+    "span": [ [ 9, 4 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Fulfilled",
+  "org.ref_send.log.Resolved",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 0
+  }
+ },
+ "condition": "ucid:0.4026792657095939:product",
+ "timestamp": 1312083788485,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.aelBase.addEventListener, addEventListener",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 289, 45 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwProduct.js",
+    "span": [ [ 25, 8 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwProduct.js",
+    "span": [ [ 45, 2 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 1
+  }
+ },
+ "message": "umid:0.004761622054502368:buyer",
+ "timestamp": 1312083788489,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 1
+  }
+ },
+ "condition": "ucid:0.4026792657095939:product",
+ "message": "umid:0.032417615642771125:product",
+ "timestamp": 1312083788489,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 2
+  }
+ },
+ "message": "umid:0.032417615642771125:product",
+ "timestamp": 1312083788489,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 2
+  }
+ },
+ "message": "umid:0.06406614766456187:product",
+ "timestamp": 1312083788490,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwProduct.js",
+    "span": [ [ 30, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 1
+  }
+ },
+ "message": "umid:0.06406614766456187:product",
+ "timestamp": 1312083788497,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 1
+  }
+ },
+ "condition": "ucid:0.6911164959892631:buyer",
+ "message": "umid:0.9486830779351294:buyer",
+ "timestamp": 1312083788497,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 2
+  }
+ },
+ "message": "umid:0.9486830779351294:buyer",
+ "timestamp": 1312083788497,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 2
+  }
+ },
+ "message": "umid:0.25290418206714094:buyer",
+ "timestamp": 1312083788498,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 226, 36 ] ]
+   },
+   {
+    "name": "accounts.addEventListener.data, null",
+    "source": "mainBuyer.js",
+    "span": [ [ 135, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 3
+  }
+ },
+ "message": "umid:0.7076346904505044:buyer",
+ "timestamp": 1312083788490,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 3
+  }
+ },
+ "condition": "ucid:0.4026792657095939:product",
+ "message": "umid:0.4060458093881607:product",
+ "timestamp": 1312083788490,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 4
+  }
+ },
+ "message": "umid:0.4060458093881607:product",
+ "timestamp": 1312083788492,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 4
+  }
+ },
+ "message": "umid:0.37087732716463506:product",
+ "timestamp": 1312083788492,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwProduct.js",
+    "span": [ [ 34, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 3
+  }
+ },
+ "message": "umid:0.37087732716463506:product",
+ "timestamp": 1312083788499,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 3
+  }
+ },
+ "condition": "ucid:0.6911164959892631:buyer",
+ "message": "umid:0.33486570441164076:buyer",
+ "timestamp": 1312083788499,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 4
+  }
+ },
+ "message": "umid:0.33486570441164076:buyer",
+ "timestamp": 1312083788499,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 4
+  }
+ },
+ "message": "umid:0.7493889511097223:buyer",
+ "timestamp": 1312083788499,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 226, 36 ] ]
+   },
+   {
+    "name": "accounts.addEventListener.data, null",
+    "source": "mainBuyer.js",
+    "span": [ [ 135, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 5
+  }
+ },
+ "message": "umid:0.25290418206714094:buyer",
+ "timestamp": 1312083788500,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 228, 37 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 6
+  }
+ },
+ "message": "umid:0.7493889511097223:buyer",
+ "timestamp": 1312083788510,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 228, 37 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Fulfilled",
+  "org.ref_send.log.Resolved",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "accounts",
+   "number": 0
+  }
+ },
+ "condition": "ucid:0.7630356380250305:accounts",
+ "timestamp": 1312083788516,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.aelBase.addEventListener, addEventListener",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 289, 45 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwAccounts.js",
+    "span": [ [ 17, 8 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwAccounts.js",
+    "span": [ [ 29, 2 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "accounts",
+   "number": 1
+  }
+ },
+ "message": "umid:0.33898594975471497:buyer",
+ "timestamp": 1312083788521,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "accounts",
+   "number": 1
+  }
+ },
+ "condition": "ucid:0.7630356380250305:accounts",
+ "message": "umid:0.5918135109823197:accounts",
+ "timestamp": 1312083788521,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "accounts",
+   "number": 2
+  }
+ },
+ "message": "umid:0.5918135109823197:accounts",
+ "timestamp": 1312083788521,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "accounts",
+   "number": 2
+  }
+ },
+ "message": "umid:0.6915717620868236:accounts",
+ "timestamp": 1312083788522,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwAccounts.js",
+    "span": [ [ 22, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 7
+  }
+ },
+ "message": "umid:0.6915717620868236:accounts",
+ "timestamp": 1312083788527,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 7
+  }
+ },
+ "condition": "ucid:0.12917879596352577:buyer",
+ "message": "umid:0.5631106407381594:buyer",
+ "timestamp": 1312083788527,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 8
+  }
+ },
+ "message": "umid:0.5631106407381594:buyer",
+ "timestamp": 1312083788527,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 8
+  }
+ },
+ "message": "umid:0.3091225160751492:buyer",
+ "timestamp": 1312083788527,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 226, 36 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "mainBuyer.js",
+    "span": [ [ 158, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 9
+  }
+ },
+ "message": "umid:0.3091225160751492:buyer",
+ "timestamp": 1312083788528,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 228, 37 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 9
+  }
+ },
+ "message": "umid:0.9023772072978318:buyer",
+ "timestamp": 1312083788533,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 226, 36 ] ]
+   },
+   {
+    "name": "teller.run, run",
+    "source": "asyncAnd.js",
+    "span": [ [ 28, 14 ] ]
+   },
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 229, 22 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 10
+  }
+ },
+ "message": "umid:0.9023772072978318:buyer",
+ "timestamp": 1312083788538,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 228, 37 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Comment",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 10
+  }
+ },
+ "text": "All queries answered true",
+ "timestamp": 1312083788543,
+ "trace": {
+  "calls": [
+   {
+    "name": "checkAnswers.run, run",
+    "source": "mainBuyer.js",
+    "span": [ [ 106, 38 ] ]
+   },
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 229, 22 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 2,
+  "turn": {
+   "loop": "buyer",
+   "number": 10
+  }
+ },
+ "message": "umid:0.14237171178683639:buyer",
+ "timestamp": 1312083788547,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": "checkAnswers.run, run",
+    "source": "mainBuyer.js",
+    "span": [ [ 107, 20 ] ]
+   },
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 229, 22 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 5
+  }
+ },
+ "message": "umid:0.14237171178683639:buyer",
+ "timestamp": 1312083788552,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 5
+  }
+ },
+ "condition": "ucid:0.4026792657095939:product",
+ "message": "umid:0.6610352080315351:product",
+ "timestamp": 1312083788552,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 6
+  }
+ },
+ "message": "umid:0.6610352080315351:product",
+ "timestamp": 1312083788553,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 6
+  }
+ },
+ "message": "umid:0.8543953315820545:product",
+ "timestamp": 1312083788553,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.turnOn.pmBase.postMessage, postMessage",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 259, 38 ] ]
+   },
+   {
+    "name": ", null",
+    "source": "wwProduct.js",
+    "span": [ [ 38, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 11
+  }
+ },
+ "message": "umid:0.8543953315820545:product",
+ "timestamp": 1312083788554,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 278, 43 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 11
+  }
+ },
+ "condition": "ucid:0.6911164959892631:buyer",
+ "message": "umid:0.5790522161405534:buyer",
+ "timestamp": 1312083788554,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 282, 51 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 12
+  }
+ },
+ "message": "umid:0.5790522161405534:buyer",
+ "timestamp": 1312083788554,
+ "trace": {
+  "calls": [
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 283, 42 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 12
+  }
+ },
+ "message": "umid:0.8030000992584974:buyer",
+ "timestamp": 1312083788554,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 226, 36 ] ]
+   },
+   {
+    "name": "accounts.addEventListener.data, null",
+    "source": "mainBuyer.js",
+    "span": [ [ 140, 12 ] ]
+   },
+   {
+    "name": "newCallback, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 285, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 13
+  }
+ },
+ "message": "umid:0.8030000992584974:buyer",
+ "timestamp": 1312083788555,
+ "trace": {
+  "calls": [
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 228, 37 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Comment",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 13
+  }
+ },
+ "text": "Order placed for West Coast Buyers",
+ "timestamp": 1312083788560,
+ "trace": {
+  "calls": [
+   {
+    "name": "reporter.run, run",
+    "source": "mainBuyer.js",
+    "span": [ [ 92, 38 ] ]
+   },
+   {
+    "name": "logger.send, null",
+    "source": "makeCausewayLogger.js",
+    "span": [ [ 229, 22 ] ]
+   }
+  ]
+ }
+}]

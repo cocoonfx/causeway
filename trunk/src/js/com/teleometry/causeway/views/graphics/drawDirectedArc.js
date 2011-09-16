@@ -2,18 +2,48 @@
 // found at http:3www.opensource.org/licenses/mit-license.html ...............
 
 var drawDirectedArc;
+var drawJoin;
 
 (function(){
   "use strict";
 
-  var displayAttr = {
-    strokeStyle: "#778899",  // lightslategray for arcs
-    fillStyle: "#778899",
-    lineStyle: "#778899",
-    lineWidth: 1
+  drawJoin = function drawJoin(context, fromPt, toPt) {
+
+    //var isBelow = (toPt.y > fromPt.y) ? true : false;
+
+    context.lineWidth = 1;
+
+    toPt.x -= 3;
+    
+    // a join is a horizontal line connecting to a vertical line
+    // it's drawn with a subtle inset, suggesting a 'channel'
+    // at a layer below
+
+    // draw the dark lines
+    context.strokeStyle = 'rgba(153, 153, 153, 0.5)';
+
+    context.beginPath();
+    context.moveTo(fromPt.x + 0.5, fromPt.y + 0.5);
+    context.lineTo(toPt.x + 0.5, fromPt.y + 0.5);
+    context.lineTo(toPt.x + 0.5, toPt.y + 0.5);
+    context.stroke();
+
+    // draw the white lines
+    context.strokeStyle = 'rgb(255, 255, 255)';
+
+    context.beginPath();
+    context.moveTo(fromPt.x + 0.5, fromPt.y + 1.5);
+    context.lineTo(toPt.x - 0.5, fromPt.y + 1.5);
+    context.moveTo(toPt.x + 1.5, fromPt.y + 1.5);
+    context.lineTo(toPt.x + 1.5, toPt.y + 0.5);
+    context.stroke();
   };
 
   drawDirectedArc = function drawDirectedArc(context, fromPt, toPt) {
+    fromPt.x += 0.5;
+    fromPt.y += 0.5;
+    toPt.x += 0.5;
+    toPt.y += 0.5;
 
     var isRight = (toPt.x > fromPt.x) ? true : false;
     var isBelow = (toPt.y > fromPt.y) ? true : false;
@@ -37,10 +67,15 @@ var drawDirectedArc;
       (fromPt.y + Math.floor(distY /2)) :
       (fromPt.y - Math.floor(distY /2));
 
-    context.strokeStyle = displayAttr.strokeStyle;
-    context.fillStyle = displayAttr.fillStyle;
-    context.lineStyle = displayAttr.lineStyle;
-    context.lineWidth = displayAttr.lineWidth;
+    context.lineWidth = 1;
+    
+    context.strokeStyle = 'rgba(0, 0, 51, 0.5)';
+
+    // joins gray
+    //context.strokeStyle = 'rgb(153, 153, 153)';
+
+    // Alexy red
+    //context.strokeStyle = 'rgb(178, 34, 34)';
 
     context.beginPath();
     context.moveTo(fromPt.x, fromPt.y);
@@ -48,18 +83,8 @@ var drawDirectedArc;
                           quarterX, fromPt.y,
                           midX, midY);
     context.bezierCurveTo(threeQuarterX, toPt.y, 
-                          toPt.x -5, toPt.y, 
-                          toPt.x -5, toPt.y);
+                          toPt.x, toPt.y, 
+                          toPt.x, toPt.y);
     context.stroke();
-
-    // draw 5x3 arrow tip (points right)
-    var x = toPt.x;
-    var y = toPt.y;
-    context.beginPath();
-    context.moveTo(x, y);
-    context.lineTo(x -5, y -3);
-    context.lineTo(x -5, y +3);
-    context.closePath();
-    context.fill();
   };
 })();
