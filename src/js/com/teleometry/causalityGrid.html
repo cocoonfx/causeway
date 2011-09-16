@@ -3,9 +3,26 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Causality Grid on Chrome-Canvas</title>
+<title>Causality Grid on Canvas</title>
 <style type="text/css">
-body { margin:0; padding:0; }
+body { font-size: 10pt; 
+       font-family: "Helvetica, sans-serif";
+       color: #000033;
+       background-color: #f5f5f5;
+       margin: 0em; padding: 0em; }
+.outline p          { margin-top: 0em;    margin-bottom: 0em; 
+                      margin-left: 0em;   margin-right: 0em; }
+.outline blockquote { margin-top: 0.05em; margin-bottom: 0.05em; 
+                      margin-left: 1em;   margin-right: 0.05em; }
+
+#messageOrder { margin-top: 1em;
+                width: 350px;
+                height: 500px;
+                float: left; }
+#gridCanvas { position: absolute;
+              left: 400px;
+              top: 10px;
+              background-color: #f5f5f5; }                  
 </style>
 </head>
 
@@ -14,8 +31,11 @@ body { margin:0; padding:0; }
   <p>This page requires a Javascript enabled web browser.</p>
 </noscript>
 
+<div id="messageOrder" class="outline">Message Order View</div>
+
 <script src="utils/jsUtils.js"></script>
 <script src="utils/FlexMap.js"></script>
+<script src="utils/dom/outline.js"></script>
 
 <script src="digraph/GraphElement.js"></script>
 <script src="digraph/GraphArc.js"></script>
@@ -30,6 +50,7 @@ body { margin:0; padding:0; }
 
 <script src="causeway/models/makeCausewayModel.js"></script>
 <script src="causeway/models/makeCellGrid.js"></script>
+<script src="causeway/models/makeSelectionModel.js"></script>
 
 <script src="causeway/views/makeVatMap.js"></script>
 <script src="causeway/views/makeGraphWalker.js"></script>
@@ -37,6 +58,7 @@ body { margin:0; padding:0; }
 <script src="causeway/views/makeTurnView.js"></script>
 <script src="causeway/views/makeIconicTurnView.js"></script>
 <script src="causeway/views/makeCausalityGridView.js"></script>
+<script src="causeway/views/makeMessageOrderView.js"></script>
 
 <script src="causeway/views/graphics/drawDirectedArc.js"></script>
 
@@ -44,7 +66,11 @@ body { margin:0; padding:0; }
 
 <script src="causalityGrid.js"></script>
 
-<canvas id="gridCanvas" width="1000" height="700"></canvas>
+<canvas id="gridCanvas" width="700" height="700">
+  <p>This example requires a browser that supports the
+     <a href="http://www.w3.org/html/wg/html5/">HTML5</a>
+      &lt;canvas&gt; feature.</p>
+</canvas>
 
 </body>
 </html>

@@ -9,6 +9,8 @@ var makeWdwMap;
   makeWdwMap = function makeWdwMap() {
 
     var lookup = new FlexMap();
+    var xScale = 1.0;
+    var yScale = 1.0;
 
     var wdwMap = {
 
@@ -20,16 +22,23 @@ var makeWdwMap;
         return !(lookup.get(graphElement) === undefined);
       },
 
+      scale: function(x, y) {
+        xScale = x;
+        yScale = y;
+      },
+
       whereIs: function(graphElement) {
         return lookup.get(graphElement);
       },
 
       whoIs: function(x, y) {
+        var tx = x / xScale;
+        var ty = y / yScale;
         var graphElements = lookup.getKeys();
         for (var i = 0, iLen = graphElements.length; i < iLen; i++) {
           var where = lookup.get(graphElements[i]);
-          if (x >= where.x && x < where.x + where.w &&
-              y >= where.y && y < where.y + where.h) {
+          if (tx >= where.x && tx < where.x + where.w &&
+              ty >= where.y && ty < where.y + where.h) {
             return graphElements[i];
           }
         }

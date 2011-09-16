@@ -8,18 +8,19 @@ var makeCausalityGridView;
   
   makeCausalityGridView = function makeCausalityGridView(causewayModel,
                                                          vatMap,
-                                                         graphWalker) {
+                                                         graphWalker,
+                                                         images) {
     var cellGrid = makeCellGrid(causewayModel);
     var cellToViewMap = new FlexMap();
     
     cellGrid.cells.forEach(function(cell) {
       var turnNode = cell.node;
-      var turnView = makeTurnView(turnNode, vatMap, graphWalker);
+      var turnView = makeIconicTurnView(turnNode, vatMap, graphWalker, images);
       cellToViewMap.set(turnNode, turnView);
     });
     
-    var colSpacing = 50;
-    var rowSpacing = 25;
+    var colSpacing = 20;
+    var rowSpacing = 20;
     var colWidths;
     var rowHeights;
     
@@ -104,28 +105,17 @@ var makeCausalityGridView;
       
       draw: function(ctx, wdwMap) {
         cellGrid.cells.forEach(function(cell) {
-          var originNode = cell.node;
-          originNode.outs(function(outgoing, target) {
-            if (wdwMap.whereIs(target) !== undefined) {
-              var originView = cellToViewMap.get(originNode);
-              var targetView = cellToViewMap.get(target);
-              var head = originView.whereIsHead(wdwMap, outgoing);
-              var tail = targetView.whereIsTail(wdwMap, target);
-              drawDirectedArc(ctx, head, tail);
-            }
-          });
-        });
-        
-        cellGrid.cells.forEach(function(cell) {
           var view = cellToViewMap.get(cell.node);
           view.draw(ctx, wdwMap);
         });
       },
       
-      redraw: function(ctx, wdwMap, selected) {
+      redraw: function(ctx, wdwMap, selected, flowWdwMap) {
         if (!selected) {
           this.draw(ctx, wdwMap);
         } else {
+
+          // draw dimmed nodes, no arcs, if selected
           ctx.save();
           ctx.globalAlpha = 0.33;
           this.draw(ctx, wdwMap);
@@ -135,37 +125,58 @@ var makeCausalityGridView;
           edgesInFlow = [];
           
           if (selected.isNode()) {
+            causalFlowIn(wdwMap, selected);
             nodesInFlow.push(selected);
             causalFlowOut(wdwMap, selected);
-            causalFlowIn(wdwMap, selected);
+
           } else {
-            nodesInFlow.push(selected.getOrigin());
-            nodesInFlow.push(selected.target);
-            edgesInFlow.push(selected);
-            causalFlowOut(wdwMap, selected.target);
             causalFlowIn(wdwMap, selected.getOrigin());
+            nodesInFlow.push(selected.getOrigin());
+            edgesInFlow.push(selected);
+            nodesInFlow.push(selected.target);
+            causalFlowOut(wdwMap, selected.target);
           }
-          
+
+          // TODO(cocoonfx): figure out canvas support for z-layer
+          // draw the Fulfilled insets, then arcs, then nodes
           edgesInFlow.forEach(function(edge) {
             var originView = cellToViewMap.get(edge.getOrigin());
             var targetView = cellToViewMap.get(edge.target);
             if (originView && targetView) {
               var head = originView.whereIsHead(wdwMap, edge);
               var tail = targetView.whereIsTail(wdwMap, edge.target);
-              drawDirectedArc(ctx, head, tail);
+              if (edge.traceRecord["class"][0] === 
+                    'org.ref_send.log.Fulfilled') {
+                drawJoin(ctx, head, tail);
+              }
+            }
+          });
+
+          edgesInFlow.forEach(function(edge) {
+            var originView = cellToViewMap.get(edge.getOrigin());
+            var targetView = cellToViewMap.get(edge.target);
+            if (originView && targetView) {
+              var head = originView.whereIsHead(wdwMap, edge);
+              var tail = targetView.whereIsTail(wdwMap, edge.target);
+              if (edge.traceRecord["class"][0] !== 
+                    'org.ref_send.log.Fulfilled') {
+                drawDirectedArc(ctx, head, tail);
+              }
             }
           });
           
           nodesInFlow.forEach(function(node) {
             var view = cellToViewMap.get(node);
             if (view) {
-              view.draw(ctx, wdwMap, node, node === selected);
+              view.draw(ctx, wdwMap, node, node === selected, true);
+              flowWdwMap.post(node, wdwMap.whereIs(node));
             }
           });
           edgesInFlow.forEach(function(edge) {
             var view = cellToViewMap.get(edge.getOrigin());
             if (view) {
-              view.draw(ctx, wdwMap, edge, edge === selected);
+              view.draw(ctx, wdwMap, edge, edge === selected, true);
+              flowWdwMap.post(edge, wdwMap.whereIs(edge));
             }
           });
         }
