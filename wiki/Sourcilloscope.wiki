@@ -1,5 +1,7 @@
 #summary Description of Causeway's sourcilloscope visualization
 
+<g:plusone size="medium"></g:plusone>
+
 === Sourcilloscope ===
 
 The sourcilloscope visualization orients the events by their corresponding source code, a very familiar context for the developer. (The name is a play on _oscilloscope_ from electrical engineering.) The text outline view includes a top-level item for each source file referenced in the trace log; nested items are the individual source lines referenced by the top of call stack in each log record. This visualization is expressive and highly interactive.
