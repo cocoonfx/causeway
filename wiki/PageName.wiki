@@ -1,15 +1,11 @@
-#summary Description of Causeway's causality grid visualization
+#summary Description of Causeway's sourcilloscope visualization
 
-<g:plusone size="medium"></g:plusone>
+=== Sourcilloscope ===
 
-=== Causality Grid ===
+The sourcilloscope visualization orients the events by their corresponding source code, a very familiar context for the developer. (The name is a play on _oscilloscope_ from electrical engineering.) The text outline view includes a top-level item for each source file referenced in the trace log; nested items are the individual source lines referenced by the top of call stack in each log record. This visualization is expressive and highly interactive.
 
-Causeway's causality grid visualization shows the _happened-before_ relation. Each black box represents the top-of-turn event, i.e., the receive event that starts a new turn. Vertically-connected red boxes represent events that occurred during that turn. Arcs are message sends.
+_At a glance:_ You can see all events with the same top of stack, the number of communicating event loops, a visual indication of potential parallelism, the posting of an event handler and the firing of an event. As with the grid, you can track process order and message order.
 
-The grid layout algorithm is constrained by the communicating event loops execution model. It constructs a causal order as described by the log records. The trace log format _ encodes_ the process order and message order of a distributed set of events. Log records can include timestamps but they are not required. Without a global clock the precise ordering of events cannot be known but these partial orders are sufficient for describing the happened-before relation.
+_With a click:_ You can filter out source files or individual source lines. As with the grid, selecting an event on the scope highlights all causally-connected events in message order and shows the corresponding line of source code.
 
-Selecting an event on the grid highlights all events connected to it in message order. The corresponding text (source code, if available) is automatically selected in the message-order outline.
-
-Consider tracking down a bug that manifests at the selected event. The question to answer is _What likely caused this to happen?_ Message order describes the most likely causes, the events to examine first. This is analogous to examining the call stack in conventional sequential programming. If message order does not reveal the bug, potential causality -- the happened-before relation -- must be considered.
-
-http://causeway.googlecode.com/svn/wiki/wiki-grid.gif
+This expressive, elegant layout was designed and implemented by Alexy Agranovsky (UC Davis, while at Google) and Tyler Close (Google).
