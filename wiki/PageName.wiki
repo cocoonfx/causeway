@@ -12,7 +12,7 @@ Selecting an event on the grid highlights all events connected to it in message 
 
 Consider tracking down a bug that manifests at the selected event. The question to answer is _What likely caused this to happen?_ Message order describes the most likely causes, the events to examine first. This is analogous to examining the call stack in conventional sequential programming. If message order does not reveal the bug, potential causality&#150;the happened-before relation&#150;must be considered.
 
-http://code.google.com/p/causeway/images/grid.gif
+http://causeway.googlecode.com/svn/wiki/grid.gif
 
 Add your content here.
 
