@@ -9,3 +9,5 @@ _At a glance:_ You can see all events with the same top of stack, the number of 
 _With a click:_ You can filter out source files or individual source lines. As with the grid, selecting an event on the scope highlights all causally-connected events in message order and shows the corresponding line of source code.
 
 This expressive, elegant layout was designed and implemented by Alexy Agranovsky (UC Davis, while at Google) and Tyler Close (Google).
+
+http://causeway.googlecode.com/svn/wiki/wiki-scope.gif
