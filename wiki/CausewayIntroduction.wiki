@@ -1,0 +1,13 @@
+#summary An introduction to Causeway.
+
+<g:plusone size="medium"></g:plusone>
+
+== Causeway: A message-oriented distributed debugger ==
+
+Causeway is an open source distributed debugger for examining the behavior of distributed programs built as _communicating event loops_. It is the first distributed debugger to emphasize _message order_ -- the message flow in and out of different processes -- rather than _process order_  -- the chain of events within each process.
+
+Our message-oriented approach borrows an effective strategy from sequential debugging:  To find the source of unintended side-effects, start with the chain of expressed intentions. For most of us, the stack view and examining the call stack is central to debugging sequential programs. By emphasizing message order Causeway supports the distributed equivalent of the call stack.
+
+=== A bit of history... ===
+
+The communicating event loops computational model requires particular support not provided by conventional distributed debuggers. We started a research project to build a debugger to support what was at the time, a niche market. Our customers for the first release in 2005 were computer science graduate students writing promise-based distributed programs in the E language.  http://erights.org/
