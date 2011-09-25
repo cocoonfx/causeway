@@ -38,3 +38,11 @@ Follow the links below to read about Causeway's support for distributed computat
 [http://code.google.com/p/causeway/wiki/CausalityGrid CausalityGrid]
 
 [http://code.google.com/p/causeway/wiki/Sourcilloscope Sourcilloscope]
+
+To read about Griddle and Causeway, in the large:
+
+[http://code.google.com/p/causeway/wiki/Griddle Griddle]
+
+To read about Causeway's limitations.
+
+[http://code.google.com/p/causeway/wiki/Limitations What Causeway can't do]
