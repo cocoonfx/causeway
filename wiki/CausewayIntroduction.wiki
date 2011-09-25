@@ -16,14 +16,14 @@ Building on this, we extended Causeway to support the event loops model, in gene
 
 === Our niche market is growing... ===
 
-With the emergence of the web as an application platform, communicating event loops are rapidly becoming the mainstream model for distributed computation. The web browser runs multiple isolated JavaScript programs. Each program runs as an event loop, processing user interface events as well as 
-asynchronous messages from a server. With HTML5, JavaScript event loops within the browser will be able to send asynchronous messages to each other and to multiple servers.
+With the emergence of the web as an application platform, communicating event loops are rapidly becoming the mainstream model for distributed computation. The web browser runs multiple isolated !JavaScript programs. Each program runs as an event loop, processing user interface events as well as 
+asynchronous messages from a server. With HTML5, !JavaScript event loops within the browser will be able to send asynchronous messages to each other and to multiple servers.
 
 === Causeway running in the browser... ===
 
-Summer 2011 we began our effort to port Causeway to the web. It was a good summer: Causeway, rewritten in JavaScript and HTML5 Canvas, now runs in the browser and presents two graphical, interactive visualizations of program behavior. The open source project is at [http://code.google.com/p/causeway/ Google Project Hosting]. Our project home page has links to live versions of the examples described here.
+Summer 2011 we began our effort to port Causeway to the web. It was a good summer: Causeway, rewritten in !JavaScript and HTML5 Canvas, now runs in the browser and presents two graphical, interactive visualizations of program behavior. The open source project is at [http://code.google.com/p/causeway/ Google Project Hosting]. Our project home page has links to live versions of the examples described here.
 
-The example programs described here are simple JavaScript programs, generating small trace logs. They are interesting in that they communicate asynchronously to `workers` and `iframes` through the `postMessage()` API. A principal motivation behind Causeway is to support following message flow across machine and process boundaries. Focusing on distributed computation internal to the browser and these simple test cases gave a good place to start.
+The example programs described here are simple !JavaScript programs, generating small trace logs. They are interesting in that they communicate asynchronously to `workers` and `iframes` through the `postMessage()` API. A principal motivation behind Causeway is to support following message flow across machine and process boundaries. Focusing on distributed computation internal to the browser and these simple test cases gave a good place to start.
 
 === And more to come... ===
 
@@ -34,4 +34,3 @@ Over the near-term we expect to improve causality tracing in the browser. Longer
 === Causeway, in the small... ===
 
 The following example programs demonstrate Causeway's support for distributed computation internal to the browser.
-
