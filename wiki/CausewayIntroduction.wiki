@@ -45,4 +45,4 @@ To read about Griddle and Causeway, in the large:
 
 To read about Causeway's limitations.
 
-[http://code.google.com/p/causeway/wiki/Limitations What Causeway can't do]
+[http://code.google.com/p/causeway/wiki/Limitations What Causeway doesn't do]
