@@ -1,4 +1,4 @@
-#Description of Causeway's griddle visualization
+#summary Description of Causeway's griddle visualization
 
 <g:plusone size="medium"></g:plusone>
 
