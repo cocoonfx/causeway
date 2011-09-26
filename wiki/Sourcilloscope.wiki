@@ -12,4 +12,6 @@ _With a click:_ You can filter out source files or individual source lines. As w
 
 This expressive, elegant layout was designed and implemented by Alexy Agranovsky (UC Davis, while at Google) and Tyler Close (Google).
 
+[http://causeway.googlecode.com/svn/trunk/src/js/com/teleometry/sourceGrid.html Live Sourcilloscope Example]
+
 http://causeway.googlecode.com/svn/wiki/wiki-scope.gif
