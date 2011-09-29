@@ -6,6 +6,18 @@ var makeVatMap;
 (function(){
   "use strict";
 
+  if (!('freeze' in Object) || !('getOwnPropertyNames' in Object)) {
+    alert('This page requires a browser supporting more of EcmaScript 5.\n' +
+          'This includes at least all browsers starting with\n' +
+          '* Firefox 4\n' +
+          '* Chrome 12\n' +
+          '* Safari 5.0.6\n' +
+          '* Internet Explorer 9\n' +
+          '* Opera 12');
+    return;
+   }
+
+
   var vatColors = Object.freeze([
     {x11Color: "mediumblue",    hexColor: "#0000CD"},
     {x11Color: "forestgreen",   hexColor: "#228B22"},
@@ -35,14 +47,14 @@ var makeVatMap;
   makeVatMap = function makeVatMap(messageGraph) {
 
     var vatSet = {};
-   
+
     messageGraph.top.deepOutsPre(function(edge, target) {
       var id = target.id;
       if (id.loop !== 'bottom') {
         vatSet[id.loop] = true;
       }
     });
-    
+
     var vatNames = [];
     for (var vatName in vatSet) {
       if (vatSet.hasOwnProperty(vatName)) {
@@ -56,7 +68,7 @@ var makeVatMap;
       vatMap[vatNames[i]] = {displayName: getDisplayName(vatNames[i]),
                              color: vatColors[i % vatColors.length]};
     }
-    vatMap['top'] = {displayName: 'top', 
+    vatMap['top'] = {displayName: 'top',
                      color: {x11Color: "black",
                              hexColor: "#000000"}};
     vatMap['bottom'] = {displayName: 'bottom',
