@@ -29,7 +29,7 @@ var outline;
    //var DEFLATE = '[-] ';
 
   var NOFLATE = 'images/causalityGrid/no-tip.gif';
-  var INFLATE = 'images/causalityGrid/tip-right.gif'
+  var INFLATE = 'images/causalityGrid/tip-right.gif';
   var DEFLATE = 'images/causalityGrid/tip-down.gif';
 
    function deflate(parent, inflatable) {
