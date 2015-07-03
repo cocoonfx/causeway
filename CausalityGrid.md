@@ -1,0 +1,15 @@
+
+
+### Causality Grid ###
+
+Causeway's causality grid visualization shows the _happened-before_ relation. Each black box represents the top-of-turn event, i.e., the receive event that starts a new turn. Vertically-connected red boxes represent events that occurred during that turn. Arcs are message sends.
+
+The grid layout algorithm is constrained by the communicating event loops execution model. It constructs a causal order as described by the log records. The trace log format _encodes_ the process order and message order of a distributed set of events. Log records can include timestamps but they are not required. Without a global clock the precise ordering of events cannot be known but these partial orders are sufficient for describing the happened-before relation.
+
+Selecting an event on the grid highlights all events connected to it in message order. The corresponding text (source code, if available) is automatically selected in the message-order outline.
+
+Consider tracking down a bug that manifests at the selected event. The question to answer is _What likely caused this to happen?_ Message order describes the most likely causes, the events to examine first. This is analogous to examining the call stack in conventional sequential programming. If message order does not reveal the bug, potential causality -- the happened-before relation -- must be considered.
+
+[Live Causality Grid Example](http://causeway.googlecode.com/svn/trunk/src/js/com/teleometry/causalityGrid.html)
+
+![http://causeway.googlecode.com/svn/wiki/wiki-grid.gif](http://causeway.googlecode.com/svn/wiki/wiki-grid.gif)

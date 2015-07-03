@@ -1,0 +1,46 @@
+
+
+## Causeway: A message-oriented distributed debugger ##
+
+Causeway is an open source distributed debugger for examining the behavior of distributed programs built as _communicating event loops_. It is the first distributed debugger to emphasize _message order_ -- the message flow in and out of different processes -- rather than _process order_  -- the chain of events within each process.
+
+Our message-oriented approach borrows an effective strategy from sequential debugging:  To find the source of unintended side-effects, start with the chain of expressed intentions. For most of us, the stack view and examining the call stack is central to debugging sequential programs. By emphasizing message order Causeway supports the distributed equivalent of the call stack.
+
+### A bit of history... ###
+
+The communicating event loops computational model requires particular support not provided by conventional distributed debuggers. We started a research project to build a debugger to support what was at the time, a niche market. Our customers for the first release in 2005 were computer science graduate students writing promise-based distributed programs in the [E](http://erights.org/) language.
+
+Building on this, we extended Causeway to support the event loops model, in general. Two platforms were instrumented to generate Causeway's language-neutral trace log format. This effort gave us experience with new languages (Java, [AmbientTalk](http://code.google.com/p/ambienttalk/)) and different promise architectures ([Waterken ref-send](http://waterken.sourceforge.net/), [AmbientTalk Futures](http://code.google.com/p/ambienttalk/)).
+
+### Our niche market is growing... ###
+
+With the emergence of the web as an application platform, communicating event loops are rapidly becoming the mainstream model for distributed computation. The web browser runs multiple isolated JavaScript programs. Each program runs as an event loop, processing user interface events as well as
+asynchronous messages from a server. With HTML5, JavaScript event loops within the browser will be able to send asynchronous messages to each other and to multiple servers.
+
+### Causeway running in the browser... ###
+
+Summer 2011 we began our effort to port Causeway to the web. It was a good summer: Causeway, rewritten in JavaScript and HTML5 Canvas, now runs in the browser and presents two graphical, interactive visualizations of program behavior. The open source project is at [Google Project Hosting](http://code.google.com/p/causeway/). Our project home page has links to live versions of the examples described here.
+
+The example programs described here are simple JavaScript programs, generating small trace logs. They are interesting in that they communicate asynchronously to `workers` and `iframes` through the `postMessage()` API. A principal motivation behind Causeway is to support following message flow across machine and process boundaries. Focusing on distributed computation internal to the browser and these simple test cases gave a good place to start.
+
+### And more to come... ###
+
+Upcoming web standards will support a more distributed interconnected web. Browsers will communicate with multiple servers (cross-origin XHR2, server-sent events, websockets); servers will communicate directly to provide web services. Soon mainstream web developers will be building large distributed system.
+
+Over the near-term we expect to improve causality tracing in the browser. Longer term we expect to proceed to larger, more complex test cases. Also, to better support web developers we would like to investigate the possibility of integrating Causeway with browser developer tools.
+
+### Causeway, in the small... ###
+
+Follow the links below to read about Causeway's support for distributed computation internal to the browser:
+
+[CausalityGrid](http://code.google.com/p/causeway/wiki/CausalityGrid)
+
+[Sourcilloscope](http://code.google.com/p/causeway/wiki/Sourcilloscope)
+
+To read about Griddle and Causeway, in the large:
+
+[Griddle](http://code.google.com/p/causeway/wiki/Griddle)
+
+To read about Causeway's limitations.
+
+[What Causeway doesn't do](http://code.google.com/p/causeway/wiki/Limitations)

@@ -1,0 +1,9 @@
+
+
+### Causeway, in the large... Griddle ###
+
+The two examples above are very small. Our limited experience with large distributed systems generating voluminous trace logs introduced us to a myriad of challenges. There's an overwhelming amount of information, most of which is uninteresting. In the large, event filtering and abstraction are critical. Early filtering reduces volume; interactive filtering hides detail that is at the moment, uninteresting or distracting. But it's not a simple matter of turning a knob for more or less information. The best way to find the interesting causality and present it at the right level of abstraction is through user interaction. To continue making progress in this area, we need more experience with real-world systems. We are looking for test cases to stress our filtering algorithms and visualizations.
+
+We are intrigued by the possibility that the abstract, highly-expressive visualizations can show the _shape of the execution_ and meaningful patterns can be learned over time. At a glance, a display updating with streaming events, can indicate whether things are cooking along as expected, or not. An unexpected pattern can signal a problem.
+
+![http://causeway.googlecode.com/svn/wiki/wiki-griddle.gif](http://causeway.googlecode.com/svn/wiki/wiki-griddle.gif)
