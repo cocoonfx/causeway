@@ -5,9 +5,11 @@ var doCausalityGridTest;
 
   var push = Function.prototype.apply.bind(Array.prototype.push);
 
+  // This function collects one or more JSON files asynchronously.
+  // After the number of expected have been seen (either as files or errors)
+  // the parsed JSON chunks (possibly zero) are passed to callback.
+
   function collectJsonChunks(nExpected, callback) {
-    if (nExpected === 0) {  // TODO(cocoonfx): handle this case
-    }
     
     var chunks = [];
  
@@ -19,16 +21,16 @@ var doCausalityGridTest;
           nExpected--;
           if (nExpected === 0) {
             callback(chunks);
-            callback = null;
+            callback = null;  // a bit more robust
           }
         }
       },
       noticeError: function(message) {  // expect less
-        if (callback) {
+        if (callback) {  // if still active, just decrement counter
           nExpected--;
           if (nExpected === 0) {
             callback(chunks);
-            callback = null;
+            callback = null;  // a bit more robust
           }
         }
       }
@@ -36,10 +38,13 @@ var doCausalityGridTest;
     return collector;
   }
 
-  function collectSrcFiles(nExpected, callback) {
-    if (nExpected === 0) {  // TODO(cocoonfx): handle this case
-    }
+  // This function collects one or more source files asynchronously.
+  // Each file collected is added to 'srcLookup' and indexed by pathname.
+  // After the number of expected have been seen (either as files or errors)
+  // the srcLookup (possibly empty) is passed to callback.
 
+  function collectSrcFiles(nExpected, callback) {
+ 
     var srcLookup = {};
  
     var collector = {
@@ -49,16 +54,16 @@ var doCausalityGridTest;
           nExpected--;
           if (nExpected === 0) {
             callback(srcLookup);
-            callback = null;
+            callback = null;  // a bit more robust
           }
         }
       },
       noticeError: function(message) {  // expect less
-        if (callback) {
+        if (callback) {  // if still active, just decrement counter
           nExpected--;
           if (nExpected === 0) {
             callback(srcLookup);
-            callback = null;
+            callback = null;  // a bit more robust
           }
         }
       }
@@ -160,7 +165,7 @@ var doCausalityGridTest;
     var pathnames = cg_model.getPathnames();
     var n = pathnames.length;
     if (n === 0) {
-      makeWalker({});
+      makeWalker({});  // source files are not required
     } else {
       var collector = collectSrcFiles(n, function(srcLookup) {
         makeWalker(srcLookup);
@@ -170,6 +175,11 @@ var doCausalityGridTest;
       }
     }
   }
+
+  // The Causeway model represents the distributed message flow across
+  // address-space boundaries. Causeway log files encode local messaging
+  // such that a happened-before relation can be constructed.
+  // The model requires at least one log file.
 
   function makeModel(chunks) {
     if (chunks.length === 0) {
