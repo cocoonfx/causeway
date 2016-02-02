@@ -6,8 +6,6 @@ var makeCausewayLogger;
 (function(){
   "use strict";
 
-  Error.prepareStackTrace = function(err, sst) { return sst; };
-
   var postpone;
   if (typeof process === 'undefined') {
     postpone = function(thunk) {
@@ -67,24 +65,10 @@ var makeCausewayLogger;
       }
     }
 
-    function log(json, sst) {
+    function log(json, cwStack) {
       json.timestamp = Date.now();
-      json.trace = makeStack(sst);
+      json.trace = cwStack;
       logJson(json);
-    }
-
-    function makeStack(sst) {
-      var stack = [];
-      for (var i = 0, iLen = sst.length; i < iLen; i++) {
-        var frame = sst[i];
-        stack.push({
-          name: frame.getFunctionName() + ', ' +
-            frame.getMethodName(),
-          source: ''+frame.getFileName(),
-          span: [ [ frame.getLineNumber(), frame.getColumnNumber() ] ]
-        });
-      }
-      return { calls: stack };
     }
 
     function makeEvent() {
@@ -164,57 +148,61 @@ var makeCausewayLogger;
       return result;
     }
 
+    function getCWStack() {
+      return System.getCWStack(new Error('dummy'));
+    }
+
     var logger = {
 
-      logSentRecord: function(msgId, sst) {
+      logSentRecord: function(msgId) {
         TheAnchor.number++;
-        log(makeSent(msgId), sst);
+        log(makeSent(msgId), getCWStack());
       },
 
-      logReturnedRecord: function(msgId, sst) {
+      logReturnedRecord: function(msgId) {
         TheAnchor.number++;
-        log(makeReturned(msgId), sst);
+        log(makeReturned(msgId), getCWStack());
       },
 
-      logGotRecord: function(msgId, sst) {
+      logGotRecord: function(msgId) {
         TheAnchor.turn.number++;
         TheAnchor.number = 0;
-        log(makeGot(msgId), sst);
+        log(makeGot(msgId), getCWStack());
       },
 
-      logCommentRecord: function(text, sst) {
+      logCommentRecord: function(text) {
         TheAnchor.number++;
-        log(makeComment(text), sst);
+        log(makeComment(text), getCWStack());
       },
 
-      logSentIfRecord: function(condition, msgId, sst) {
+      logSentIfRecord: function(condition, msgId) {
         TheAnchor.number++;
-        log(makeSentIf(condition, msgId), sst);
+        log(makeSentIf(condition, msgId), getCWStack());
       },
 
-      logResolvedRecord: function(condition, sst) {
+      logResolvedRecord: function(condition) {
         TheAnchor.number++;
-        log(makeResolved(condition), sst);
+        log(makeResolved(condition), getCWStack());
       },
 
-      logProgressedRecord: function(condition, sst) {
+      logProgressedRecord: function(condition) {
         TheAnchor.number++;
-        log(makeProgressed(condition), sst);
+        log(makeProgressed(condition), getCWStack());
       },
 
-      logFulfilledRecord: function(condition, sst) {
+      logFulfilledRecord: function(condition) {
         TheAnchor.number++;
-        log(makeFulfilled(condition), sst);
+        log(makeFulfilled(condition), getCWStack());
       },
 
-      logProblemRecord: function(reason, text, sst) {
+      logProblemRecord: function(reason, text) {
         TheAnchor.number++;
-        log(makeProblem(reason, text), sst);
+        log(makeProblem(reason, text), getCWStack());
       },
 
-      logRejectedRecord: function(reason, condition, sst) {
+      logRejectedRecord: function(reason, condition) {
         TheAnchor.number++;
-        log(makeRejected(reason, condition), sst);
+        log(makeRejected(reason, condition), getCWStack());
       },
 
       logJsonRecord: function(json) {
@@ -223,9 +211,9 @@ var makeCausewayLogger;
 
       send: function(rcvr, verb, args) {
         var umid = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
-        logger.logSentRecord(umid, new Error('dummy').stack);
+        logger.logSentRecord(umid);
         postpone(function() {
-          logger.logGotRecord(umid, new Error('dummy').stack);
+          logger.logGotRecord(umid);
           rcvr[verb].apply(rcvr, args);
         });
       },
@@ -245,7 +233,18 @@ var makeCausewayLogger;
 
         function getOwnBase(obj, name) {
           while (obj !== null) {
-            if (hop.call(obj, name)) { return obj; }
+            try {
+              if (hop.call(obj, name)) { return obj; }
+            } catch (er) {
+              // Weirdness seen on Safari: Without the try/catch the hop call
+              // fails with 
+              // TypeError: undefined is not an object
+              //            (evaluating 'hop.call(obj, name)')
+              // With the try/catch everything works without the catch clause
+              // happening. If the following is logged to the console, we are
+              // seeing a new symptom.
+              console.error('Unexpected: ', er);
+            }
             obj = Object.getPrototypeOf(obj);
           }
           return undefined;
@@ -253,10 +252,10 @@ var makeCausewayLogger;
 
         var pmBase = getOwnBase(messenger, 'postMessage');
         origPostMessage = pmBase.postMessage;  // for bypassing logging
-
+        
         pmBase.postMessage = function(json) {
           var umid = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
-          logger.logSentRecord(umid, new Error('dummy').stack);
+          logger.logSentRecord(umid);
           if (typeof json === 'object') {
             json.umid = umid;
           }
@@ -275,18 +274,18 @@ var makeCausewayLogger;
             } else {
               var umid = event && event.data && event.data.umid;
               if (umid) {
-                logger.logGotRecord(umid, new Error('dummy').stack);
+                logger.logGotRecord(umid);
                 delete event.data.umid;
               }
               var umid2 = 'umid:' + Math.random() + ':' + TheAnchor.turn.loop;
-              logger.logSentIfRecord(ucid, umid2, new Error('dummy').stack);
-              logger.logGotRecord(umid2, new Error('dummy').stack);
+              logger.logSentIfRecord(ucid, umid2);
+              logger.logGotRecord(umid2);
             }
             return origCallback.apply(this, arguments);
           }
           if (type === 'message' && typeof callback === 'function') {
             ucid = 'ucid:' + Math.random() + ':' + TheAnchor.turn.loop;
-            logger.logFulfilledRecord(ucid, new Error('dummy').stack);
+            logger.logFulfilledRecord(ucid);
             return ael.call(this, type, newCallback);
           } else {
             return ael.apply(this, arguments);

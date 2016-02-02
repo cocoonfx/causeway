@@ -1,4 +1,5 @@
 
+
 [{
  "class": [
   "org.ref_send.log.Sent",
@@ -11,104 +12,8 @@
    "number": 0
   }
  },
- "message": "umid:0.2563442368991673:buyer",
- "timestamp": 1454306694475,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 159, 30 ] ]
-   },
-   {
-    "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
-   },
-   {
-    "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 114, 14 ] ]
-   },
-   {
-    "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Sent",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 2,
-  "turn": {
-   "loop": "buyer",
-   "number": 0
-  }
- },
- "message": "umid:0.9763014663476497:buyer",
- "timestamp": 1454306694476,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 159, 30 ] ]
-   },
-   {
-    "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
-   },
-   {
-    "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 115, 15 ] ]
-   },
-   {
-    "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Sent",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 3,
-  "turn": {
-   "loop": "buyer",
-   "number": 0
-  }
- },
- "message": "umid:0.4765654557850212:buyer",
- "timestamp": 1454306694476,
+ "message": "umid:0.8703178386203945:buyer",
+ "timestamp": 1454209528113,
  "trace": {
   "calls": [
    {
@@ -145,6 +50,102 @@
 },
 {
  "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 2,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "message": "umid:0.04086817288771272:buyer",
+ "timestamp": 1454209528114,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logSentRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 159, 30 ] ]
+   },
+   {
+    "name": "pmBase.postMessage",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 258, 18 ] ]
+   },
+   {
+    "name": "doWebWorkersTest",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "span": [ [ 118, 15 ] ]
+   },
+   {
+    "name": "onload",
+    "source": {
+     "name": "?",
+     "source": "http://localhost:8080/workersExample.html",
+     "span": []
+    },
+    "span": [ [ 8, 40 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 3,
+  "turn": {
+   "loop": "buyer",
+   "number": 0
+  }
+ },
+ "message": "umid:0.799225975992158:buyer",
+ "timestamp": 1454209528114,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logSentRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 159, 30 ] ]
+   },
+   {
+    "name": "pmBase.postMessage",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 258, 18 ] ]
+   },
+   {
+    "name": "doWebWorkersTest",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "span": [ [ 120, 14 ] ]
+   },
+   {
+    "name": "onload",
+    "source": {
+     "name": "?",
+     "source": "http://localhost:8080/workersExample.html",
+     "span": []
+    },
+    "span": [ [ 8, 40 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
   "org.ref_send.log.Fulfilled",
   "org.ref_send.log.Resolved",
   "org.ref_send.log.Event"
@@ -156,8 +157,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.23518666555173695:buyer",
- "timestamp": 1454306694477,
+ "condition": "ucid:0.6276896537747234:buyer",
+ "timestamp": 1454209528115,
  "trace": {
   "calls": [
    {
@@ -178,7 +179,7 @@
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 118, 14 ] ]
+    "span": [ [ 123, 14 ] ]
    },
    {
     "name": "onload",
@@ -205,8 +206,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.6742120310664177:buyer",
- "timestamp": 1454306694477,
+ "condition": "ucid:0.1108741913922131:buyer",
+ "timestamp": 1454209528115,
  "trace": {
   "calls": [
    {
@@ -227,7 +228,7 @@
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 142, 15 ] ]
+    "span": [ [ 147, 15 ] ]
    },
    {
     "name": "onload",
@@ -254,8 +255,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.08275435259565711:accounts",
- "timestamp": 1454306694492,
+ "condition": "ucid:0.3415694269351661:accounts",
+ "timestamp": 1454209528319,
  "trace": {
   "calls": [
    {
@@ -281,7 +282,7 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
-    "span": [ [ 29, 3 ] ]
+    "span": [ [ 30, 3 ] ]
    }
   ]
  }
@@ -299,8 +300,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.5735569847747684:product",
- "timestamp": 1454306694492,
+ "condition": "ucid:0.7188855847343802:product",
+ "timestamp": 1454209528320,
  "trace": {
   "calls": [
    {
@@ -326,7 +327,7 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 43, 3 ] ]
+    "span": [ [ 46, 3 ] ]
    }
   ]
  }
@@ -343,42 +344,8 @@
    "number": 1
   }
  },
- "message": "umid:0.9763014663476497:buyer",
- "timestamp": 1454306694493,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 170, 29 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "product",
-   "number": 1
-  }
- },
- "message": "umid:0.2563442368991673:buyer",
- "timestamp": 1454306694493,
+ "message": "umid:0.04086817288771272:buyer",
+ "timestamp": 1454209528320,
  "trace": {
   "calls": [
    {
@@ -412,9 +379,9 @@
    "number": 1
   }
  },
- "condition": "ucid:0.08275435259565711:accounts",
- "message": "umid:0.9934831170830876:accounts",
- "timestamp": 1454306694493,
+ "condition": "ucid:0.3415694269351661:accounts",
+ "message": "umid:0.9019425541628152:accounts",
+ "timestamp": 1454209528321,
  "trace": {
   "calls": [
    {
@@ -447,8 +414,8 @@
    "number": 2
   }
  },
- "message": "umid:0.9934831170830876:accounts",
- "timestamp": 1454306694493,
+ "message": "umid:0.9019425541628152:accounts",
+ "timestamp": 1454209528321,
  "trace": {
   "calls": [
    {
@@ -471,54 +438,18 @@
 },
 {
  "class": [
-  "org.ref_send.log.SentIf",
-  "org.ref_send.log.Sent",
+  "org.ref_send.log.Got",
   "org.ref_send.log.Event"
  ],
  "anchor": {
-  "number": 1,
+  "number": 0,
   "turn": {
    "loop": "product",
    "number": 1
   }
  },
- "condition": "ucid:0.5735569847747684:product",
- "message": "umid:0.8129028577823192:product",
- "timestamp": 1454306694494,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 180, 43 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "product",
-   "number": 2
-  }
- },
- "message": "umid:0.8129028577823192:product",
- "timestamp": 1454306694494,
+ "message": "umid:0.8703178386203945:buyer",
+ "timestamp": 1454209528321,
  "trace": {
   "calls": [
    {
@@ -534,7 +465,7 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 277, 24 ] ]
    }
   ]
  }
@@ -551,8 +482,8 @@
    "number": 2
   }
  },
- "message": "umid:0.9059745592530817:accounts",
- "timestamp": 1454306694494,
+ "message": "umid:0.7880069895181805:accounts",
+ "timestamp": 1454209528322,
  "trace": {
   "calls": [
    {
@@ -571,7 +502,7 @@
     "span": [ [ 258, 18 ] ]
    },
    {
-    "name": "accountsRequest",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
     "span": [ [ 23, 12 ] ]
    },
@@ -595,8 +526,8 @@
    "number": 1
   }
  },
- "message": "umid:0.9059745592530817:accounts",
- "timestamp": 1454306694495,
+ "message": "umid:0.7880069895181805:accounts",
+ "timestamp": 1454209528323,
  "trace": {
   "calls": [
    {
@@ -630,9 +561,9 @@
    "number": 1
   }
  },
- "condition": "ucid:0.6742120310664177:buyer",
- "message": "umid:0.10586368129588664:buyer",
- "timestamp": 1454306694495,
+ "condition": "ucid:0.1108741913922131:buyer",
+ "message": "umid:0.6788283211644739:buyer",
+ "timestamp": 1454209528324,
  "trace": {
   "calls": [
    {
@@ -665,8 +596,8 @@
    "number": 2
   }
  },
- "message": "umid:0.10586368129588664:buyer",
- "timestamp": 1454306694496,
+ "message": "umid:0.6788283211644739:buyer",
+ "timestamp": 1454209528325,
  "trace": {
   "calls": [
    {
@@ -699,8 +630,8 @@
    "number": 2
   }
  },
- "message": "umid:0.13372811791487038:buyer",
- "timestamp": 1454306694496,
+ "message": "umid:0.6288175727240741:buyer",
+ "timestamp": 1454209528325,
  "trace": {
   "calls": [
    {
@@ -719,14 +650,84 @@
     "span": [ [ 214, 16 ] ]
    },
    {
-    "name": "accountsAnswer",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 147, 12 ] ]
+    "span": [ [ 152, 12 ] ]
    },
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 33 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "product",
+   "number": 1
+  }
+ },
+ "condition": "ucid:0.7188855847343802:product",
+ "message": "umid:0.7655174103565514:product",
+ "timestamp": 1454209528322,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logSentIfRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 180, 43 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 281, 22 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 2
+  }
+ },
+ "message": "umid:0.7655174103565514:product",
+ "timestamp": 1454209528322,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logGotRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 170, 29 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 282, 22 ] ]
    }
   ]
  }
@@ -743,8 +744,8 @@
    "number": 2
   }
  },
- "message": "umid:0.521779288072139:product",
- "timestamp": 1454306694495,
+ "message": "umid:0.7231782153248787:product",
+ "timestamp": 1454209528323,
  "trace": {
   "calls": [
    {
@@ -763,7 +764,7 @@
     "span": [ [ 258, 18 ] ]
    },
    {
-    "name": "productRequest",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 31, 12 ] ]
    },
@@ -787,8 +788,8 @@
    "number": 3
   }
  },
- "message": "umid:0.521779288072139:product",
- "timestamp": 1454306694496,
+ "message": "umid:0.7231782153248787:product",
+ "timestamp": 1454209528327,
  "trace": {
   "calls": [
    {
@@ -822,9 +823,9 @@
    "number": 3
   }
  },
- "condition": "ucid:0.23518666555173695:buyer",
- "message": "umid:0.7602732400409877:buyer",
- "timestamp": 1454306694496,
+ "condition": "ucid:0.6276896537747234:buyer",
+ "message": "umid:0.769216961460188:buyer",
+ "timestamp": 1454209528327,
  "trace": {
   "calls": [
    {
@@ -857,8 +858,8 @@
    "number": 4
   }
  },
- "message": "umid:0.7602732400409877:buyer",
- "timestamp": 1454306694496,
+ "message": "umid:0.769216961460188:buyer",
+ "timestamp": 1454209528327,
  "trace": {
   "calls": [
    {
@@ -891,8 +892,8 @@
    "number": 4
   }
  },
- "message": "umid:0.741684028878808:buyer",
- "timestamp": 1454306694496,
+ "message": "umid:0.6278544254601002:buyer",
+ "timestamp": 1454209528328,
  "trace": {
   "calls": [
    {
@@ -911,9 +912,9 @@
     "span": [ [ 214, 16 ] ]
    },
    {
-    "name": "productAnswer",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 124, 12 ] ]
+    "span": [ [ 129, 12 ] ]
    },
    {
     "name": "newCallback",
@@ -935,8 +936,8 @@
    "number": 3
   }
  },
- "message": "umid:0.4765654557850212:buyer",
- "timestamp": 1454306694495,
+ "message": "umid:0.799225975992158:buyer",
+ "timestamp": 1454209528323,
  "trace": {
   "calls": [
    {
@@ -970,9 +971,9 @@
    "number": 3
   }
  },
- "condition": "ucid:0.5735569847747684:product",
- "message": "umid:0.7745506919454783:product",
- "timestamp": 1454306694495,
+ "condition": "ucid:0.7188855847343802:product",
+ "message": "umid:0.15305538196116686:product",
+ "timestamp": 1454209528324,
  "trace": {
   "calls": [
    {
@@ -1005,8 +1006,8 @@
    "number": 4
   }
  },
- "message": "umid:0.7745506919454783:product",
- "timestamp": 1454306694495,
+ "message": "umid:0.15305538196116686:product",
+ "timestamp": 1454209528324,
  "trace": {
   "calls": [
    {
@@ -1039,8 +1040,8 @@
    "number": 4
   }
  },
- "message": "umid:0.501167704584077:product",
- "timestamp": 1454306694496,
+ "message": "umid:0.3272509388625622:product",
+ "timestamp": 1454209528324,
  "trace": {
   "calls": [
    {
@@ -1059,9 +1060,9 @@
     "span": [ [ 258, 18 ] ]
    },
    {
-    "name": "productRequest",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 34, 12 ] ]
+    "span": [ [ 35, 12 ] ]
    },
    {
     "name": "newCallback",
@@ -1083,8 +1084,8 @@
    "number": 5
   }
  },
- "message": "umid:0.501167704584077:product",
- "timestamp": 1454306694497,
+ "message": "umid:0.3272509388625622:product",
+ "timestamp": 1454209528330,
  "trace": {
   "calls": [
    {
@@ -1118,9 +1119,9 @@
    "number": 5
   }
  },
- "condition": "ucid:0.23518666555173695:buyer",
- "message": "umid:0.28575547225773335:buyer",
- "timestamp": 1454306694497,
+ "condition": "ucid:0.6276896537747234:buyer",
+ "message": "umid:0.6282828447874635:buyer",
+ "timestamp": 1454209528330,
  "trace": {
   "calls": [
    {
@@ -1153,8 +1154,8 @@
    "number": 6
   }
  },
- "message": "umid:0.28575547225773335:buyer",
- "timestamp": 1454306694497,
+ "message": "umid:0.6282828447874635:buyer",
+ "timestamp": 1454209528330,
  "trace": {
   "calls": [
    {
@@ -1187,8 +1188,8 @@
    "number": 6
   }
  },
- "message": "umid:0.8109781213570386:buyer",
- "timestamp": 1454306694497,
+ "message": "umid:0.06700533232651651:buyer",
+ "timestamp": 1454209528331,
  "trace": {
   "calls": [
    {
@@ -1207,9 +1208,9 @@
     "span": [ [ 214, 16 ] ]
    },
    {
-    "name": "productAnswer",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 124, 12 ] ]
+    "span": [ [ 129, 12 ] ]
    },
    {
     "name": "newCallback",
@@ -1231,8 +1232,8 @@
    "number": 7
   }
  },
- "message": "umid:0.13372811791487038:buyer",
- "timestamp": 1454306694498,
+ "message": "umid:0.6288175727240741:buyer",
+ "timestamp": 1454209528331,
  "trace": {
   "calls": [
    {
@@ -1265,8 +1266,8 @@
    "number": 8
   }
  },
- "message": "umid:0.741684028878808:buyer",
- "timestamp": 1454306694498,
+ "message": "umid:0.6278544254601002:buyer",
+ "timestamp": 1454209528331,
  "trace": {
   "calls": [
    {
@@ -1299,8 +1300,8 @@
    "number": 9
   }
  },
- "message": "umid:0.8109781213570386:buyer",
- "timestamp": 1454306694499,
+ "message": "umid:0.06700533232651651:buyer",
+ "timestamp": 1454209528337,
  "trace": {
   "calls": [
    {
@@ -1333,8 +1334,8 @@
    "number": 9
   }
  },
- "message": "umid:0.7027065653819591:buyer",
- "timestamp": 1454306694499,
+ "message": "umid:0.9422055520117283:buyer",
+ "timestamp": 1454209528338,
  "trace": {
   "calls": [
    {
@@ -1377,8 +1378,8 @@
    "number": 10
   }
  },
- "message": "umid:0.7027065653819591:buyer",
- "timestamp": 1454306694501,
+ "message": "umid:0.9422055520117283:buyer",
+ "timestamp": 1454209528339,
  "trace": {
   "calls": [
    {
@@ -1412,7 +1413,7 @@
   }
  },
  "text": "All queries answered true",
- "timestamp": 1454306694502,
+ "timestamp": 1454209528339,
  "trace": {
   "calls": [
    {
@@ -1450,8 +1451,8 @@
    "number": 10
   }
  },
- "message": "umid:0.2516956978943199:buyer",
- "timestamp": 1454306694502,
+ "message": "umid:0.6763673380482942:buyer",
+ "timestamp": 1454209528339,
  "trace": {
   "calls": [
    {
@@ -1494,8 +1495,8 @@
    "number": 5
   }
  },
- "message": "umid:0.2516956978943199:buyer",
- "timestamp": 1454306694502,
+ "message": "umid:0.6763673380482942:buyer",
+ "timestamp": 1454209528340,
  "trace": {
   "calls": [
    {
@@ -1529,9 +1530,9 @@
    "number": 5
   }
  },
- "condition": "ucid:0.5735569847747684:product",
- "message": "umid:0.8279727650806308:product",
- "timestamp": 1454306694502,
+ "condition": "ucid:0.7188855847343802:product",
+ "message": "umid:0.22345280810259283:product",
+ "timestamp": 1454209528340,
  "trace": {
   "calls": [
    {
@@ -1564,8 +1565,8 @@
    "number": 6
   }
  },
- "message": "umid:0.8279727650806308:product",
- "timestamp": 1454306694503,
+ "message": "umid:0.22345280810259283:product",
+ "timestamp": 1454209528340,
  "trace": {
   "calls": [
    {
@@ -1598,8 +1599,8 @@
    "number": 6
   }
  },
- "message": "umid:0.7089169088285416:product",
- "timestamp": 1454306694503,
+ "message": "umid:0.7605335728731006:product",
+ "timestamp": 1454209528341,
  "trace": {
   "calls": [
    {
@@ -1618,9 +1619,9 @@
     "span": [ [ 258, 18 ] ]
    },
    {
-    "name": "productRequest",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 37, 12 ] ]
+    "span": [ [ 39, 12 ] ]
    },
    {
     "name": "newCallback",
@@ -1642,8 +1643,8 @@
    "number": 11
   }
  },
- "message": "umid:0.7089169088285416:product",
- "timestamp": 1454306694503,
+ "message": "umid:0.7605335728731006:product",
+ "timestamp": 1454209528341,
  "trace": {
   "calls": [
    {
@@ -1677,9 +1678,9 @@
    "number": 11
   }
  },
- "condition": "ucid:0.23518666555173695:buyer",
- "message": "umid:0.025843925308436155:buyer",
- "timestamp": 1454306694503,
+ "condition": "ucid:0.6276896537747234:buyer",
+ "message": "umid:0.5245965241920203:buyer",
+ "timestamp": 1454209528341,
  "trace": {
   "calls": [
    {
@@ -1712,8 +1713,8 @@
    "number": 12
   }
  },
- "message": "umid:0.025843925308436155:buyer",
- "timestamp": 1454306694504,
+ "message": "umid:0.5245965241920203:buyer",
+ "timestamp": 1454209528342,
  "trace": {
   "calls": [
    {
@@ -1746,8 +1747,8 @@
    "number": 12
   }
  },
- "message": "umid:0.4861730362754315:buyer",
- "timestamp": 1454306694504,
+ "message": "umid:0.5939665082842112:buyer",
+ "timestamp": 1454209528342,
  "trace": {
   "calls": [
    {
@@ -1766,9 +1767,9 @@
     "span": [ [ 214, 16 ] ]
    },
    {
-    "name": "productAnswer",
+    "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 129, 12 ] ]
+    "span": [ [ 134, 12 ] ]
    },
    {
     "name": "newCallback",
@@ -1790,8 +1791,8 @@
    "number": 13
   }
  },
- "message": "umid:0.4861730362754315:buyer",
- "timestamp": 1454306694506,
+ "message": "umid:0.5939665082842112:buyer",
+ "timestamp": 1454209528343,
  "trace": {
   "calls": [
    {
@@ -1825,7 +1826,7 @@
   }
  },
  "text": "Order placed for West Coast Buyers",
- "timestamp": 1454306694506,
+ "timestamp": 1454209528343,
  "trace": {
   "calls": [
    {
@@ -1851,3 +1852,4 @@
   ]
  }
 }]
+

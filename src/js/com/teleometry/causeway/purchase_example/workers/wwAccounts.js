@@ -4,6 +4,7 @@
 (function(){
   "use strict";
   
+  importScripts('debug.js');
   importScripts('makeCausewayLogger.js');
   
   var cwLogger = makeCausewayLogger('accounts');
@@ -14,13 +15,12 @@
     return true;
   }
   
-  self.addEventListener('message', function(e) {
+  self.addEventListener('message', function accountsRequest(e) {
     var msg = e.data.msg;
     var data = e.data;
     switch (msg) {
     case 'doCreditCheck':
-      self.postMessage({'msg': msg,
-                        'answer': doCreditCheck(data.name)});
+      self.postMessage({'msg': msg, 'answer': doCreditCheck(data.name)});
       break;
     default:
       break;

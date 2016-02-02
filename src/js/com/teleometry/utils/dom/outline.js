@@ -5,6 +5,22 @@ var outline;
 
 (function(){
    "use strict";
+   
+   // polyfill from 
+   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+   if (!String.prototype.endsWith) {
+     String.prototype.endsWith = function(searchString, position) {
+       var subjectString = this.toString();
+       if (typeof position !== 'number' || !isFinite(position) || 
+           Math.floor(position) !== position || 
+           position > subjectString.length) {
+         position = subjectString.length;
+       }
+       position -= searchString.length;
+       var lastIndex = subjectString.indexOf(searchString, position);
+       return lastIndex !== -1 && lastIndex === position;
+     };
+   }
 
    function appendNew(parent, tagName) {
      var result = document.createElement(tagName);
@@ -40,7 +56,7 @@ var outline;
 
      inflatable.style.display = 'none';
      icon.addEventListener('click', function(event) {
-       if (icon.src === DEFLATE) {
+       if (icon.src.endsWith(DEFLATE)) {
          inflatable.deflate();
        } else {
          inflatable.inflate();
@@ -123,6 +139,11 @@ var outline;
        }
        addInflatableDescendants(inflatable);
        return descendants;
+     };
+     
+     inflatable.getSpanText = function() {
+       // TODO: Silly brute force. The span is actually the left sibling.
+       return inflatable.parentNode.getElementsByTagName('span')[0];
      };
    }
 

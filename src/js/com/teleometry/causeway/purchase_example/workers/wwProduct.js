@@ -4,6 +4,7 @@
 (function(){
   "use strict";
   
+  importScripts('debug.js');
   importScripts('makeCausewayLogger.js');
   
   var cwLogger = makeCausewayLogger('product');
@@ -22,21 +23,18 @@
     return true;
   }
   
-  self.addEventListener('message', function(e) {
+  self.addEventListener('message', function productRequest(e) {
     var msg = e.data.msg;
     var data = e.data;
     switch (msg) {
     case 'isAvailable':
-      self.postMessage({'msg': msg,
-                        'answer': isAvailable(data.partNo)});
+      self.postMessage({'msg': msg, 'answer': isAvailable(data.partNo)});
       break;
     case 'canDeliver':
-      self.postMessage({'msg': msg,
-                        'answer': canDeliver(data.profile)});
+      self.postMessage({'msg': msg, 'answer': canDeliver(data.profile)});
       break;
     case 'placeOrder':
-      self.postMessage({'msg': msg,
-                        'answer': placeOrder(data.name, data.partNo)});
+      self.postMessage({'msg': msg, 'answer': placeOrder(data.name, data.partNo)});
       break;
     default:
       break;

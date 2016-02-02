@@ -16,7 +16,8 @@ var makeIconicTurnView;
       graphElement: turnNode,
       displayAttr: {active: images.totPopped,
                     inactive: images.totFlat,
-                    selectionStyle: "rgba(178, 34, 34, 0.3)" }};
+                    enteredStyle: 'rgba(178, 34, 34, 0.15)',
+                    selectionStyle: 'rgba(178, 34, 34, 0.3)'}};
 
     var turnEvents = [];
 
@@ -25,12 +26,14 @@ var makeIconicTurnView;
       turnEvents.push({graphElement: outgoing,
                        displayAttr: { active: images.inturnPopped, 
                          inactive: images.inturnFlat,
-                         selectionStyle: "rgba(178, 34, 34, 0.3)"}});
+                         enteredStyle: 'rgba(178, 34, 34, 0.15)',
+                         selectionStyle: 'rgba(178, 34, 34, 0.3)'}});
     });
 
     var displayArea;
 
-    function drawTurnEvent(ctx, wdwMap, turnEvent, isSelected, isActive) {
+    function drawTurnEvent(ctx, wdwMap, turnEvent, 
+                           isSelected, isActive, isEntered) {
       var where = wdwMap.whereIs(turnEvent.graphElement);
       if (where) {
         ctx.clearRect(where.x, where.y, 
@@ -40,6 +43,10 @@ var makeIconicTurnView;
           ctx.fillStyle = turnEvent.displayAttr.selectionStyle;
           ctx.fillRect(where.x - 4, where.y - 4,
                        turnEvent.area.w + 8, turnEvent.area.h + 8);
+        } else if (isEntered) {
+            ctx.fillStyle = turnEvent.displayAttr.enteredStyle;
+            ctx.fillRect(where.x - 4, where.y - 4,
+                         turnEvent.area.w + 8, turnEvent.area.h + 8);
         }
 
         if (isActive) {
@@ -123,15 +130,18 @@ var makeIconicTurnView;
         }
       },
 
-      draw: function(ctx, wdwMap, graphElement, isSelected, isActive) {
+      draw: function(ctx, wdwMap, graphElement, 
+                     isSelected, isActive, isEntered) {
         if (graphElement) {
           if (topOfTurn.graphElement === graphElement) {
-            drawTurnEvent(ctx, wdwMap, topOfTurn, isSelected, isActive);
+            drawTurnEvent(ctx, wdwMap, topOfTurn, 
+                          isSelected, isActive, isEntered);
             return;
           } else {
             for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
               if (turnEvents[i].graphElement === graphElement) {
-                drawTurnEvent(ctx, wdwMap, turnEvents[i], isSelected, isActive);
+                drawTurnEvent(ctx, wdwMap, turnEvents[i], 
+                              isSelected, isActive, isEntered);
                 return;
               }
             }

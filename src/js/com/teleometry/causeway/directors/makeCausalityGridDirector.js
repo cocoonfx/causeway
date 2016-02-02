@@ -26,7 +26,9 @@ var makeCausalityGridDirector;
     var yOffset = 5.5;
 
     var wdwMap = makeWdwMap();
-    var flowWdwMap;
+    var flowWdwMap = null;
+    
+    var currentSelection = null;
 
     var gridView = makeCausalityGridView(causewayModel, 
                                          vatMap, 
@@ -58,11 +60,19 @@ var makeCausalityGridDirector;
 
     var selectionObserver = {
       elementSelected: function(optElement) {
-        if(optElement) {
-          gridView.redraw(context, wdwMap, optElement);
+        context.clearRect(0, 0, displayArea.w, displayArea.h);
+        flowWdwMap = null;
+        currentSelection = optElement;  // remember for elementEntered
+        if (optElement) {  // causal flow map depends on selection
+          flowWdwMap = makeWdwMap();
+          flowWdwMap.scale(xScale, yScale);
         }
+        gridView.redraw(context, wdwMap, optElement, void 0, flowWdwMap);
       },
+      
       elementEntered: function(optElement) {
+        context.clearRect(0, 0, displayArea.w, displayArea.h);
+        gridView.redraw(context, wdwMap, currentSelection, optElement, flowWdwMap);
       }
     };
     selectionModel.addObserver(selectionObserver);
@@ -84,20 +94,11 @@ var makeCausalityGridDirector;
       x -= gridCanvas.offsetLeft;
       y -= gridCanvas.offsetTop;
 
-      context.clearRect(0, 0, displayArea.w, displayArea.h);
-
       var who = wdwMap.whoIs(x, y);
 
-      flowWdwMap = null;
-      if (who) {
-        flowWdwMap = makeWdwMap();
-        flowWdwMap.scale(xScale, yScale);
-      }
-
-      gridView.redraw(context, wdwMap, who, flowWdwMap);
-      selectionModel.setOptSelectedElement(selectionObserver, who);
+      selectionModel.setOptSelectedElement(void 0, who);
     }
-    gridCanvas.addEventListener("click", gridOnClick, false);
+    gridCanvas.addEventListener('click', gridOnClick, false);
 
     function gridOnMouseMove(e) {
       //if (!flowWdwMap) { return; }
@@ -116,14 +117,12 @@ var makeCausalityGridDirector;
       // get canvas-relative coordinates
       x -= gridCanvas.offsetLeft;
       y -= gridCanvas.offsetTop;
-
-      //var who = flowWdwMap.whoIs(x, y);
+      
       var who = wdwMap.whoIs(x, y);
-      if (who) {
-        selectionModel.setOptEnteredElement(selectionObserver, who)
-      }
+      
+      selectionModel.setOptEnteredElement(void 0, who);
     }
-    gridCanvas.addEventListener("mousemove", gridOnMouseMove, false);
+    gridCanvas.addEventListener('mousemove', gridOnMouseMove, false);
 
     var causalityGridDirector = {
 

@@ -59,13 +59,23 @@ var makeCausewayModel;
 
       getPathnames: function() {
         var pathnames = {};
+        
+        function sourceString(source) {
+          while (source && typeof source !== 'string') {
+            source = source.source;
+          }
+          return source;
+        }
 
         messageGraph.top.deepOutsPre(function(edge, target) {
           if (edge.traceRecord.trace) {
             var stack = edge.traceRecord.trace.calls;
             if (stack.length > 0) {
               for (var i = 0, iLen = stack.length; i < iLen; i++) {
-                pathnames[stack[i].source] = true;
+                var ss = sourceString(stack[i].source);
+                if (ss) {
+                  pathnames[ss] = true;
+                }
               }
             }
           }
@@ -73,7 +83,10 @@ var makeCausewayModel;
             var stack = target.traceRecord.trace.calls;
             if (stack.length > 0) {
               for (var i = 0, iLen = stack.length; i < iLen; i++) {
-                pathnames[stack[i].source] = true;
+                var ss = sourceString(stack[i].source);
+                if (ss) {
+                  pathnames[ss] = true;
+                }
               }
             }
           }

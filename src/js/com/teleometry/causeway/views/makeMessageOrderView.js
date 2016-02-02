@@ -6,6 +6,8 @@ var makeMessageOrderView;
 (function(){
   "use strict";
   
+  var selectionObserver = void 0;
+  
   makeMessageOrderView = function makeMessageOrderView(causewayModel,
                                                        vatMap,
                                                        graphWalker,
@@ -29,6 +31,13 @@ var makeMessageOrderView;
 
       modelToViewMap.set(edge, uiElement);
       viewToModelMap.set(uiElement, edge);
+      var span = uiElement.getSpanText();
+      span.addEventListener('click', function(event) {
+        selectionModel.setOptSelectedElement(void 0, edge);
+      }, false);
+      span.addEventListener('mousemove', function(event) {
+        selectionModel.setOptEnteredElement(void 0, edge);
+      }, false);
 
       var target = edge.target;
 
@@ -75,10 +84,18 @@ var makeMessageOrderView;
         }
       }
 
-      viewToModelMap.set(uiElement, edge);
+      modelToViewMap.set(node, uiElement);
+      viewToModelMap.set(uiElement, node);
+      var span = uiElement.getSpanText();
+      span.addEventListener('click', function(event) {
+        selectionModel.setOptSelectedElement(void 0, node);
+      }, false);
+      span.addEventListener('mousemove', function(event) {
+        selectionModel.setOptEnteredElement(void 0, node);
+      }, false);
+
 
       if (doKids) {
-        modelToViewMap.set(node, uiElement);
         node.outs(function(outgoing, target) { 
           buildTreeFromEdge(uiParent, outgoing);
         });
@@ -93,7 +110,7 @@ var makeMessageOrderView;
       return node.parentNode && !node.parentNode.previousSibling;
     }
 
-    var selectionObserver = {
+    selectionObserver = {
       elementSelected: function(optElement) {
 
         if (previousSelection) {
@@ -111,7 +128,7 @@ var makeMessageOrderView;
           if (view) {
 
             var node = view;
-            var span = node.parentNode.getElementsByTagName('span')[0];
+            var span = node.getSpanText();
             if (span) {
               span.style.backgroundColor = 'rgba(178, 34, 34, 0.35)';
               previousSelection = span;
@@ -159,7 +176,7 @@ var makeMessageOrderView;
 
             var node = view;
 
-            var span = node.parentNode.getElementsByTagName('span')[0];
+            var span = node.getSpanText();
             if (span) {
               if (span !== previousSelection) {
                 span.style.backgroundColor = 'rgba(178, 34, 34, 0.15)';

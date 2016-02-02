@@ -209,8 +209,9 @@ var doCausalityGridTest;
     //cg_srcRoot = '';
 
     cg_logfiles = [ 'causeway/purchase_example/workers/log/ael-workers.log' ];
-    cg_hidden.addElement('makeCausewayLogger.js');  // filter out logger calls
-    cg_srcRoot = 'causeway/purchase_example/workers/';
+    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/debug.js');  // filter out logger calls
+    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js');  // filter out logger calls
+    cg_srcRoot = '';
 
     getLogFiles();
   };

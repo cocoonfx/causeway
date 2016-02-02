@@ -87,13 +87,9 @@
      var reporter = {
        run: function(answer) {
          if (answer) {
-           cwLogger.logCommentRecord('Order placed for ' +
-                                     name,
-                                     new Error('dummy').stack);
+           cwLogger.logCommentRecord('Order placed for ' + name);
          } else {
-           cwLogger.logCommentRecord('Could not place order for ' +
-                                     name,
-                                     new Error('dummy').stack);
+           cwLogger.logCommentRecord('Could not place order for ' + name);
          }
          captureLog();
        }
@@ -102,14 +98,10 @@
      var checkAnswers = {
        run: function(allOk) {
          if (allOk) {
-           cwLogger.logCommentRecord('All queries answered true', 
-                                     new Error('dummy').stack);
-           product.postMessage({'msg': 'placeOrder',
-                                'name': name,
-                                'partNo': partNo});
+           cwLogger.logCommentRecord('All queries answered true');
+           product.postMessage({'msg': 'placeOrder', 'name': name, 'partNo': partNo});
          } else {
-           cwLogger.logCommentRecord('Conditions were not met',
-                                     new Error('dummy').stack);
+           cwLogger.logCommentRecord('Conditions were not met');
            captureLog();
          }
        }
@@ -119,14 +111,11 @@
      // checkAnswers is invoked after 3 trues or the first false
      var teller = asyncAnd(3, checkAnswers, send);
      
-     product.postMessage({'msg': 'isAvailable',
-                          'partNo': partNo});
-     accounts.postMessage({'msg': 'doCreditCheck',
-                           'name': name});
-     product.postMessage({'msg': 'canDeliver',
-                          'profile': profile});
+     product.postMessage({'msg': 'isAvailable', 'partNo': partNo});
+     accounts.postMessage({'msg': 'doCreditCheck', 'name': name});
+     product.postMessage({'msg': 'canDeliver', 'profile': profile});
      
-     product.addEventListener('message', function(e) {
+     product.addEventListener('message', function productAnswer(e) {
        var data = e.data;
        switch (data.msg) {
        case 'isAvailable':
@@ -150,7 +139,7 @@
        };
      }, false);
      
-     accounts.addEventListener('message', function(e) {
+     accounts.addEventListener('message', function accountsAnswer(e) {
        var data = e.data;
        switch (data.msg) {
        case 'doCreditCheck':
@@ -169,4 +158,3 @@
      }, false);
    };
  })();    
- 
