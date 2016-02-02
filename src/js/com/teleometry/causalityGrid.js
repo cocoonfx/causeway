@@ -142,6 +142,8 @@ var doCausalityGridTest;
     var vatMap = makeVatMap(cg_model.getMessageGraph());
 
     var moOutline = document.getElementById('messageOrder');
+    var seOutline = document.getElementById('stackExplorer');
+
     var canvas = document.getElementById('gridCanvas');
     var context = canvas.getContext('2d');
 
@@ -157,7 +159,8 @@ var doCausalityGridTest;
  
     loadImages(gifs, function() {
       makeCausalityGridDirector(cg_model, vatMap, walker, 
-                                moOutline, canvas, context, cg_images);
+                                moOutline, seOutline, canvas, 
+                                context, cg_images);
     });
   }
 

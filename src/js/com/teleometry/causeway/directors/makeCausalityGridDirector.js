@@ -10,6 +10,7 @@ var makeCausalityGridDirector;
                                                                  vatMap,
                                                                  graphWalker,
                                                                  moOutline,
+                                                                 seOutline,
                                                                  gridCanvas,
                                                                  context, 
                                                                  images) {
@@ -22,6 +23,12 @@ var makeCausalityGridDirector;
                                                 graphWalker, 
                                                 moOutline, 
                                                 selectionModel);
+    var stackExplorerView = makeStackExplorerView(causewayModel,
+                                                  vatMap, 
+                                                  graphWalker, 
+                                                  seOutline, 
+                                                  selectionModel);
+
     var xOffset = 5.5;
     var yOffset = 5.5;
 
