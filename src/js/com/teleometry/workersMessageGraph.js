@@ -112,7 +112,7 @@ var doMessageGraphTest;
 
   function makeModel(chunks) {
 
-    var srcURL = "http://localhost:8080/causeway/purchase_example/workers/";
+    var srcURL = "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/";
 
     var hidden = new FlexSet();
     hidden.addElement("makeCausewayLogger.js");
@@ -136,7 +136,7 @@ var doMessageGraphTest;
 
   doMessageGraphTest = function doMessageGraphTest() {
 
-    var logURL = "http://localhost:8080/causeway/purchase_example/workers/log/";
+    var logURL = "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/log/";
     
     var parser = new AsyncParse(1, function(chunks) {
                                 makeModel(chunks);
