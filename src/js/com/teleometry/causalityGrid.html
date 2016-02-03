@@ -15,18 +15,16 @@ body { font-size: 10pt;
 .outline blockquote { margin-top: 0.05em; margin-bottom: 0.05em; 
                       margin-left: 1em;   margin-right: 0.05em; }
 
-#messageOrder { margin-top: 1em;
-                width: 550px;
-                height: 500px;
-                float: left; }
 #stackExplorer { margin-top: 1em;
                  width: 550px;
-                 height: 500px;
-                 float: left; }
+                 height: 500px;}
 #gridCanvas { position: absolute;
               left: 600px;
               top: 10px;
               background-color: #f5f5f5; }                  
+#messageOrder { margin-top: 1em;
+                width: 550px;
+                height: 500px;}
 </style>
 </head>
 
@@ -35,8 +33,14 @@ body { font-size: 10pt;
   <p>This page requires a Javascript enabled web browser.</p>
 </noscript>
 
-<div id="messageOrder" class="outline">Message Order View</div>
 <div id="stackExplorer" class="outline">Stack Explorer</div>
+<canvas id="gridCanvas" width="700" height="700">
+  <p>This example requires a browser that supports the
+     <a href="http://www.w3.org/html/wg/html5/">HTML5</a>
+      &lt;canvas&gt; feature.</p>
+</canvas>
+<div id="messageOrder" class="outline">Message Order View</div>
+
 
 <script src="utils/jsUtils.js"></script>
 <script src="utils/FlexMap.js"></script>
@@ -71,12 +75,6 @@ body { font-size: 10pt;
 <script src="causeway/directors/makeCausalityGridDirector.js"></script>
 
 <script src="causalityGrid.js"></script>
-
-<canvas id="gridCanvas" width="700" height="700">
-  <p>This example requires a browser that supports the
-     <a href="http://www.w3.org/html/wg/html5/">HTML5</a>
-      &lt;canvas&gt; feature.</p>
-</canvas>
 
 </body>
 </html>
