@@ -21,7 +21,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         for (key in map) {
             if (Object.prototype.hasOwnProperty.call(map, key)) {
                 answer = predicate(map[key], key);
-                if (undefined !== answer) {
+                if (void 0 !== answer) {
                     return answer;
                 }
             }
@@ -49,7 +49,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             //stack trace for gots
             stack = cell.node.traceRecord.trace.calls;
             if (stack.length > 0) {
-                label = walker.getElementLabel(trn.trnNode, vatMap);
+                label = walker.getEntryLabel(trn.trnNode, 0, vatMap);
                 checkFile(globFiles, stack[0].source, stack[0].span, label, trn.trnNode, true);
             }
 
@@ -57,7 +57,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             cell.node.outs(function (edge) {
                 stack = edge.traceRecord.trace.calls;
                 if (stack.length > 0) {
-                    label = walker.getElementLabel(edge, vatMap);
+                    label = walker.getEntryLabel(edge, 0, vatMap);
                     checkFile(globFiles, stack[0].source, stack[0].span, label, edge, false);
                     glyphMap.set(edge, {x: startNdx, y: 0, alpha: 1, hlight: false, border: false});
 
@@ -112,7 +112,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             if(glyphMap.get(nextEdge)) {
                 glyphMap.get(nextEdge).alpha = 1; // edge transparency
                 target = nextEdge.getTarget();
-                if (target !== undefined && target.name !== "bottom: 0") {
+                if (target !== void 0 && target.name !== "bottom: 0") {
                     setTransparentRight(sourceTurns[target.name]);
                 }
             }
@@ -128,7 +128,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             if(glyphMap.get(nextEdge)) {
                 glyphMap.get(nextEdge).alpha = 1; //edge transparency
                 origin = nextEdge.getOrigin();
-                if (origin !== undefined && origin.name !== "top: 0") {
+                if (origin !== void 0 && origin.name !== "top: 0") {
                     setTransparentLeft(sourceTurns[origin.name], nextEdge);
                 }
             }
@@ -356,7 +356,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             done = false; //complete flag
 
         //if click is in defined space
-        if (x === undefined || y === undefined) {
+        if (x === void 0 || y === void 0) {
             return;
         }
 
@@ -380,7 +380,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
             nodeGlyph;   //turn node information
 
         //if click is not in defined space
-        if (x === undefined || y === undefined) {
+        if (x === void 0 || y === void 0) {
             return;
         }
  
@@ -400,7 +400,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
         var x = e.pageX, //x coordinate of mouse click
             y = e.pageY; //y coordinate of mouse click
  
-        if (x === undefined || y === undefined)
+        if (x === void 0 || y === void 0)
             return;
   
         globFiles.forEach(function (file) {
@@ -409,7 +409,7 @@ function makeSourcilloscopeModel(jsonChunks, hiddenSrcPaths, vatMap, walker, can
                     elementGlyph, //element information from glyphMap
                     imageData;    //image data from source line
 
-                if(lineMap.get(line) === undefined)
+                if(lineMap.get(line) === void 0)
                     lineMap.set(line, {image: null, border: false});
                 lineGlyph = lineMap.get(line);
                 for(var i = 0; i < line.lnElements.length; i++) {

@@ -29,13 +29,13 @@ var makeCausalityGridDirector;
                                                   seOutline, 
                                                   selectionModel);
 
-    var xOffset = 5.5;
-    var yOffset = 5.5;
+    //var xOffset = 5.5;
+    //var yOffset = 5.5;
+    var xOffset = 5.0;
+    var yOffset = 5.0;
 
-    var wdwMap = makeWdwMap();
-    var flowWdwMap = null;
-    
-    var currentSelection = null;
+    var wdwMap = makeWdwMap();    
+    var prevSelection = null;
 
     var gridView = makeCausalityGridView(causewayModel, 
                                          vatMap, 
@@ -66,68 +66,52 @@ var makeCausalityGridDirector;
     gridView.draw(context, wdwMap);
 
     var selectionObserver = {
-      elementSelected: function(optElement) {
+      elementSelected: function(origin, optElement, optIndex) {
         context.clearRect(0, 0, displayArea.w, displayArea.h);
-        flowWdwMap = null;
-        currentSelection = optElement;  // remember for elementEntered
-        if (optElement) {  // causal flow map depends on selection
-          flowWdwMap = makeWdwMap();
-          flowWdwMap.scale(xScale, yScale);
-        }
-        gridView.redraw(context, wdwMap, optElement, void 0, flowWdwMap);
+        prevSelection = optElement;  // remember for 'elementEntered'
+        // redraw with current selection, clear hover
+        gridView.redraw(context, wdwMap, optElement, void 0);
       },
       
-      elementEntered: function(optElement) {
+      elementEntered: function(origin, optElement, optIndex) {
         context.clearRect(0, 0, displayArea.w, displayArea.h);
-        gridView.redraw(context, wdwMap, currentSelection, optElement, flowWdwMap);
+        gridView.redraw(context, wdwMap, prevSelection, optElement);
       }
     };
     selectionModel.addObserver(selectionObserver);
 
-    function gridOnClick(e) {
+    function elementAtEvent(event) {
       var x;
       var y;
       // get document-relative coordinates
-      if (e.pageX !== undefined && e.pageY !== undefined) {
-        x = e.pageX;
-        y = e.pageY;
+      if (event.pageX !== void 0 && event.pageY !== void 0) {
+        x = event.pageX;
+        y = event.pageY;
       } else {
-        x = e.clientX + document.body.scrollLeft +
+        x = event.clientX + document.body.scrollLeft +
           document.documentElement.scrollLeft;
-        y = e.clientY + document.body.scrollTop +
+        y = event.clientY + document.body.scrollTop +
           document.documentElement.scrollTop;
       }
       // get canvas-relative coordinates
       x -= gridCanvas.offsetLeft;
       y -= gridCanvas.offsetTop;
 
-      var who = wdwMap.whoIs(x, y);
-
-      selectionModel.setOptSelectedElement(void 0, who);
+      return wdwMap.whoIs(x, y);
+    }
+    
+    function gridOnClick(event) {  // handle 'hard' click
+      var who = elementAtEvent(event);
+      // notify observers that selection changed. If !who, deselect.
+      selectionModel.setOptSelectedElement(selectionObserver, who, 0);
     }
     gridCanvas.addEventListener('click', gridOnClick, false);
 
-    function gridOnMouseMove(e) {
-      //if (!flowWdwMap) { return; }
-      var x;
-      var y;
-      // get document-relative coordinates
-      if (e.pageX !== undefined && e.pageY !== undefined) {
-        x = e.pageX;
-        y = e.pageY;
-      } else {
-        x = e.clientX + document.body.scrollLeft +
-          document.documentElement.scrollLeft;
-        y = e.clientY + document.body.scrollTop +
-          document.documentElement.scrollTop;
-      }
-      // get canvas-relative coordinates
-      x -= gridCanvas.offsetLeft;
-      y -= gridCanvas.offsetTop;
-      
-      var who = wdwMap.whoIs(x, y);
-      
-      selectionModel.setOptEnteredElement(void 0, who);
+    function gridOnMouseMove(event) {  // handle hover
+      var who = elementAtEvent(event); 
+      // notify observers that hover changed.
+      // If !who, not hovering over anything.
+      selectionModel.setOptEnteredElement(selectionObserver, who, 0);
     }
     gridCanvas.addEventListener('mousemove', gridOnMouseMove, false);
 

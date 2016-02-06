@@ -19,7 +19,7 @@ var makeWdwMap;
       },
 
       maps: function(graphElement) {
-        return !(lookup.get(graphElement) === undefined);
+        return !(lookup.get(graphElement) === void 0);
       },
 
       scale: function(x, y) {

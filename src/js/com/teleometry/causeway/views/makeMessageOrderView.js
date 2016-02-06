@@ -15,7 +15,6 @@ var makeMessageOrderView;
                                                        selectionModel) {
     
     var modelToViewMap = new FlexMap();
-    var viewToModelMap = new FlexMap();
 
     var seen = new FlexSet();
 
@@ -26,17 +25,16 @@ var makeMessageOrderView;
       }
       seen.addElement(edge);
      
-      var label = graphWalker.getElementLabel(edge, vatMap);
+      var label = graphWalker.getEntryLabel(edge, 0, vatMap);
       var uiElement = outline.add(uiParent, label);
 
       modelToViewMap.set(edge, uiElement);
-      viewToModelMap.set(uiElement, edge);
       var span = uiElement.getSpanText();
       span.addEventListener('click', function(event) {
-        selectionModel.setOptSelectedElement(void 0, edge);
+        selectionModel.setOptSelectedElement(selectionObserver, edge, 0);
       }, false);
       span.addEventListener('mousemove', function(event) {
-        selectionModel.setOptEnteredElement(void 0, edge);
+        selectionModel.setOptEnteredElement(selectionObserver, edge, 0);
       }, false);
 
       var target = edge.target;
@@ -50,7 +48,7 @@ var makeMessageOrderView;
         return;
       }
 
-      var label = graphWalker.getElementLabel(node, vatMap);
+      var label = graphWalker.getEntryLabel(node, 0, vatMap);
       var uiElement = outline.add(uiParent, label);
 
       var doKids = true;
@@ -85,15 +83,15 @@ var makeMessageOrderView;
       }
 
       modelToViewMap.set(node, uiElement);
-      viewToModelMap.set(uiElement, node);
+      /*
       var span = uiElement.getSpanText();
       span.addEventListener('click', function(event) {
-        selectionModel.setOptSelectedElement(void 0, node);
+        selectionModel.setOptSelectedElement(selectionObserver, node, 0);
       }, false);
       span.addEventListener('mousemove', function(event) {
-        selectionModel.setOptEnteredElement(void 0, node);
+        selectionModel.setOptEnteredElement(selectionObserver, node, 0);
       }, false);
-
+      */
 
       if (doKids) {
         node.outs(function(outgoing, target) { 
@@ -102,8 +100,8 @@ var makeMessageOrderView;
       }
     }
 
-    var previousEnter;
-    var previousSelection;
+    var previousEnter = void 0;
+    var previousSelection = void 0;
 
     function isGotNode(node) {
       // TODO(cocoonfx): Need a better test than this!
@@ -111,16 +109,16 @@ var makeMessageOrderView;
     }
 
     selectionObserver = {
-      elementSelected: function(optElement) {
+      elementSelected: function(origin, optElement, optIndex) {
 
         if (previousSelection) {
           previousSelection.style.backgroundColor = '#f5f5f5';
-          previousSelection = null;
+          previousSelection = void 0;
         }
 
         if (previousEnter) {
           previousEnter.style.backgroundColor = '#f5f5f5';
-          previousEnter = null;
+          previousEnter = void 0;
         }
           
         if (optElement) {
@@ -164,7 +162,7 @@ var makeMessageOrderView;
           }
         }
       },
-      elementEntered: function(optElement) {
+      elementEntered: function(origin, optElement, optIndex) {
         if (previousEnter) {
           previousEnter.style.backgroundColor = '#f5f5f5';
           previousEnter = null;
@@ -187,7 +185,7 @@ var makeMessageOrderView;
         }
       }
     };
-    selectionModel.addObserver(selectionObserver);
+    //selectionModel.addObserver(selectionObserver);
 
     var top = causewayModel.getMessageGraph().top;
     var uiOutlineRoot = outline(uiRoot);

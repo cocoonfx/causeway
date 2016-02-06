@@ -57,7 +57,7 @@ var makeCausewayLogger;
         origPostMessage({'msg': 'log',
                          'json': json});
       } else {
-        var s = JSON.stringify(json, undefined, ' ');
+        var s = JSON.stringify(json, void 0, ' ');
         var pretty = fixSpans(s);
         //console.log(pretty);
         //console.log(',');
@@ -247,7 +247,7 @@ var makeCausewayLogger;
             }
             obj = Object.getPrototypeOf(obj);
           }
-          return undefined;
+          return void 0;
         }
 
         var pmBase = getOwnBase(messenger, 'postMessage');

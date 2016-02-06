@@ -145,7 +145,7 @@ var drawSourcilloscopeGrid = (function () {
                     target = edge.getTarget();
 
                     //connect sent edges with bezier curves or mark fulfilleds 
-                    if (sourceTurns[target.name] !== undefined) {
+                    if (sourceTurns[target.name] !== void 0) {
                         targetGlyph = glyphMap.get(sourceTurns[target.name].trnNode);
   
                         endx = targetGlyph.x + 7.5;
@@ -185,7 +185,7 @@ var drawSourcilloscopeGrid = (function () {
                 }
 
                 //line connecting nodes between vats, process order
-                if (conVats[turn.name] === undefined) {
+                if (conVats[turn.name] === void 0) {
                     conVats[turn.name] = turn.trnNode.name;
                 } else {
                     src = sourceTurns[conVats[turn.name]];
@@ -325,7 +325,7 @@ var drawSourcilloscopeGrid = (function () {
     // nowipe - flag to limit canvas clearing
     return function (globFiles, sourceTurns, canvas, ctx, maxX, glyphMap, dotAlpha, noWipe) {
 
-        if (noWipe === undefined) {
+        if (noWipe === void 0) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
         drawFiles(globFiles, canvas, ctx, maxX, glyphMap);

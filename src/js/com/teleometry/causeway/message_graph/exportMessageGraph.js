@@ -63,8 +63,8 @@ var exportToDotHTML;
       var oid = origin.traceRecord.anchor.turn;
       var tid = target.traceRecord.anchor.turn;
 
-      var oname = graphWalker.getElementLabel(origin, vatMap);
-      var tname = graphWalker.getElementLabel(target, vatMap);
+      var oname = graphWalker.getEntryLabel(origin, 0, vatMap);
+      var tname = graphWalker.getEntryLabel(target, 0, vatMap);
 
       // dot format requires X11 color names.
       var ocolor = tagToColor(origin.tag,
@@ -90,7 +90,7 @@ var exportToDotHTML;
         dotSrc.push('"', tspec, '" ', tcspec, ';\n');
       }
 
-      var ep = graphWalker.getElementLabel(edge, vatMap) || '[]';
+      var ep = graphWalker.getEntryLabel(edge, 0, vatMap) || '[]';
 
       var ecolor = tagToColor(edge.tag, 'lightslategray');
 

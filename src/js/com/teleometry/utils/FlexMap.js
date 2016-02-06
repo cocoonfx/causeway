@@ -50,7 +50,7 @@ var FlexSet;
         return subVals[j];
       }
     }
-    return undefined;
+    return void 0;
   };
 
   FlexMap.prototype.getKeys = function(opt_comparefn) {

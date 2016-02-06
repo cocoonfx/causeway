@@ -21,7 +21,7 @@ var sendLog = (function () {
     buffer.forEach(function (data) {
       postMessageToWindow.call(logRef, data, logOrigin);
     });
-    buffer = undefined;
+    buffer = void 0;
   }, 1000);
   return bufferLog;
 }());

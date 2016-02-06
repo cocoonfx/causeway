@@ -13,172 +13,101 @@ var makeStackExplorerView;
                                                          graphWalker,
                                                          uiRoot,
                                                          selectionModel) {
-    
-    var modelToViewMap = new FlexMap();
-    var viewToModelMap = new FlexMap();
+    var uiOutlineRoot = outline(uiRoot);
 
-    var seen = new FlexSet();
-
-    function buildTreeFromEdge(uiParent, edge) {
-
-      if (seen.contains(edge)) {
-        return;
-      }
-      seen.addElement(edge);
-     
-      var label = graphWalker.getElementLabel(edge, vatMap);
-      var uiElement = outline.add(uiParent, label);
-
-      modelToViewMap.set(edge, uiElement);
-      viewToModelMap.set(uiElement, edge);
-      var span = uiElement.getSpanText();
-      span.addEventListener('click', function(event) {
-        selectionModel.setOptSelectedElement(void 0, edge);
-      }, false);
-      span.addEventListener('mousemove', function(event) {
-        selectionModel.setOptEnteredElement(void 0, edge);
-      }, false);
-
-      var target = edge.target;
-
-      buildTreeFromNode(uiElement, target, edge);
-    }
-
-    function buildTreeFromNode(uiParent, node, edge) {
-
-      if (node.id.loop === 'bottom') {
-        return;
-      }
-
-      var label = graphWalker.getElementLabel(node, vatMap);
-      var uiElement = outline.add(uiParent, label);
-
-      var doKids = true;
-
-      // our data structure is mostly tree-like, but sometimes
-      // events have multiple causes, i.e., multiple incoming arcs
-
-      if (node.getIncomingCount() > 1) {
-        var edgeList = [];
-        node.ins(function(incoming, origin) {
-
-
-          // TODO(cocoonfx): do we still need this?
-
-          // optional filtering of SentIf events
-          /*
-            if (incoming.traceRecord.class[0] === 'org.ref_send.log.SentIf') {
-              return;
-            }
-          */
-
-          edgeList.push(incoming);
-        });
-
-        if (edgeList.length > 1) {
-          // TODO(cocoonfx): multiples icon image
-          // show 'multiples' icon for this tree item
-          if (edgeList[0] !== edge) {
-            doKids = false;  // continue with children only if last cause
-          }
-        }
-      }
-
-      modelToViewMap.set(node, uiElement);
-      viewToModelMap.set(uiElement, node);
-      var span = uiElement.getSpanText();
-      span.addEventListener('click', function(event) {
-        selectionModel.setOptSelectedElement(void 0, node);
-      }, false);
-      span.addEventListener('mousemove', function(event) {
-        selectionModel.setOptEnteredElement(void 0, node);
-      }, false);
-
-
-      if (doKids) {
-        node.outs(function(outgoing, target) { 
-          buildTreeFromEdge(uiParent, outgoing);
-        });
-      }
-    }
-
-    var previousEnter;
-    var previousSelection;
-
-    function isGotNode(node) {
-      // TODO(cocoonfx): Need a better test than this!
-      return node.parentNode && !node.parentNode.previousSibling;
-    }
+    // from a graph element to an array of views, one per stack index
+    var modelToViewsMap = new FlexMap();
+    var previousEnter = void 0;
+    var previousSelection = void 0;
 
     selectionObserver = {
-      elementSelected: function(optElement) {
-
-        if (previousSelection) {
-          previousSelection.style.backgroundColor = '#f5f5f5';
-          previousSelection = null;
-        }
-
-        if (previousEnter) {
-          previousEnter.style.backgroundColor = '#f5f5f5';
-          previousEnter = null;
+      elementSelected: function(origin, optElement, optIndex) {
+        
+        if (optElement && origin !== selectionObserver) {
+          // Clear the entire display first
+          while (uiOutlineRoot.firstChild) {
+            uiOutlineRoot.removeChild(uiOutlineRoot.firstChild);
+          }
+          modelToViewsMap = new FlexMap();
+          previousEnter = void 0;
+          previousSelection = void 0;
+          
+          function buildTreeItem(parentUI, element, index) {
+            var label = graphWalker.getEntryLabel(element, index, vatMap);
+            var resultUI = outline.add(parentUI, label);
+            modelToViewsMap.get(element).push(resultUI);
+            var span = resultUI.getSpanText();
+            if (span) {
+              span.addEventListener('click', function(event) {
+                selectionModel.setOptSelectedElement(selectionObserver, 
+                    element, index);
+              }, false);
+              span.addEventListener('mousemove', function(event) {
+                selectionModel.setOptEnteredElement(selectionObserver, 
+                    element, index);
+              }, false);
+            }
+            return resultUI;
+          }
+          
+          // Build the view
+          var curElement = optElement;
+          if (curElement) {
+            modelToViewsMap.set(curElement, []);
+            var outerUI = buildTreeItem(uiOutlineRoot, curElement, 0);
+            
+            var stackSize = curElement.traceRecord.trace.calls.length;
+            for (var i = 1; i < stackSize; i++) {
+              var innerUI = buildTreeItem(outerUI, curElement, i);
+              // TODO(cocoonfx): Add third level under innerUI
+            }
+            outerUI.inflate();
+          }
+        } else {
+          // if either we are the origin or nothing was selected,
+          // leave the layout but start by clearing the previous selection.
+          if (!!previousSelection) {
+            previousSelection.style.backgroundColor = '#f5f5f5';
+            previousSelection = void 0;
+          }
+  
+          if (!!previousEnter) {
+            previousEnter.style.backgroundColor = '#f5f5f5';
+            previousEnter = void 0;
+          }
         }
           
         if (optElement) {
-          var view  = modelToViewMap.get(optElement);
-          if (view) {
-
-            var node = view;
-            var span = node.getSpanText();
-            if (span) {
-              span.style.backgroundColor = 'rgba(178, 34, 34, 0.35)';
-              previousSelection = span;
-            }
-
-            var parent;
-            if (isGotNode(node)) {
-              // For the remaining logic only, we want to treat
-              // selecting a got as if its inflatable parent had been
-              // selected instead.
-              parent = node.getInflatableParent();
-              if (parent) {
-                node = parent;
-                parent = node.getInflatableParent();
+          var views  = modelToViewsMap.get(optElement);
+          if (views) {
+            var node = views[optIndex];
+            if (node) {
+              var span = node.getSpanText();
+              if (span) {
+                span.style.backgroundColor = 'rgba(178, 34, 34, 0.35)';
+                previousSelection = span;
               }
+              var ancestors = node.getInflatableAncestors();
+              ancestors.forEach(function(elder) {
+                elder.inflate();
+              });
             }
-
-            var ancestors = node.getInflatableAncestors();
-            ancestors.forEach(function(elder) {
-              elder.inflate();
-              var sibs = elder.getInflatableSiblings();
-              sibs.forEach(function(sib) { sib.deflate(); });
-            });
-
-            node.inflate();
-            var sibs = node.getInflatableSiblings();
-            sibs.forEach(function(sib) { sib.deflate(); });
-
-            var descendants = node.getInflatableDescendants();
-            descendants.forEach(function(junior) {
-              junior.inflate();
-            });
           }
         }
       },
-      elementEntered: function(optElement) {
-        if (previousEnter) {
+      elementEntered: function(origin, optElement, optIndex) {
+        if (!!previousEnter) {
           previousEnter.style.backgroundColor = '#f5f5f5';
-          previousEnter = null;
+          previousEnter = void 0;
         }
 
         if (optElement) {
-          var view  = modelToViewMap.get(optElement);
-          if (view) {
-
-            var node = view;
-
-            var span = node.getSpanText();
-            if (span) {
-              if (span !== previousSelection) {
+          var views  = modelToViewsMap.get(optElement);
+          if (views) {
+            var node = views[optIndex];
+            if (node) {
+              var span = node.getSpanText();
+              if (span && span !== previousSelection) {
                 span.style.backgroundColor = 'rgba(178, 34, 34, 0.15)';
                 previousEnter = span;
               }
@@ -188,12 +117,6 @@ var makeStackExplorerView;
       }
     };
     selectionModel.addObserver(selectionObserver);
-
-    var top = causewayModel.getMessageGraph().top;
-    var uiOutlineRoot = outline(uiRoot);
-    top.outs(function(outgoing, target) {
-      buildTreeFromNode(uiOutlineRoot, target, null);
-    });
 
     var stackExplorerView = {
       

@@ -110,11 +110,10 @@ var makeCausalityGridView;
         });
       },
       
-      redraw: function(ctx, wdwMap, selected, entered, flowWdwMap) {
+      redraw: function(ctx, wdwMap, selected, entered) {
         if (!selected) {
           this.draw(ctx, wdwMap);
         } else {
-
           // draw dimmed nodes, no arcs, if selected
           ctx.save();
           ctx.globalAlpha = 0.33;
@@ -123,7 +122,7 @@ var makeCausalityGridView;
           
           nodesInFlow = [];
           edgesInFlow = [];
-          
+                   
           if (selected.isNode()) {
             causalFlowIn(wdwMap, selected);
             nodesInFlow.push(selected);
@@ -171,11 +170,6 @@ var makeCausalityGridView;
             if (view) {
               view.draw(ctx, wdwMap, node, 
                         node === selected, true, node === entered);
-              if (flowWdwMap) {
-                flowWdwMap.post(node, wdwMap.whereIs(node));
-              } else {
-//                debugger;
-              }
             }
           });
           edgesInFlow.forEach(function(edge) {
@@ -183,11 +177,6 @@ var makeCausalityGridView;
             if (view) {
               view.draw(ctx, wdwMap, edge, 
                         edge === selected, true, edge === entered);
-              if (flowWdwMap) {
-                flowWdwMap.post(edge, wdwMap.whereIs(edge));
-              } else {
-//                debugger;
-              }
             }
           });
         }

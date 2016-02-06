@@ -40,7 +40,12 @@ var makeGraphWalker;
     function getOptLine(stackEntry) {
 
       if (stackEntry.source && stackEntry.span) {
-        var source = srcLookup[stackEntry.source];
+        var sourceFile = stackEntry.source;
+        while (typeof sourceFile !== 'string') {
+          // TODO(cocoonfx): Temporary kludge, fix
+          sourceFile = sourceFile.source;
+        }
+        var source = srcLookup[sourceFile];
         if (source) {
           var normalSpan = normalizeSpan(stackEntry.span);
           var lines = source.split("\n");
@@ -63,7 +68,8 @@ var makeGraphWalker;
           var line = getOptLine(se);
           if (line) {
             var normalSpan = normalizeSpan(se.span);
-            var slice = line.slice(normalSpan.firstOffset -1);
+            normalSpan.firstOffset = 0;  // TODO(cocoonfx): fix
+            var slice = line.slice(normalSpan.firstOffset);
             return slice;
           }
         }
@@ -80,11 +86,16 @@ var makeGraphWalker;
       //   3. Vat name followed by turn number.
       //   4. Log event type.
 
-      getElementLabel: function(element, vatMap) {
+      getEntryLabel: function(element, entryIndex, vatMap) {
 
+        if (entryIndex >= 1) {
+          // TODO(cocoonfx): Revise to be more like E code
+          return getEntryLabel(element, entryIndex, vatMap);
+        }
+        
         var result = "";
-
         if (element.traceRecord.text) {
+          // Comment record
           result += "# " + element.traceRecord.text;
         } else if (srcLookup && element.traceRecord.trace.calls) {
           result += getEntryLabel(element, 0, vatMap);

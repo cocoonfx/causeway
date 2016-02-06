@@ -5,7 +5,7 @@
 
   function iterate(list, predicate) {
     var i = 0, end = list.length, found;
-    for (; i < end && undefined === found; i += 1) {
+    for (; i < end && void 0 === found; i += 1) {
       found = predicate(list[i], i);
     }
     return found;

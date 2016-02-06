@@ -11,19 +11,15 @@ var makeSelectionModel;
 
     var selectionModel = {
 
-      setOptSelectedElement: function(observer, optElement) {
+      setOptSelectedElement: function(origin, optElement, optIndex) {
         observers.forEach(function(o) {
-          if (o !== observer) {
-            o.elementSelected(optElement);
-          }
+          o.elementSelected(origin, optElement, optIndex);
         });
       },
 
-      setOptEnteredElement: function(observer, optElement) {
+      setOptEnteredElement: function(origin, optElement, optIndex) {
         observers.forEach(function(o) {
-          if (o !== observer) {
-            o.elementEntered(optElement);
-          }
+          o.elementEntered(origin, optElement, optIndex);
         });
       },
 

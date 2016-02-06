@@ -11,14 +11,14 @@ var makeTurnView;
 
     // the receive event that starts this turn
     turnEvents.push({graphElement: turnNode,
-                     displayName: graphWalker.getElementLabel(turnNode,
-                                                              vatMap)});
+                     displayName: graphWalker.getEntryLabel(turnNode, 0,
+                                                            vatMap)});
 
     // The subsequent events that occurred during this turn
     turnNode.outs(function(outgoing, target) {
       turnEvents.push({graphElement: outgoing,
-                       displayName: graphWalker.getElementLabel(outgoing,
-                                                                vatMap)});
+                       displayName: graphWalker.getEntryLabel(outgoing, 0,
+                                                              vatMap)});
     });
 
     var displayAttr = {

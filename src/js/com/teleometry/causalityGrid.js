@@ -144,7 +144,8 @@ var doCausalityGridTest;
     var moOutline = document.getElementById('messageOrder');
     var seOutline = document.getElementById('stackExplorer');
     
-    seOutline.style.display = 'none';
+    moOutline.style.display = 'none';
+//    seOutline.style.display = 'none';
 
     var canvas = document.getElementById('gridCanvas');
     var context = canvas.getContext('2d');
