@@ -20,6 +20,21 @@ var makeStackExplorerView;
     var previousEnter = void 0;
     var previousSelection = void 0;
 
+    var top = causewayModel.getMessageGraph().top;
+    function getMainAncestor(node) {
+      var ancestor = void 0;
+      if (node.getIncomingCount() >= 1) {
+        ancestor = node.nextIn;
+        while ((ancestor.traceRecord["class"][0] == 
+               'org.ref_send.log.Fulfilled') && 
+               ancestor.nextIn !== node) {
+          ancestor = ancestor.nextIn;
+        }
+      }
+      if (ancestor.getOrigin() === top) { return void 0; }
+      return ancestor;
+    }
+          
     selectionObserver = {
       elementSelected: function(origin, optElement, optIndex) {
         
@@ -52,16 +67,27 @@ var makeStackExplorerView;
           
           // Build the view
           var curElement = optElement;
-          if (curElement) {
+          var outerUI;
+          // TODO(cocoonfx): Add third level under inner ui level
+          while (curElement) {
             modelToViewsMap.set(curElement, []);
-            var outerUI = buildTreeItem(uiOutlineRoot, curElement, 0);
-            
+            outerUI = buildTreeItem(uiOutlineRoot, curElement, 0);
             var stackSize = curElement.traceRecord.trace.calls.length;
             for (var i = 1; i < stackSize; i++) {
-              var innerUI = buildTreeItem(outerUI, curElement, i);
-              // TODO(cocoonfx): Add third level under innerUI
+              buildTreeItem(outerUI, curElement, i);
+            }
+            var curOrigin = curElement.getOrigin();
+            if (curOrigin !== curElement) {
+              modelToViewsMap.set(curOrigin, []);
+              buildTreeItem(outerUI, curOrigin, 0);
+              var oStackSize = curOrigin.traceRecord.trace.calls.length;
+              for (var j = 1; j < oStackSize; j++) {
+                buildTreeItem(outerUI, curOrigin, j);
+              }
             }
             outerUI.inflate();
+            
+            curElement = getMainAncestor(curOrigin);
           }
         } else {
           // if either we are the origin or nothing was selected,

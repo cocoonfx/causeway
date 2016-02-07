@@ -60,15 +60,16 @@ var makeMessageOrderView;
         var edgeList = [];
         node.ins(function(incoming, origin) {
 
-
+          // optional filtering of SentIf events          
           // TODO(cocoonfx): do we still need this?
-
-          // optional filtering of SentIf events
-          /*
-            if (incoming.traceRecord.class[0] === 'org.ref_send.log.SentIf') {
-              return;
-            }
-          */
+          // This case does not arise right now, because makeCauseway logger
+          // is always in our filter list. Once we make this list configurable
+          // we will need to decide.
+          if (incoming.traceRecord.class[0] === 'org.ref_send.log.SentIf') {
+            // debugger;
+            // return;
+          }
+          
 
           edgeList.push(incoming);
         });

@@ -35,7 +35,7 @@ var outline;
    }
 
    function appendText(parent, text) {
-     var result = document.createTextNode(text);
+     var result = document.createTextNode(text.trim());
      parent.appendChild(result);
      return result;
    }
