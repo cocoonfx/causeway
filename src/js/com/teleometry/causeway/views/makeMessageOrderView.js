@@ -83,7 +83,6 @@ var makeMessageOrderView;
       }
 
       modelToViewMap.set(node, uiElement);
-      /*
       var span = uiElement.getSpanText();
       span.addEventListener('click', function(event) {
         selectionModel.setOptSelectedElement(selectionObserver, node, 0);
@@ -91,7 +90,6 @@ var makeMessageOrderView;
       span.addEventListener('mousemove', function(event) {
         selectionModel.setOptEnteredElement(selectionObserver, node, 0);
       }, false);
-      */
 
       if (doKids) {
         node.outs(function(outgoing, target) { 
@@ -185,7 +183,7 @@ var makeMessageOrderView;
         }
       }
     };
-    //selectionModel.addObserver(selectionObserver);
+    selectionModel.addObserver(selectionObserver);
 
     var top = causewayModel.getMessageGraph().top;
     var uiOutlineRoot = outline(uiRoot);
