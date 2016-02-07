@@ -31,7 +31,9 @@ var makeIconicTurnView;
     });
 
     var displayArea;
-
+    
+    var hoveredEvent = void 0;
+    
     function drawTurnEvent(ctx, wdwMap, turnEvent, 
                            isSelected, isActive, isEntered) {
       var where = wdwMap.whereIs(turnEvent.graphElement);
@@ -44,9 +46,27 @@ var makeIconicTurnView;
           ctx.fillRect(where.x - 4, where.y - 4,
                        turnEvent.area.w + 8, turnEvent.area.h + 8);
         } else if (isEntered) {
-            ctx.fillStyle = turnEvent.displayAttr.enteredStyle;
-            ctx.fillRect(where.x - 4, where.y - 4,
-                         turnEvent.area.w + 8, turnEvent.area.h + 8);
+          ctx.fillStyle = turnEvent.displayAttr.enteredStyle;
+          ctx.fillRect(where.x - 4, where.y - 4,
+              turnEvent.area.w + 8, turnEvent.area.h + 8);
+
+          // remember hovered event          
+          hoveredEvent = {
+            turnEvent: turnEvent,
+            eventWhere: {
+              x: where.x,
+              y: where.y,
+              w: turnEvent.area.w,
+              h: turnEvent.area.h,
+            },
+            hoverWhere: {
+              x: where.x - 4,
+              y: where.y - 4,
+              w: turnEvent.area.w + 8,
+              h: turnEvent.area.h + 8,
+            },
+            isActive: isActive
+          };
         }
 
         if (isActive) {
@@ -57,15 +77,48 @@ var makeIconicTurnView;
           ctx.drawImage(turnEvent.displayAttr.inactive,
                         where.x, where.y,
                         turnEvent.area.w, turnEvent.area.h);
-
         }
+        
       } else {
         throw new Error('graphElement not found in wdwMap');
       }
     }
 
     var iconicTurnView = {
-
+        
+      hover: function(ctx, wdwMap, graphElement) {
+        if (graphElement) {
+          if (topOfTurn.graphElement === graphElement) {
+            drawTurnEvent(ctx, wdwMap, topOfTurn, 
+                          false, true, true);
+          } else {
+            for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
+              if (turnEvents[i].graphElement === graphElement) {
+                drawTurnEvent(ctx, wdwMap, turnEvents[i], 
+                              false, true, true);
+                break;
+              }
+            }
+          }
+        }
+      },
+        
+      dehover: function(ctx, wdwMap, graphElement) {
+        if (hoveredEvent) {
+          var hw = hoveredEvent.hoverWhere;
+          ctx.clearRect(hw.x, hw.y, hw.w, hw.h);
+          var where = hoveredEvent.eventWhere;
+          if (hoveredEvent.isActive) {
+            ctx.drawImage(hoveredEvent.turnEvent.displayAttr.active,
+                          where.x, where.y, where.w, where.h);
+          } else {
+            ctx.drawImage(turnEvent.displayAttr.inactive,
+                          where.x, where.y, where.w, where.h);
+          }
+          hoveredEvent = void 0;
+        }
+      },
+        
       layout: function(ctx) {
         // TODO(cocoonfx): Invalidate cache if ctx changes
         if (displayArea) { return displayArea; }
@@ -164,6 +217,7 @@ var makeIconicTurnView;
           turnEvents.forEach(function(te) {
             drawTurnEvent(ctx, wdwMap, te);
           });
+          hoveredEvent = void 0;
         }
       }
     };

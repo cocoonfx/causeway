@@ -103,23 +103,38 @@ var makeCausalityGridView;
         });
       },
       
-      draw: function(ctx, wdwMap) {
+      hover: function(ctx, wdwMap, entered) {
+        var views = cellToViewMap.getVals();
+        views.forEach(function(view) {
+          view.hover(ctx, wdwMap, entered);
+        });
+      },
+      
+      dehover: function(ctx, wdwMap, entered) {
+        var views = cellToViewMap.getVals();
+        views.forEach(function(view) {
+          view.dehover(ctx, wdwMap, entered);
+        });
+      },
+      
+      draw: function(ctx, wdwMap) {  // draw turns, no arcs or joins
         cellGrid.cells.forEach(function(cell) {
           var view = cellToViewMap.get(cell.node);
           view.draw(ctx, wdwMap);
         });
       },
       
-      redraw: function(ctx, wdwMap, selected, entered) {
+      redraw: function(ctx, wdwMap, selected) {
         if (!selected) {
           this.draw(ctx, wdwMap);
         } else {
-          // draw dimmed nodes, no arcs, if selected
+          // draw dimmed nodes
           ctx.save();
           ctx.globalAlpha = 0.33;
           this.draw(ctx, wdwMap);
           ctx.restore();
           
+          // causal flow wrt: selected
           nodesInFlow = [];
           edgesInFlow = [];
                    
@@ -168,15 +183,17 @@ var makeCausalityGridView;
           nodesInFlow.forEach(function(node) {
             var view = cellToViewMap.get(node);
             if (view) {
+                  // draw active view, possibly selected, no hover
               view.draw(ctx, wdwMap, node, 
-                        node === selected, true, node === entered);
+                        node === selected, true, false);
             }
           });
           edgesInFlow.forEach(function(edge) {
             var view = cellToViewMap.get(edge.getOrigin());
             if (view) {
+                  // draw active view, possibly selected, no hover
               view.draw(ctx, wdwMap, edge, 
-                        edge === selected, true, edge === entered);
+                        edge === selected, true, false);
             }
           });
         }

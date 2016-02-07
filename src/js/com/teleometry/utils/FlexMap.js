@@ -71,6 +71,26 @@ var FlexSet;
       return result;
     }
   };
+  
+  FlexMap.prototype.getVals = function(opt_comparefn) {
+    var result = [];
+    for (var i in this.vals) {
+      if (({}).hasOwnProperty.call(this.vals, i)) {
+        var subVals = this.vals[i];
+        if (subVals) {
+          for (var j = 0, jlen = subVals.length; j < jlen; j++) {
+            result.push(subVals[j]);
+          }
+        }
+      }
+    }
+    if (opt_comparefn) {
+      return result.sort(opt_comparefn);
+    } else {
+      return result;
+    }
+  };
+
 
   FlexSet = function FlexSet() {
     this.map = new FlexMap(

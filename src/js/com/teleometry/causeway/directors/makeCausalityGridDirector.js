@@ -29,13 +29,12 @@ var makeCausalityGridDirector;
                                                   seOutline, 
                                                   selectionModel);
 
-    //var xOffset = 5.5;
-    //var yOffset = 5.5;
-    var xOffset = 5.0;
-    var yOffset = 5.0;
+    var xOffset = 5.5;
+    var yOffset = 5.5;
 
     var wdwMap = makeWdwMap();    
-    var prevSelection = null;
+    var prevSelection = void 0;
+    var prevEntered = void 0;
 
     var gridView = makeCausalityGridView(causewayModel, 
                                          vatMap, 
@@ -69,13 +68,59 @@ var makeCausalityGridDirector;
       elementSelected: function(origin, optElement, optIndex) {
         context.clearRect(0, 0, displayArea.w, displayArea.h);
         prevSelection = optElement;  // remember for 'elementEntered'
-        // redraw with current selection, clear hover
-        gridView.redraw(context, wdwMap, optElement, void 0);
+        // redraw with new selection
+        gridView.redraw(context, wdwMap, optElement);
       },
       
       elementEntered: function(origin, optElement, optIndex) {
-        context.clearRect(0, 0, displayArea.w, displayArea.h);
-        gridView.redraw(context, wdwMap, prevSelection, optElement);
+        //context.clearRect(0, 0, displayArea.w, displayArea.h);
+        //gridView.redraw(context, wdwMap, prevSelection, optElement);
+        if (optElement) {
+          if (prevSelection) {
+            if (prevEntered) {
+              if (optElement === prevSelection) {  // hovered over selection
+                // ignore hover over selection, but check for hover change
+                //if (hoverChanged(prevEntered, optElement)) {
+                if (optElement !== prevEntered) {
+                  gridView.dehover(context, wdwMap, prevEntered);
+                  prevEntered = optElement;
+                }
+              } else {  // not hovered over selection
+                //if (hoverChanged(prevEntered, optElement)) {
+                if (optElement !== prevEntered) {
+                  // update hover
+                  gridView.dehover(context, wdwMap, prevEntered);
+                  gridView.hover(context, wdwMap, optElement);
+                  prevEntered = optElement;
+                }
+              }
+            } else {  // !prevEntered
+              if (optElement !== prevSelection) {  // not hovered over selection
+                gridView.hover(context, wdwMap, optElement);
+                prevEntered = optElement;
+              }
+            }
+          } else { // !prevSelection
+            if (prevEntered) {
+              //if (hoverChanged(prevEntered, optElement)) {
+              if (optElement !== prevEntered) {
+                // update hover
+                gridView.dehover(context, wdwMap, prevEntered);
+                gridView.hover(context, wdwMap, optElement);
+                prevEntered = optElement;
+              }
+            } else {  // !prevEntered
+              gridView.hover(context, wdwMap, optElement);
+              prevEntered = optElement;
+            }
+          }
+        } else {  // !optElement
+          if (prevEntered) {
+            // update hover
+            gridView.dehover(context, wdwMap, prevEntered);
+            prevEntered = optElement;
+          }
+        }
       }
     };
     selectionModel.addObserver(selectionObserver);
@@ -102,15 +147,14 @@ var makeCausalityGridDirector;
     
     function gridOnClick(event) {  // handle 'hard' click
       var who = elementAtEvent(event);
-      // notify observers that selection changed. If !who, deselect.
+      // notify observers that selection changed. 
+      // If !who, no selection.
       selectionModel.setOptSelectedElement(selectionObserver, who, 0);
     }
     gridCanvas.addEventListener('click', gridOnClick, false);
 
     function gridOnMouseMove(event) {  // handle hover
       var who = elementAtEvent(event); 
-      // notify observers that hover changed.
-      // If !who, not hovering over anything.
       selectionModel.setOptEnteredElement(selectionObserver, who, 0);
     }
     gridCanvas.addEventListener('mousemove', gridOnMouseMove, false);
