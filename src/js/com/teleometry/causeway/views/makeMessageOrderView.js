@@ -30,6 +30,9 @@ var makeMessageOrderView;
 
       modelToViewMap.set(edge, uiElement);
       var span = uiElement.getSpanText();
+      var id = edge.traceRecord.anchor.turn;
+      var attr = vatMap[id.loop];
+      span.style.color = attr.color.hexColor;
       span.addEventListener('click', function(event) {
         selectionModel.setOptSelectedElement(selectionObserver, edge, 0);
       }, false);
@@ -85,6 +88,9 @@ var makeMessageOrderView;
 
       modelToViewMap.set(node, uiElement);
       var span = uiElement.getSpanText();
+      var id = node.traceRecord.anchor.turn;
+      var attr = vatMap[id.loop];
+      span.style.color = attr.color.hexColor;
       span.addEventListener('click', function(event) {
         selectionModel.setOptSelectedElement(selectionObserver, node, 0);
       }, false);
@@ -111,7 +117,7 @@ var makeMessageOrderView;
       elementSelected: function(origin, optElement, optIndex) {
 
         if (previousSelection) {
-          previousSelection.style.backgroundColor = '#f5f5f5';
+          previousSelection.style.border = '';
           previousSelection = void 0;
         }
 
@@ -127,7 +133,7 @@ var makeMessageOrderView;
             var node = view;
             var span = node.getSpanText();
             if (span) {
-              span.style.backgroundColor = 'rgba(178, 34, 34, 0.35)';
+              span.style.border = 'thin solid #B22222';
               previousSelection = span;
             }
 
@@ -176,7 +182,7 @@ var makeMessageOrderView;
             var span = node.getSpanText();
             if (span) {
               if (span !== previousSelection) {
-                span.style.backgroundColor = 'rgba(178, 34, 34, 0.15)';
+                span.style.backgroundColor = 'rgba(47, 79, 79, 0.15)';
                 previousEnter = span;
               }
             }

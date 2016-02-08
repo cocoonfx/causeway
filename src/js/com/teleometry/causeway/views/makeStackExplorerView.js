@@ -55,9 +55,7 @@ var makeStackExplorerView;
             if (span) {
               var id = element.traceRecord.anchor.turn;
               var attr = vatMap[id.loop];
-                   
               span.style.color = attr.color.hexColor;
-              
               span.addEventListener('click', function(event) {
                 selectionModel.setOptSelectedElement(selectionObserver, 
                     element, index);
