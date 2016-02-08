@@ -21,11 +21,12 @@ var makeVatMap;
   var vatColors = Object.freeze([
     {x11Color: "mediumblue",    hexColor: "#0000CD"},
     {x11Color: "forestgreen",   hexColor: "#228B22"},
+    {x11Color: "sienna",        hexColor: "#A0522D"},
+    {x11Color: "dark orange",   hexColor: "#FF8C00"},
     {x11Color: "indigo",        hexColor: "#4B0082"},
     {x11Color: "chocolate",     hexColor: "#D2691E"},
     {x11Color: "darkslateblue", hexColor: "#483D8B"},
     {x11Color: "saddle brown",  hexColor: "#8B4513"},
-    {x11Color: "dark orange",   hexColor: "#FF8C00"},
     {x11Color: "navy",          hexColor: "#000080"},
     {x11Color: "indian red",    hexColor: "#CD5C5C"},
     {x11Color: "teal",          hexColor: "#008080"}

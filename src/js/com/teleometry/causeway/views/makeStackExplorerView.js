@@ -53,6 +53,11 @@ var makeStackExplorerView;
             modelToViewsMap.get(element).push(resultUI);
             var span = resultUI.getSpanText();
             if (span) {
+              var id = element.traceRecord.anchor.turn;
+              var attr = vatMap[id.loop];
+                   
+              span.style.color = attr.color.hexColor;
+              
               span.addEventListener('click', function(event) {
                 selectionModel.setOptSelectedElement(selectionObserver, 
                     element, index);
@@ -93,7 +98,7 @@ var makeStackExplorerView;
           // if either we are the origin or nothing was selected,
           // leave the layout but start by clearing the previous selection.
           if (!!previousSelection) {
-            previousSelection.style.backgroundColor = '#f5f5f5';
+            previousSelection.style.border = '';
             previousSelection = void 0;
           }
   
@@ -110,7 +115,7 @@ var makeStackExplorerView;
             if (node) {
               var span = node.getSpanText();
               if (span) {
-                span.style.backgroundColor = 'rgba(178, 34, 34, 0.35)';
+                span.style.border = 'thin solid #B22222';
                 previousSelection = span;
               }
               var ancestors = node.getInflatableAncestors();
@@ -134,7 +139,11 @@ var makeStackExplorerView;
             if (node) {
               var span = node.getSpanText();
               if (span && span !== previousSelection) {
-                span.style.backgroundColor = 'rgba(178, 34, 34, 0.15)';
+                //span.style.backgroundColor = 'rgba(178, 34, 34, 0.15)';
+                //{x11Color: "darkslateblue", hexColor: "#483D8B"},
+                // slate blue 112, 128, 144
+                
+                span.style.backgroundColor = 'rgba(47, 79, 79, 0.15)';
                 previousEnter = span;
               }
             }
