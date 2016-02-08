@@ -12,10 +12,12 @@ var makeCausalityGridView;
                                                          images) {
     var cellGrid = makeCellGrid(causewayModel);
     var cellToViewMap = new FlexMap();
-    
+    var modelToViewMap = new FlexMap();
+
     cellGrid.cells.forEach(function(cell) {
       var turnNode = cell.node;
-      var turnView = makeIconicTurnView(turnNode, vatMap, graphWalker, images);
+      var turnView = makeIconicTurnView(turnNode, vatMap, graphWalker, images,
+          modelToViewMap);
       cellToViewMap.set(turnNode, turnView);
     });
     

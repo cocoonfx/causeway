@@ -6,115 +6,106 @@ var makeIconicTurnView;
 (function(){
   "use strict";
 
+  var hoveredEvent = void 0;
+  
+  var enteredStyle = 'rgba(47, 79, 79, 0.15)';
+  var selectionStyle = 'rgba(178, 34, 34, 1.0)';
+  var clearStyle = 'rgba(245, 245, 245, 1.0)';
+  
   makeIconicTurnView = function makeIconicTurnView(turnNode, 
                                                    vatMap, 
                                                    graphWalker,
-                                                   images) {
+                                                   images,
+                                                   modelToViewMap) {
+    function makeEventView(graphElement) {
+      var isTop = graphElement === turnNode;
+      var self = void 0;
+      var id = graphElement.traceRecord.anchor.turn;
+      self = {
+          isTop: isTop,
+          graphElement: graphElement,
+          vatColor: vatMap[id.loop].color.hexColor,
+          isActive: false,
+          isSelected: false,
+          isEntered: false,
+          where: void 0,  // gets filled in below
 
+          draw: function(ctx) {
+            var where = self.where;
+            if (where) {
+              ctx.fillStyle = clearStyle;
+              ctx.fillRect(where.x - 5, where.y - 5, 
+                           where.w + 10, where.h + 10);
+              if (self.isSelected) {
+                ctx.fillStyle = selectionStyle;
+                ctx.fillRect(where.x - 4, where.y - 4, 
+                             where.w + 8, where.h + 8);
+                ctx.fillStyle = clearStyle;
+                ctx.fillRect(where.x - 3, where.y - 3, 
+                             where.w + 6, where.h + 6);
+              } else if (self.isEntered) {
+                ctx.fillStyle = enteredStyle;
+                ctx.fillRect(where.x - 4, where.y - 4, 
+                             where.w + 8, where.h + 8);
+              }
+              if (self.isEntered) {
+                if (hoveredEvent && self !== hoveredEvent) {
+                  hoveredEvent.isEntered = false;
+                  hoveredEvent.draw(ctx);
+                }
+                hoveredEvent = self;
+              }
+              ctx.save();
+              ctx.globalAlpha = self.isActive ? 1.0 : 0.33;
+              ctx.fillStyle = self.vatColor;
+              ctx.fillRect(where.x, where.y, where.w, where.h);
+              ctx.restore();
+            } else {
+              throw new Error('turnEvent.where not set');
+            }
+          }
+      };
+      modelToViewMap.set(graphElement, self);
+      return self;
+    }
+    
     // the receive event that starts this turn
-    var topOfTurn = { 
-      graphElement: turnNode,
-      displayAttr: {active: images.totPopped,
-                    inactive: images.totFlat,
-                    enteredStyle: 'rgba(178, 34, 34, 0.15)',
-                    selectionStyle: 'rgba(178, 34, 34, 0.3)'}};
+    var topOfTurn = makeEventView(turnNode);
 
     var turnEvents = [];
 
     // The subsequent events that occurred during this turn
     turnNode.outs(function(outgoing, target) {
-      turnEvents.push({graphElement: outgoing,
-                       displayAttr: { active: images.inturnPopped, 
-                         inactive: images.inturnFlat,
-                         enteredStyle: 'rgba(178, 34, 34, 0.15)',
-                         selectionStyle: 'rgba(178, 34, 34, 0.3)'}});
+      turnEvents.push(makeEventView(outgoing));
     });
 
     var displayArea;
     
-    var hoveredEvent = void 0;
-    
     function drawTurnEvent(ctx, wdwMap, turnEvent, 
                            isSelected, isActive, isEntered) {
-      var where = wdwMap.whereIs(turnEvent.graphElement);
-      if (where) {
-        ctx.clearRect(where.x, where.y, 
-                      turnEvent.area.w, turnEvent.area.h);
+      turnEvent.isSelected = isSelected;
+      turnEvent.isActive = isActive;
+      turnEvent.isEntered = isEntered;
 
-        if (isSelected) {
-          ctx.fillStyle = turnEvent.displayAttr.selectionStyle;
-          ctx.fillRect(where.x - 4, where.y - 4,
-                       turnEvent.area.w + 8, turnEvent.area.h + 8);
-        } else if (isEntered) {
-          ctx.fillStyle = turnEvent.displayAttr.enteredStyle;
-          ctx.fillRect(where.x - 4, where.y - 4,
-              turnEvent.area.w + 8, turnEvent.area.h + 8);
-
-          // remember hovered event          
-          hoveredEvent = {
-            turnEvent: turnEvent,
-            eventWhere: {
-              x: where.x,
-              y: where.y,
-              w: turnEvent.area.w,
-              h: turnEvent.area.h,
-            },
-            hoverWhere: {
-              x: where.x - 4,
-              y: where.y - 4,
-              w: turnEvent.area.w + 8,
-              h: turnEvent.area.h + 8,
-            },
-            isActive: isActive
-          };
-        }
-
-        if (isActive) {
-          ctx.drawImage(turnEvent.displayAttr.active,
-                        where.x, where.y,
-                        turnEvent.area.w, turnEvent.area.h);
-        } else {
-          ctx.drawImage(turnEvent.displayAttr.inactive,
-                        where.x, where.y,
-                        turnEvent.area.w, turnEvent.area.h);
-        }
-        
-      } else {
-        throw new Error('graphElement not found in wdwMap');
-      }
+      turnEvent.draw(ctx);
     }
 
     var iconicTurnView = {
         
       hover: function(ctx, wdwMap, graphElement) {
         if (graphElement) {
-          if (topOfTurn.graphElement === graphElement) {
-            drawTurnEvent(ctx, wdwMap, topOfTurn, 
-                          false, true, true);
-          } else {
-            for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
-              if (turnEvents[i].graphElement === graphElement) {
-                drawTurnEvent(ctx, wdwMap, turnEvents[i], 
-                              false, true, true);
-                break;
-              }
-            }
+          var view = modelToViewMap.get(graphElement);
+          if (view) {
+            view.isEntered = true;
+            view.draw(ctx);
           }
         }
       },
         
       dehover: function(ctx, wdwMap, graphElement) {
         if (hoveredEvent) {
-          var hw = hoveredEvent.hoverWhere;
-          ctx.clearRect(hw.x, hw.y, hw.w, hw.h);
-          var where = hoveredEvent.eventWhere;
-          if (hoveredEvent.isActive) {
-            ctx.drawImage(hoveredEvent.turnEvent.displayAttr.active,
-                          where.x, where.y, where.w, where.h);
-          } else {
-            ctx.drawImage(turnEvent.displayAttr.inactive,
-                          where.x, where.y, where.w, where.h);
-          }
+          hoveredEvent.isEntered = false;
+          hoveredEvent.draw(ctx);
           hoveredEvent = void 0;
         }
       },
@@ -127,11 +118,9 @@ var makeIconicTurnView;
         var h = 8;
         var totalh = 0;
 
-        topOfTurn.area = {w: w, h: h};
         totalh += h + 8;
 
         turnEvents.forEach(function(te) {
-          te.area = {w: w, h: h};
           totalh += h + 8;
         });
         totalh -= 8;
@@ -145,15 +134,18 @@ var makeIconicTurnView;
         var x = left;
         var y = top;
         var w = displayArea.w;  // fixed width
+        var h = 8;
 
-        wdwMap.post(topOfTurn.graphElement,
-                    {x: x, y: y, w: w, h: topOfTurn.area.h});
-        y += topOfTurn.area.h + 8;
+        var where = {x: x, y: y, w: w, h: h};
+        wdwMap.post(topOfTurn.graphElement, where);
+        topOfTurn.where = where;
+        y += h + 8;
 
         turnEvents.forEach(function(te) {
-          var where = {x: x, y: y, w: w, h: te.area.h};
+          var where = {x: x, y: y, w: w, h: h};
           wdwMap.post(te.graphElement, where);
-          y += te.area.h + 8;
+          te.where = where;
+          y += h + 8;
         });
       },
 
@@ -186,36 +178,13 @@ var makeIconicTurnView;
       draw: function(ctx, wdwMap, graphElement, 
                      isSelected, isActive, isEntered) {
         if (graphElement) {
-          if (topOfTurn.graphElement === graphElement) {
-            drawTurnEvent(ctx, wdwMap, topOfTurn, 
-                          isSelected, isActive, isEntered);
-            return;
-          } else {
-            for (var i = 0, iLen = turnEvents.length; i < iLen; i++) {
-              if (turnEvents[i].graphElement === graphElement) {
-                drawTurnEvent(ctx, wdwMap, turnEvents[i], 
-                              isSelected, isActive, isEntered);
-                return;
-              }
-            }
-            throw new Error('graphElement not found in turnEvents');
-          }
+          var view = modelToViewMap.get(graphElement);
+          drawTurnEvent(ctx, wdwMap, view, isSelected, isActive, isEntered);
 
         } else {
-          var where = wdwMap.whereIs(topOfTurn.graphElement);
-          var xCenter = where.x + Math.floor(where.w /2);
-          var yTop = where.y + where.h - 1;
-          var yBottom = where.y + displayArea.h - 1;
-          ctx.strokeStyle = 'rgb(0, 0, 0)';  // black
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(xCenter, yTop);
-          ctx.lineTo(xCenter, yBottom);
-          ctx.stroke();
-
-          drawTurnEvent(ctx, wdwMap, topOfTurn);
+          drawTurnEvent(ctx, wdwMap, topOfTurn, false, false, false);
           turnEvents.forEach(function(te) {
-            drawTurnEvent(ctx, wdwMap, te);
+            drawTurnEvent(ctx, wdwMap, te, false, false, false);
           });
           hoveredEvent = void 0;
         }
