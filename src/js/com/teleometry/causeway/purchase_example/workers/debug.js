@@ -407,7 +407,15 @@ if (!System) { System = {}; }
            lines = lines.slice(1);
          }
          lines = lines.filter(function(line) { return line !== ''; });
-         var frames = lines.map(line2CWFrame);
+         var frames = [];
+         for (var i = 0, len = lines.length; i < len; i++) {
+           var frame = line2CWFrame(lines[i]);
+           frames.push(frame);
+           if (/\*/.test(frame.name)) {
+             // Cut off Firefox deep stack
+             break;
+           }
+         }
          return { calls: frames };
        }
 
