@@ -9,10 +9,9 @@
   
   var cwLogger = makeCausewayLogger('accounts');
   cwLogger.turnOn();
-  var send = cwLogger.send;
   
-  function doCreditCheck(name) {
-    return true;
+  function doCreditCheck(name, msg) {
+    self.postMessage({'msg': msg, 'answer': true});
   }
   
   self.addEventListener('message', function accountsRequest(e) {
@@ -20,7 +19,7 @@
     var data = e.data;
     switch (msg) {
     case 'doCreditCheck':
-      self.postMessage({'msg': msg, 'answer': doCreditCheck(data.name)});
+      doCreditCheck(data.name, msg);
       break;
     default:
       break;

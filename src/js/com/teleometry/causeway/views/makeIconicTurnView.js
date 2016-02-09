@@ -8,9 +8,9 @@ var makeIconicTurnView;
 
   var hoveredEvent = void 0;
   
-  var enteredStyle = 'rgba(47, 79, 79, 0.15)';
+  var enteredStyle = 'rgba(47, 79, 79, 0.25)';
   var selectionStyle = 'rgba(178, 34, 34, 1.0)';
-  var clearStyle = 'rgba(245, 245, 245, 1.0)';
+  var clearStyle = 'rgba(255, 255, 255, 1.0)';
   
   makeIconicTurnView = function makeIconicTurnView(turnNode, 
                                                    vatMap, 
@@ -34,19 +34,19 @@ var makeIconicTurnView;
             var where = self.where;
             if (where) {
               ctx.fillStyle = clearStyle;
-              ctx.fillRect(where.x - 5, where.y - 5, 
-                           where.w + 10, where.h + 10);
+              ctx.fillRect(where.x - 4, where.y - 4, 
+                           where.w + 8, where.h + 8);
               if (self.isSelected) {
                 ctx.fillStyle = selectionStyle;
-                ctx.fillRect(where.x - 4, where.y - 4, 
-                             where.w + 8, where.h + 8);
-                ctx.fillStyle = clearStyle;
                 ctx.fillRect(where.x - 3, where.y - 3, 
                              where.w + 6, where.h + 6);
+                ctx.fillStyle = clearStyle;
+                ctx.fillRect(where.x - 2, where.y - 2, 
+                             where.w + 4, where.h + 4);
               } else if (self.isEntered) {
                 ctx.fillStyle = enteredStyle;
-                ctx.fillRect(where.x - 4, where.y - 4, 
-                             where.w + 8, where.h + 8);
+                ctx.fillRect(where.x - 3, where.y - 3, 
+                             where.w + 6, where.h + 6);
               }
               if (self.isEntered) {
                 if (hoveredEvent && self !== hoveredEvent) {

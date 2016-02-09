@@ -214,9 +214,10 @@ var doCausalityGridTest;
     //cg_logfiles = [ 'log/live-250K.log' ];
     //cg_srcRoot = '';
 
-    cg_logfiles = [ 'causeway/purchase_example/workers/log/ael-workers.log' ];
-    cg_hidden.addElement('https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/debug.js');  // filter out logger calls
-    cg_hidden.addElement('https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js');  // filter out logger calls
+    cg_logfiles = [ 'causeway/purchase_example/workers/log/V8-workers.log' ];
+    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/debug.js');  // filter out logger calls
+    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js');  // filter out logger calls
+    cg_hidden.addElement('http://localhost:8080/workersExample.html');  // filter out logger calls
     cg_srcRoot = '';
 
     getLogFiles();
