@@ -44,6 +44,9 @@ var filterMessageGraph;
   
   function hideFrame(srcPath, hiddenSrcPaths) {
     for (var i = 0, ilen = hiddenSrcPaths.length; i < ilen; i++) {
+      while (typeof srcPath !== 'string') {
+        srcPath = srcPath.source;
+      }
       if (srcPath.endsWith(hiddenSrcPaths[i])) {
         return true;
       }

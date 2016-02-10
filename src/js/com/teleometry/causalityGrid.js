@@ -1,4 +1,5 @@
 var doCausalityGridTest;
+var showTracelog;
 
 (function(){
   "use strict";
@@ -224,4 +225,15 @@ var doCausalityGridTest;
 
     getLogFiles();
   };
+
+  showTracelog = function showTracelog() {
+    "use strict";
+    var logfile = document.getElementById("tracelog").value;
+    cg_logfiles = [logfile];
+    
+    getLogFiles();
+  };
+
 })();
+
+
