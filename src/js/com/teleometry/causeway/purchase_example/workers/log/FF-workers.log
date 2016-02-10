@@ -19,27 +19,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 114, 6 ] ]
    },
    {
     "name": "onload",
-    "source": "http://localhost:8080/workersExample.html",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/workersExample.html",
     "span": [ [ 1, 1 ] ]
    }
   ]
@@ -63,27 +63,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 115, 6 ] ]
    },
    {
     "name": "onload",
-    "source": "http://localhost:8080/workersExample.html",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/workersExample.html",
     "span": [ [ 1, 1 ] ]
    }
   ]
@@ -107,27 +107,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 116, 6 ] ]
    },
    {
     "name": "onload",
-    "source": "http://localhost:8080/workersExample.html",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/workersExample.html",
     "span": [ [ 1, 1 ] ]
    }
   ]
@@ -152,27 +152,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logFulfilledRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 195, 39 ] ]
    },
    {
     "name": "aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 288, 13 ] ]
    },
    {
     "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 118, 6 ] ]
    },
    {
     "name": "onload",
-    "source": "http://localhost:8080/workersExample.html",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/workersExample.html",
     "span": [ [ 1, 1 ] ]
    }
   ]
@@ -197,27 +197,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logFulfilledRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 195, 39 ] ]
    },
    {
     "name": "aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 288, 13 ] ]
    },
    {
     "name": "doWebWorkersTest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 142, 6 ] ]
    },
    {
     "name": "onload",
-    "source": "http://localhost:8080/workersExample.html",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/workersExample.html",
     "span": [ [ 1, 1 ] ]
    }
   ]
@@ -242,27 +242,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logFulfilledRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 195, 39 ] ]
    },
    {
     "name": "aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 288, 13 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 25, 3 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 4, 2 ] ]
    }
   ]
@@ -286,22 +286,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -327,22 +327,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -366,22 +366,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -405,37 +405,37 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "isAvailable",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 14, 5 ] ]
    },
    {
     "name": "productRequest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 30, 7 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -459,22 +459,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -500,22 +500,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -539,22 +539,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -578,32 +578,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 124, 12 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -628,27 +628,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logFulfilledRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 195, 39 ] ]
    },
    {
     "name": "aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 288, 13 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwAccounts.js",
     "span": [ [ 17, 3 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwAccounts.js",
     "span": [ [ 4, 2 ] ]
    }
   ]
@@ -672,22 +672,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -713,22 +713,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -752,22 +752,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -791,22 +791,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -830,37 +830,37 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "canDeliver",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 18, 5 ] ]
    },
    {
     "name": "productRequest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 33, 7 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -884,22 +884,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -925,22 +925,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -964,22 +964,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1003,32 +1003,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 124, 12 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1054,22 +1054,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1093,22 +1093,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 216, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1132,22 +1132,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 216, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1171,22 +1171,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1210,37 +1210,37 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doCreditCheck",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwAccounts.js",
     "span": [ [ 14, 5 ] ]
    },
    {
     "name": "accountsRequest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwAccounts.js",
     "span": [ [ 22, 7 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1264,22 +1264,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1305,22 +1305,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1344,22 +1344,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1383,32 +1383,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 214, 9 ] ]
    },
    {
     "name": "accountsAnswer",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 147, 12 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1432,22 +1432,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 216, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1471,32 +1471,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 214, 9 ] ]
    },
    {
     "name": "teller.run",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/asyncAnd.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/asyncAnd.js",
     "span": [ [ 28, 14 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 217, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1520,22 +1520,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 216, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1559,27 +1559,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logCommentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 175, 32 ] ]
    },
    {
     "name": "checkAnswers.run",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 101, 12 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 217, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1603,32 +1603,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "checkAnswers.run",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 102, 12 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 217, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -1652,22 +1652,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1693,22 +1693,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1732,22 +1732,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1771,37 +1771,37 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "pmBase.postMessage",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 258, 11 ] ]
    },
    {
     "name": "placeOrder",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 22, 5 ] ]
    },
    {
     "name": "productRequest",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/wwProduct.js",
     "span": [ [ 36, 7 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1825,22 +1825,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 277, 17 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1866,22 +1866,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 180, 43 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 281, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1905,22 +1905,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 282, 15 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1944,32 +1944,32 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 159, 30 ] ]
    },
    {
     "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 129, 12 ] ]
    },
    {
     "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 284, 20 ] ]
    },
    {
     "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 289, 20 ] ]
    }
   ]
@@ -1993,22 +1993,22 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 170, 29 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 216, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
@@ -2032,27 +2032,27 @@
   "calls": [
    {
     "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 152, 32 ] ]
    },
    {
     "name": "logger.logCommentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 175, 32 ] ]
    },
    {
     "name": "reporter.run",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/mainBuyer.js",
     "span": [ [ 90, 12 ] ]
    },
    {
     "name": "?",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 217, 11 ] ]
    },
    {
     "name": "setTimeout handler*postpone",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "source": "https://rawgit.com/cocoonfx/causeway/master/src/js/com/teleometry/causeway/purchase_example/workers/makeCausewayLogger.js",
     "span": [ [ 12, 7 ] ]
    }
   ]
