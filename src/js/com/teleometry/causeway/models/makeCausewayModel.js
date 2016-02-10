@@ -31,6 +31,22 @@ var makeCausewayModel;
       getMessageGraph: function() {
         return messageGraph;
       },
+      
+      getMainAncestor: function(node) {
+        var ancestor = void 0;
+        if (node.getIncomingCount() >= 1) {
+          ancestor = node.nextIn;
+          while ((ancestor.traceRecord["class"][0] == 
+                 'org.ref_send.log.Fulfilled') && 
+                 ancestor.nextIn !== node) {
+            ancestor = ancestor.nextIn;
+          }
+        }
+        if (ancestor && ancestor.getOrigin().id.loop === 'top') {
+          return void 0;
+        }
+        return ancestor;
+      },
 
       getVatTurns: function() {
         var ordered = {};  // process order

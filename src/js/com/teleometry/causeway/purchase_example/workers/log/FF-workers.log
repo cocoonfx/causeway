@@ -1,5 +1,6 @@
 
 
+
 [{
  "class": [
   "org.ref_send.log.Sent",
@@ -12,8 +13,8 @@
    "number": 0
   }
  },
- "message": "umid:0.057261573849245906:buyer",
- "timestamp": 1455042294144,
+ "message": "umid:0.02633347359124616:buyer",
+ "timestamp": 1455043883999,
  "trace": {
   "calls": [
    {
@@ -29,21 +30,17 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 114, 14 ] ]
+    "span": [ [ 114, 6 ] ]
    },
    {
     "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
+    "source": "http://localhost:8080/workersExample.html",
+    "span": [ [ 1, 1 ] ]
    }
   ]
  }
@@ -60,8 +57,8 @@
    "number": 0
   }
  },
- "message": "umid:0.7688476087059826:buyer",
- "timestamp": 1455042294146,
+ "message": "umid:0.7148887832536782:buyer",
+ "timestamp": 1455043884000,
  "trace": {
   "calls": [
    {
@@ -77,21 +74,17 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 115, 15 ] ]
+    "span": [ [ 115, 6 ] ]
    },
    {
     "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
+    "source": "http://localhost:8080/workersExample.html",
+    "span": [ [ 1, 1 ] ]
    }
   ]
  }
@@ -108,8 +101,8 @@
    "number": 0
   }
  },
- "message": "umid:0.7405255313497037:buyer",
- "timestamp": 1455042294147,
+ "message": "umid:0.8717623330672502:buyer",
+ "timestamp": 1455043884000,
  "trace": {
   "calls": [
    {
@@ -125,21 +118,17 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 116, 14 ] ]
+    "span": [ [ 116, 6 ] ]
    },
    {
     "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
+    "source": "http://localhost:8080/workersExample.html",
+    "span": [ [ 1, 1 ] ]
    }
   ]
  }
@@ -157,8 +146,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.9283735370263457:buyer",
- "timestamp": 1455042294147,
+ "condition": "ucid:0.12345157522576922:buyer",
+ "timestamp": 1455043884000,
  "trace": {
   "calls": [
    {
@@ -174,21 +163,17 @@
    {
     "name": "aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 288, 20 ] ]
+    "span": [ [ 288, 13 ] ]
    },
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 118, 14 ] ]
+    "span": [ [ 118, 6 ] ]
    },
    {
     "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
+    "source": "http://localhost:8080/workersExample.html",
+    "span": [ [ 1, 1 ] ]
    }
   ]
  }
@@ -206,8 +191,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.3644422614015639:buyer",
- "timestamp": 1455042294147,
+ "condition": "ucid:0.7755537209421752:buyer",
+ "timestamp": 1455043884001,
  "trace": {
   "calls": [
    {
@@ -223,21 +208,17 @@
    {
     "name": "aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 288, 20 ] ]
+    "span": [ [ 288, 13 ] ]
    },
    {
     "name": "doWebWorkersTest",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 142, 15 ] ]
+    "span": [ [ 142, 6 ] ]
    },
    {
     "name": "onload",
-    "source": {
-     "name": "?",
-     "source": "http://localhost:8080/workersExample.html",
-     "span": []
-    },
-    "span": [ [ 8, 40 ] ]
+    "source": "http://localhost:8080/workersExample.html",
+    "span": [ [ 1, 1 ] ]
    }
   ]
  }
@@ -255,8 +236,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.8170586545020342:product",
- "timestamp": 1455042294416,
+ "condition": "ucid:0.8823603042998323:product",
+ "timestamp": 1455043884070,
  "trace": {
   "calls": [
    {
@@ -272,17 +253,17 @@
    {
     "name": "aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 288, 20 ] ]
+    "span": [ [ 288, 13 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 25, 8 ] ]
+    "span": [ [ 25, 3 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 42, 3 ] ]
+    "span": [ [ 4, 2 ] ]
    }
   ]
  }
@@ -299,8 +280,8 @@
    "number": 1
   }
  },
- "message": "umid:0.057261573849245906:buyer",
- "timestamp": 1455042294417,
+ "message": "umid:0.02633347359124616:buyer",
+ "timestamp": 1455043884071,
  "trace": {
   "calls": [
    {
@@ -316,7 +297,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -334,9 +320,9 @@
    "number": 1
   }
  },
- "condition": "ucid:0.8170586545020342:product",
- "message": "umid:0.930200609145686:product",
- "timestamp": 1455042294418,
+ "condition": "ucid:0.8823603042998323:product",
+ "message": "umid:0.4030157270159901:product",
+ "timestamp": 1455043884071,
  "trace": {
   "calls": [
    {
@@ -352,7 +338,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -369,8 +360,8 @@
    "number": 2
   }
  },
- "message": "umid:0.930200609145686:product",
- "timestamp": 1455042294418,
+ "message": "umid:0.4030157270159901:product",
+ "timestamp": 1455043884071,
  "trace": {
   "calls": [
    {
@@ -386,7 +377,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -403,8 +399,8 @@
    "number": 2
   }
  },
- "message": "umid:0.6064951540902257:product",
- "timestamp": 1455042294419,
+ "message": "umid:0.26113244353692466:product",
+ "timestamp": 1455043884072,
  "trace": {
   "calls": [
    {
@@ -420,12 +416,12 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "isAvailable",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 14, 10 ] ]
+    "span": [ [ 14, 5 ] ]
    },
    {
     "name": "productRequest",
@@ -435,7 +431,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
+    "span": [ [ 284, 20 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -452,8 +453,8 @@
    "number": 1
   }
  },
- "message": "umid:0.6064951540902257:product",
- "timestamp": 1455042294420,
+ "message": "umid:0.26113244353692466:product",
+ "timestamp": 1455043884072,
  "trace": {
   "calls": [
    {
@@ -469,7 +470,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -487,9 +493,9 @@
    "number": 1
   }
  },
- "condition": "ucid:0.9283735370263457:buyer",
- "message": "umid:0.875535236671567:buyer",
- "timestamp": 1455042294420,
+ "condition": "ucid:0.12345157522576922:buyer",
+ "message": "umid:0.2514456828687128:buyer",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -505,7 +511,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -522,8 +533,8 @@
    "number": 2
   }
  },
- "message": "umid:0.875535236671567:buyer",
- "timestamp": 1455042294421,
+ "message": "umid:0.2514456828687128:buyer",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -539,7 +550,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -556,8 +572,8 @@
    "number": 2
   }
  },
- "message": "umid:0.9101182613521814:buyer",
- "timestamp": 1455042294421,
+ "message": "umid:0.33769696467589183:buyer",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -573,7 +589,7 @@
    {
     "name": "logger.send",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 214, 16 ] ]
+    "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
@@ -583,41 +599,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "product",
-   "number": 3
-  }
- },
- "message": "umid:0.7405255313497037:buyer",
- "timestamp": 1455042294419,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
+    "span": [ [ 284, 20 ] ]
    },
    {
-    "name": "logger.logGotRecord",
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 170, 29 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -635,8 +622,8 @@
    "number": 0
   }
  },
- "condition": "ucid:0.07145698228850961:accounts",
- "timestamp": 1455042294419,
+ "condition": "ucid:0.6963204617503898:accounts",
+ "timestamp": 1455043884072,
  "trace": {
   "calls": [
    {
@@ -652,17 +639,56 @@
    {
     "name": "aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 288, 20 ] ]
+    "span": [ [ 288, 13 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
-    "span": [ [ 17, 8 ] ]
+    "span": [ [ 17, 3 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
-    "span": [ [ 28, 3 ] ]
+    "span": [ [ 4, 2 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "product",
+   "number": 3
+  }
+ },
+ "message": "umid:0.8717623330672502:buyer",
+ "timestamp": 1455043884072,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logGotRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 170, 29 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -680,9 +706,9 @@
    "number": 3
   }
  },
- "condition": "ucid:0.8170586545020342:product",
- "message": "umid:0.17432444100268185:product",
- "timestamp": 1455042294420,
+ "condition": "ucid:0.8823603042998323:product",
+ "message": "umid:0.8780119409354871:product",
+ "timestamp": 1455043884072,
  "trace": {
   "calls": [
    {
@@ -698,7 +724,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -715,8 +746,8 @@
    "number": 4
   }
  },
- "message": "umid:0.17432444100268185:product",
- "timestamp": 1455042294420,
+ "message": "umid:0.8780119409354871:product",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -732,7 +763,51 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "accounts",
+   "number": 1
+  }
+ },
+ "message": "umid:0.7148887832536782:buyer",
+ "timestamp": 1455043884073,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logGotRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 170, 29 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -749,8 +824,8 @@
    "number": 4
   }
  },
- "message": "umid:0.6393510955385864:product",
- "timestamp": 1455042294420,
+ "message": "umid:0.9131375306787076:product",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -766,12 +841,12 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "canDeliver",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 18, 10 ] ]
+    "span": [ [ 18, 5 ] ]
    },
    {
     "name": "productRequest",
@@ -781,7 +856,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
+    "span": [ [ 284, 20 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -798,8 +878,8 @@
    "number": 3
   }
  },
- "message": "umid:0.6393510955385864:product",
- "timestamp": 1455042294425,
+ "message": "umid:0.9131375306787076:product",
+ "timestamp": 1455043884074,
  "trace": {
   "calls": [
    {
@@ -815,7 +895,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -833,9 +918,9 @@
    "number": 3
   }
  },
- "condition": "ucid:0.9283735370263457:buyer",
- "message": "umid:0.5470076606143266:buyer",
- "timestamp": 1455042294425,
+ "condition": "ucid:0.12345157522576922:buyer",
+ "message": "umid:0.8270173602188292:buyer",
+ "timestamp": 1455043884075,
  "trace": {
   "calls": [
    {
@@ -851,7 +936,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -868,8 +958,8 @@
    "number": 4
   }
  },
- "message": "umid:0.5470076606143266:buyer",
- "timestamp": 1455042294426,
+ "message": "umid:0.8270173602188292:buyer",
+ "timestamp": 1455043884075,
  "trace": {
   "calls": [
    {
@@ -885,7 +975,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -902,8 +997,8 @@
    "number": 4
   }
  },
- "message": "umid:0.3822919905651361:buyer",
- "timestamp": 1455042294426,
+ "message": "umid:0.05976958848762881:buyer",
+ "timestamp": 1455043884075,
  "trace": {
   "calls": [
    {
@@ -919,7 +1014,7 @@
    {
     "name": "logger.send",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 214, 16 ] ]
+    "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
@@ -929,41 +1024,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "accounts",
-   "number": 1
-  }
- },
- "message": "umid:0.7688476087059826:buyer",
- "timestamp": 1455042294421,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
+    "span": [ [ 284, 20 ] ]
    },
    {
-    "name": "logger.logGotRecord",
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 170, 29 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -981,9 +1047,9 @@
    "number": 1
   }
  },
- "condition": "ucid:0.07145698228850961:accounts",
- "message": "umid:0.8171123417560011:accounts",
- "timestamp": 1455042294421,
+ "condition": "ucid:0.6963204617503898:accounts",
+ "message": "umid:0.4079654407459643:accounts",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -999,7 +1065,90 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 5
+  }
+ },
+ "message": "umid:0.33769696467589183:buyer",
+ "timestamp": 1455043884075,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logGotRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 170, 29 ] ]
+   },
+   {
+    "name": "?",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 216, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Got",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 0,
+  "turn": {
+   "loop": "buyer",
+   "number": 6
+  }
+ },
+ "message": "umid:0.05976958848762881:buyer",
+ "timestamp": 1455043884075,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logGotRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 170, 29 ] ]
+   },
+   {
+    "name": "?",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 216, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1016,8 +1165,8 @@
    "number": 2
   }
  },
- "message": "umid:0.8171123417560011:accounts",
- "timestamp": 1455042294422,
+ "message": "umid:0.4079654407459643:accounts",
+ "timestamp": 1455043884073,
  "trace": {
   "calls": [
    {
@@ -1033,7 +1182,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1050,8 +1204,8 @@
    "number": 2
   }
  },
- "message": "umid:0.10654879454523325:accounts",
- "timestamp": 1455042294423,
+ "message": "umid:0.261547583864025:accounts",
+ "timestamp": 1455043884074,
  "trace": {
   "calls": [
    {
@@ -1067,12 +1221,12 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "doCreditCheck",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwAccounts.js",
-    "span": [ [ 14, 10 ] ]
+    "span": [ [ 14, 5 ] ]
    },
    {
     "name": "accountsRequest",
@@ -1082,155 +1236,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "buyer",
-   "number": 5
-  }
- },
- "message": "umid:0.10654879454523325:accounts",
- "timestamp": 1455042294427,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
+    "span": [ [ 284, 20 ] ]
    },
    {
-    "name": "logger.logGotRecord",
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 170, 29 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.SentIf",
-  "org.ref_send.log.Sent",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 1,
-  "turn": {
-   "loop": "buyer",
-   "number": 5
-  }
- },
- "condition": "ucid:0.3644422614015639:buyer",
- "message": "umid:0.8405801146291196:buyer",
- "timestamp": 1455042294427,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logSentIfRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 180, 43 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Got",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 0,
-  "turn": {
-   "loop": "buyer",
-   "number": 6
-  }
- },
- "message": "umid:0.8405801146291196:buyer",
- "timestamp": 1455042294427,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logGotRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 170, 29 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
-   }
-  ]
- }
-},
-{
- "class": [
-  "org.ref_send.log.Sent",
-  "org.ref_send.log.Event"
- ],
- "anchor": {
-  "number": 1,
-  "turn": {
-   "loop": "buyer",
-   "number": 6
-  }
- },
- "message": "umid:0.7561858927365392:buyer",
- "timestamp": 1455042294427,
- "trace": {
-  "calls": [
-   {
-    "name": "getCWStack",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 152, 32 ] ]
-   },
-   {
-    "name": "logger.logSentRecord",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 159, 30 ] ]
-   },
-   {
-    "name": "logger.send",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 214, 16 ] ]
-   },
-   {
-    "name": "accountsAnswer",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 147, 12 ] ]
-   },
-   {
-    "name": "newCallback",
-    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1247,8 +1258,8 @@
    "number": 7
   }
  },
- "message": "umid:0.9101182613521814:buyer",
- "timestamp": 1455042294428,
+ "message": "umid:0.261547583864025:accounts",
+ "timestamp": 1455043884076,
  "trace": {
   "calls": [
    {
@@ -1262,9 +1273,55 @@
     "span": [ [ 170, 29 ] ]
    },
    {
-    "name": "?",
+    "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 216, 18 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.SentIf",
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 7
+  }
+ },
+ "condition": "ucid:0.7755537209421752:buyer",
+ "message": "umid:0.6748742509575454:buyer",
+ "timestamp": 1455043884076,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logSentIfRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 180, 43 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1281,8 +1338,8 @@
    "number": 8
   }
  },
- "message": "umid:0.3822919905651361:buyer",
- "timestamp": 1455042294428,
+ "message": "umid:0.6748742509575454:buyer",
+ "timestamp": 1455043884076,
  "trace": {
   "calls": [
    {
@@ -1296,9 +1353,63 @@
     "span": [ [ 170, 29 ] ]
    },
    {
-    "name": "?",
+    "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 216, 18 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
+   }
+  ]
+ }
+},
+{
+ "class": [
+  "org.ref_send.log.Sent",
+  "org.ref_send.log.Event"
+ ],
+ "anchor": {
+  "number": 1,
+  "turn": {
+   "loop": "buyer",
+   "number": 8
+  }
+ },
+ "message": "umid:0.8760609843286898:buyer",
+ "timestamp": 1455043884076,
+ "trace": {
+  "calls": [
+   {
+    "name": "getCWStack",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 152, 32 ] ]
+   },
+   {
+    "name": "logger.logSentRecord",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 159, 30 ] ]
+   },
+   {
+    "name": "logger.send",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 214, 9 ] ]
+   },
+   {
+    "name": "accountsAnswer",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
+    "span": [ [ 147, 12 ] ]
+   },
+   {
+    "name": "newCallback",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 284, 20 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1315,8 +1426,8 @@
    "number": 9
   }
  },
- "message": "umid:0.7561858927365392:buyer",
- "timestamp": 1455042294429,
+ "message": "umid:0.8760609843286898:buyer",
+ "timestamp": 1455043884076,
  "trace": {
   "calls": [
    {
@@ -1332,7 +1443,12 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 216, 18 ] ]
+    "span": [ [ 216, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1349,8 +1465,8 @@
    "number": 9
   }
  },
- "message": "umid:0.08491622027941048:buyer",
- "timestamp": 1455042294429,
+ "message": "umid:0.9247593629861502:buyer",
+ "timestamp": 1455043884077,
  "trace": {
   "calls": [
    {
@@ -1366,7 +1482,7 @@
    {
     "name": "logger.send",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 214, 16 ] ]
+    "span": [ [ 214, 9 ] ]
    },
    {
     "name": "teller.run",
@@ -1376,7 +1492,12 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 217, 22 ] ]
+    "span": [ [ 217, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1393,8 +1514,8 @@
    "number": 10
   }
  },
- "message": "umid:0.08491622027941048:buyer",
- "timestamp": 1455042294430,
+ "message": "umid:0.9247593629861502:buyer",
+ "timestamp": 1455043884077,
  "trace": {
   "calls": [
    {
@@ -1410,7 +1531,12 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 216, 18 ] ]
+    "span": [ [ 216, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1428,7 +1554,7 @@
   }
  },
  "text": "All queries answered true",
- "timestamp": 1455042294430,
+ "timestamp": 1455043884077,
  "trace": {
   "calls": [
    {
@@ -1444,12 +1570,17 @@
    {
     "name": "checkAnswers.run",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 101, 21 ] ]
+    "span": [ [ 101, 12 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 217, 22 ] ]
+    "span": [ [ 217, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1466,8 +1597,8 @@
    "number": 10
   }
  },
- "message": "umid:0.24636891926638782:buyer",
- "timestamp": 1455042294430,
+ "message": "umid:0.2937999469110383:buyer",
+ "timestamp": 1455043884077,
  "trace": {
   "calls": [
    {
@@ -1483,17 +1614,22 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "checkAnswers.run",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 102, 20 ] ]
+    "span": [ [ 102, 12 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 217, 22 ] ]
+    "span": [ [ 217, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1510,8 +1646,8 @@
    "number": 5
   }
  },
- "message": "umid:0.24636891926638782:buyer",
- "timestamp": 1455042294431,
+ "message": "umid:0.2937999469110383:buyer",
+ "timestamp": 1455043884077,
  "trace": {
   "calls": [
    {
@@ -1527,7 +1663,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1545,9 +1686,9 @@
    "number": 5
   }
  },
- "condition": "ucid:0.8170586545020342:product",
- "message": "umid:0.09538763132877648:product",
- "timestamp": 1455042294431,
+ "condition": "ucid:0.8823603042998323:product",
+ "message": "umid:0.05241102222070637:product",
+ "timestamp": 1455043884078,
  "trace": {
   "calls": [
    {
@@ -1563,7 +1704,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1580,8 +1726,8 @@
    "number": 6
   }
  },
- "message": "umid:0.09538763132877648:product",
- "timestamp": 1455042294432,
+ "message": "umid:0.05241102222070637:product",
+ "timestamp": 1455043884078,
  "trace": {
   "calls": [
    {
@@ -1597,7 +1743,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1614,8 +1765,8 @@
    "number": 6
   }
  },
- "message": "umid:0.2975788649637252:product",
- "timestamp": 1455042294432,
+ "message": "umid:0.44384144281141813:product",
+ "timestamp": 1455043884078,
  "trace": {
   "calls": [
    {
@@ -1631,12 +1782,12 @@
    {
     "name": "pmBase.postMessage",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 258, 18 ] ]
+    "span": [ [ 258, 11 ] ]
    },
    {
     "name": "placeOrder",
     "source": "http://localhost:8080/causeway/purchase_example/workers/wwProduct.js",
-    "span": [ [ 22, 10 ] ]
+    "span": [ [ 22, 5 ] ]
    },
    {
     "name": "productRequest",
@@ -1646,7 +1797,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
+    "span": [ [ 284, 20 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1663,8 +1819,8 @@
    "number": 11
   }
  },
- "message": "umid:0.2975788649637252:product",
- "timestamp": 1455042294433,
+ "message": "umid:0.44384144281141813:product",
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1680,7 +1836,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 277, 24 ] ]
+    "span": [ [ 277, 17 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1698,9 +1859,9 @@
    "number": 11
   }
  },
- "condition": "ucid:0.9283735370263457:buyer",
- "message": "umid:0.32559778029099107:buyer",
- "timestamp": 1455042294433,
+ "condition": "ucid:0.12345157522576922:buyer",
+ "message": "umid:0.5141081395963226:buyer",
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1716,7 +1877,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 281, 22 ] ]
+    "span": [ [ 281, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1733,8 +1899,8 @@
    "number": 12
   }
  },
- "message": "umid:0.32559778029099107:buyer",
- "timestamp": 1455042294433,
+ "message": "umid:0.5141081395963226:buyer",
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1750,7 +1916,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 282, 22 ] ]
+    "span": [ [ 282, 15 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1767,8 +1938,8 @@
    "number": 12
   }
  },
- "message": "umid:0.07587938429787755:buyer",
- "timestamp": 1455042294433,
+ "message": "umid:0.6145220117022783:buyer",
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1784,7 +1955,7 @@
    {
     "name": "logger.send",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 214, 16 ] ]
+    "span": [ [ 214, 9 ] ]
    },
    {
     "name": "productAnswer",
@@ -1794,7 +1965,12 @@
    {
     "name": "newCallback",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 284, 33 ] ]
+    "span": [ [ 284, 20 ] ]
+   },
+   {
+    "name": "EventListener.handleEvent*makeCausewayLogger/logger.turnOn/aelBase.addEventListener",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 289, 20 ] ]
    }
   ]
  }
@@ -1811,8 +1987,8 @@
    "number": 13
   }
  },
- "message": "umid:0.07587938429787755:buyer",
- "timestamp": 1455042294434,
+ "message": "umid:0.6145220117022783:buyer",
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1828,7 +2004,12 @@
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 216, 18 ] ]
+    "span": [ [ 216, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
@@ -1846,7 +2027,7 @@
   }
  },
  "text": "Order placed for West Coast Buyers",
- "timestamp": 1455042294434,
+ "timestamp": 1455043884079,
  "trace": {
   "calls": [
    {
@@ -1862,14 +2043,21 @@
    {
     "name": "reporter.run",
     "source": "http://localhost:8080/causeway/purchase_example/workers/mainBuyer.js",
-    "span": [ [ 90, 21 ] ]
+    "span": [ [ 90, 12 ] ]
    },
    {
     "name": "?",
     "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
-    "span": [ [ 217, 22 ] ]
+    "span": [ [ 217, 11 ] ]
+   },
+   {
+    "name": "setTimeout handler*postpone",
+    "source": "http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js",
+    "span": [ [ 12, 7 ] ]
    }
   ]
  }
 }]
+
+
 

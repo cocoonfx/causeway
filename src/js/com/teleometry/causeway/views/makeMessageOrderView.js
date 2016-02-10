@@ -57,7 +57,9 @@ var makeMessageOrderView;
       var doKids = true;
 
       // our data structure is mostly tree-like, but sometimes
-      // events have multiple causes, i.e., multiple incoming arcs
+      // events have multiple causes, i.e., multiple incoming arcs.
+      // the event itself has mutliple views but the children are
+      // shown once.
 
       if (node.getIncomingCount() > 1) {
         var edgeList = [];
@@ -73,20 +75,22 @@ var makeMessageOrderView;
             // return;
           }
           
-
           edgeList.push(incoming);
         });
 
         if (edgeList.length > 1) {
           // TODO(cocoonfx): multiples icon image
           // show 'multiples' icon for this tree item
-          if (edgeList[0] !== edge) {
-            doKids = false;  // continue with children only if last cause
+          var ancestor = causewayModel.getMainAncestor(node);
+          if (ancestor && ancestor !== edge) {
+              doKids = false;
           }
         }
       }
 
-      modelToViewMap.set(node, uiElement);
+      if (!modelToViewMap.get(node) || doKids) {
+        modelToViewMap.set(node, uiElement);
+      }
       var span = uiElement.getSpanText();
       var id = node.traceRecord.anchor.turn;
       var attr = vatMap[id.loop];

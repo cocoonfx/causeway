@@ -21,19 +21,6 @@ var makeStackExplorerView;
     var previousSelection = void 0;
 
     var top = causewayModel.getMessageGraph().top;
-    function getMainAncestor(node) {
-      var ancestor = void 0;
-      if (node.getIncomingCount() >= 1) {
-        ancestor = node.nextIn;
-        while ((ancestor.traceRecord["class"][0] == 
-               'org.ref_send.log.Fulfilled') && 
-               ancestor.nextIn !== node) {
-          ancestor = ancestor.nextIn;
-        }
-      }
-      if (ancestor.getOrigin() === top) { return void 0; }
-      return ancestor;
-    }
           
     selectionObserver = {
       elementSelected: function(origin, optElement, optIndex) {
@@ -90,7 +77,7 @@ var makeStackExplorerView;
             }
             outerUI.inflate();
             
-            curElement = getMainAncestor(curOrigin);
+            curElement = causewayModel.getMainAncestor(curOrigin);
           }
         } else {
           // if either we are the origin or nothing was selected,

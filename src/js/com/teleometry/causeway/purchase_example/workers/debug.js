@@ -280,6 +280,8 @@ if (!System) { System = {}; }
        if (name === 'Anonymous function') {
          // Adjust for weirdness seen on IE
          name = '?';
+       } else if (/\*/.test(name)) {
+         // leave FF deep stack marker alone here, for caller to handle
        } else if (name.indexOf('/') !== -1) {
          // Adjust for function name weirdness seen on FF.
          name = name.replace(/\/</g,'/');
@@ -413,6 +415,7 @@ if (!System) { System = {}; }
            frames.push(frame);
            if (/\*/.test(frame.name)) {
              // Cut off Firefox deep stack
+             // TODO(erights): perhaps later, adjust what is kept in frame.name
              break;
            }
          }

@@ -111,7 +111,7 @@ var doCausalityGridTest;
 
   // variable names prefaced with 'cg_' are at outermost scope
   var cg_logfiles = [];
-  var cg_hidden = new FlexSet();
+  var cg_hidden = [];
   var cg_srcRoot = '';
 
   var cg_model = null;
@@ -214,10 +214,12 @@ var doCausalityGridTest;
     //cg_logfiles = [ 'log/live-250K.log' ];
     //cg_srcRoot = '';
 
-    cg_logfiles = [ 'causeway/purchase_example/workers/log/V8-workers.log' ];
-    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/debug.js');  // filter out logger calls
-    cg_hidden.addElement('http://localhost:8080/causeway/purchase_example/workers/makeCausewayLogger.js');  // filter out logger calls
-    cg_hidden.addElement('http://localhost:8080/workersExample.html');  // filter out logger calls
+    //cg_logfiles = [ 'causeway/purchase_example/workers/log/V8-workers.log' ];
+    cg_logfiles = [ 'causeway/purchase_example/workers/log/FF-workers.log' ];
+    //cg_logfiles = [ 'causeway/purchase_example/workers/log/JSC-workers.log' ];
+    cg_hidden.push('causeway/purchase_example/workers/debug.js');  // filter out logger calls
+    cg_hidden.push('causeway/purchase_example/workers/makeCausewayLogger.js');
+    cg_hidden.push('workersExample.html');
     cg_srcRoot = '';
 
     getLogFiles();

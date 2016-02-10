@@ -20,22 +20,12 @@ var drawJoin;
     // at a layer below
 
     // draw the dark lines
-    context.strokeStyle = 'rgba(153, 153, 153, 0.5)';
+    context.strokeStyle = 'rgba(128, 128, 128, 0.45)';
 
     context.beginPath();
     context.moveTo(fromPt.x + 0.5, fromPt.y + 0.5);
     context.lineTo(toPt.x + 0.5, fromPt.y + 0.5);
     context.lineTo(toPt.x + 0.5, toPt.y + 0.5);
-    context.stroke();
-
-    // draw the white lines
-    context.strokeStyle = 'rgb(255, 255, 255)';
-
-    context.beginPath();
-    context.moveTo(fromPt.x + 0.5, fromPt.y + 1.5);
-    context.lineTo(toPt.x - 0.5, fromPt.y + 1.5);
-    context.moveTo(toPt.x + 1.5, fromPt.y + 1.5);
-    context.lineTo(toPt.x + 1.5, toPt.y + 0.5);
     context.stroke();
   };
 

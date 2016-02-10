@@ -41,13 +41,22 @@ var filterMessageGraph;
       }
     });
   };
+  
+  function hideFrame(srcPath, hiddenSrcPaths) {
+    for (var i = 0, ilen = hiddenSrcPaths.length; i < ilen; i++) {
+      if (srcPath.endsWith(hiddenSrcPaths[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   function hideFrames(stack, hiddenSrcPaths) {
     var result = [];
     for (var i = 0, ilen = stack.length; i < ilen; i++) {
       var se = stack[i];
       var srcPath = se.source;
-      if (!hiddenSrcPaths.contains(srcPath)) {
+      if (!hideFrame(srcPath, hiddenSrcPaths)) {
         result.push(se);
       }
     }
